@@ -1,12 +1,33 @@
+<script setup lang="ts">
+const { revealRoot, isVisible } = useRevealSection()
+
+const points = [
+  {
+    title: 'Autoridade sem retórica vazia',
+    text: 'Fundamentação explícita, referências quando necessário e clareza sobre grau de certeza médica.',
+  },
+  {
+    title: 'Agilidade no contato',
+    text: 'Primeiro contato via WhatsApp para encaminhar documentos e receber orientação sobre próximos passos.',
+  },
+  {
+    title: 'Foco em litígios complexos',
+    text: 'Estrutura pensada para causas com múltiplos documentos, evolução clínica longa e divergência de especialistas.',
+  },
+] as const
+</script>
+
 <template>
   <section
     id="diferenciais"
+    ref="revealRoot"
     class="bg-primary py-20 text-text md:py-24"
+    :class="{ 'landing-section--visible': isVisible }"
     aria-labelledby="diff-heading"
   >
     <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
       <div class="grid gap-14 lg:grid-cols-2 lg:gap-16">
-        <div>
+        <div class="landing-reveal-item" :style="{ '--rv-i': 0 }">
           <p
             class="font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-light"
           >
@@ -21,38 +42,20 @@
             magistrados, sem tirar peso da profundidade científica.
           </p>
         </div>
-        <ul class="space-y-8 font-body text-body">
-          <li class="flex gap-4">
+        <ul class="space-y-8 font-body text-body landing-reveal-stagger--alt">
+          <li
+            v-for="(p, i) in points"
+            :key="p.title"
+            class="landing-reveal-item flex gap-4"
+            :style="{ '--rv-i': i + 1 }"
+          >
             <span class="mt-1 size-2 shrink-0 rounded-full bg-gold" aria-hidden="true" />
             <div>
               <p class="font-heading text-h4 font-semibold text-white">
-                Autoridade sem retórica vazia
+                {{ p.title }}
               </p>
               <p class="mt-2 text-text/88">
-                Fundamentação explícita, referências quando necessário e clareza sobre grau de
-                certeza médica.
-              </p>
-            </div>
-          </li>
-          <li class="flex gap-4">
-            <span class="mt-1 size-2 shrink-0 rounded-full bg-gold" aria-hidden="true" />
-            <div>
-              <p class="font-heading text-h4 font-semibold text-white">Agilidade no contato</p>
-              <p class="mt-2 text-text/88">
-                Primeiro contato via WhatsApp para encaminhar documentos e receber orientação sobre
-                próximos passos.
-              </p>
-            </div>
-          </li>
-          <li class="flex gap-4">
-            <span class="mt-1 size-2 shrink-0 rounded-full bg-gold" aria-hidden="true" />
-            <div>
-              <p class="font-heading text-h4 font-semibold text-white">
-                Foco em litígios complexos
-              </p>
-              <p class="mt-2 text-text/88">
-                Estrutura pensada para causas com múltiplos documentos, evolução clínica longa e
-                divergência de especialistas.
+                {{ p.text }}
               </p>
             </div>
           </li>

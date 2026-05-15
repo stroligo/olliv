@@ -6,10 +6,12 @@ withDefaults(
     href: string
     label: string
     variant?: Variant
+    /** Versão menor (nav compacta ao rolar) */
+    dense?: boolean
     /** ring-offset no fundo escuro (ex.: header / CTA final) */
     darkOffset?: boolean
   }>(),
-  { variant: 'primary', darkOffset: false }
+  { variant: 'primary', dense: false, darkOffset: false }
 )
 
 const variants: Record<Variant, string> = {
@@ -26,8 +28,11 @@ const variants: Record<Variant, string> = {
     :href="href"
     target="_blank"
     rel="noopener noreferrer"
-    class="inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 font-heading text-small font-semibold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:text-body"
+    class="inline-flex items-center justify-center rounded-full font-heading font-semibold uppercase tracking-wide transition-[color,background-color,box-shadow,padding,gap,font-size] duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
     :class="[
+      dense
+        ? 'gap-2 px-5 py-2.5 text-caption'
+        : 'gap-3 px-8 py-4 text-small md:text-body',
       variants[variant],
       darkOffset ? 'focus-visible:ring-offset-primary-dark' : 'focus-visible:ring-offset-off-white',
     ]"
@@ -36,7 +41,8 @@ const variants: Record<Variant, string> = {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      class="size-5 shrink-0"
+      class="shrink-0 transition-[width,height] duration-300 ease-out"
+      :class="dense ? 'size-4' : 'size-5'"
       aria-hidden="true"
     >
       <path

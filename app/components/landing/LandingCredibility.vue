@@ -1,8 +1,21 @@
+<script setup lang="ts">
+const { revealRoot, isVisible } = useRevealSection()
+</script>
+
 <template>
-  <section id="sobre" class="bg-off-white py-20 md:py-24" aria-labelledby="cred-heading">
+  <section
+    id="sobre"
+    ref="revealRoot"
+    class="bg-off-white py-20 md:py-24"
+    :class="{ 'landing-section--visible': isVisible }"
+    aria-labelledby="cred-heading"
+  >
     <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
       <div class="grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-14 xl:gap-16">
-        <figure class="mx-auto max-w-md lg:col-span-5 lg:mx-0 xl:sticky xl:top-28">
+        <figure
+          class="landing-reveal-item mx-auto max-w-md lg:col-span-5 lg:mx-0 xl:sticky xl:top-28"
+          :style="{ '--rv-i': 0 }"
+        >
           <div
             class="overflow-hidden rounded-premium border border-silver shadow-[0_20px_50px_rgba(14,27,51,0.1)] ring-2 ring-primary/5"
           >
@@ -23,7 +36,10 @@
           </figcaption>
         </figure>
 
-        <div class="lg:col-span-7">
+        <div
+          class="landing-reveal-item lg:col-span-7"
+          :style="{ '--rv-i': 1, '--rv-tx': '1.5rem' }"
+        >
           <p
             class="font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-dark"
           >

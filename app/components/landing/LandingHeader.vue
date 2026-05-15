@@ -87,15 +87,19 @@ const barHidden = computed(() => headerHidden.value && !open.value)
   <div class="landing-header-root">
     <div
       ref="shellRef"
-      class="fixed inset-x-0 top-0 z-50 overflow-hidden bg-white/80 backdrop-blur-lg transition-[transform,box-shadow] duration-300 ease-out"
+      class="fixed inset-x-0 top-0 z-50 overflow-hidden bg-white backdrop-blur-lg transition-[transform,box-shadow] duration-300 ease-out"
       :class="[
         barHidden ? '-translate-y-full shadow-none' : 'translate-y-0',
         scrolled ? 'shadow-[0_8px_30px_rgba(14,27,51,0.08)]' : 'shadow-none',
       ]"
     >
       <div
-        class="mx-auto flex max-w-content items-center justify-between gap-4 px-4 sm:px-6 lg:gap-8 lg:px-8 transition-[padding] duration-300 ease-out"
-        :class="compact ? 'py-2 md:py-2.5' : 'py-3.5 md:py-4'"
+        class="mx-auto flex max-w-content items-center justify-between transition-[padding,gap] duration-300 ease-out"
+        :class="
+          compact
+            ? 'gap-3 px-4 py-2 sm:px-5 lg:gap-5 lg:px-6 xl:gap-6'
+            : 'gap-4 px-4 py-3.5 sm:px-6 lg:gap-8 lg:px-8 md:py-4'
+        "
       >
         <a
           href="#inicio"
@@ -106,7 +110,11 @@ const barHidden = computed(() => headerHidden.value && !open.value)
             src="/images/logo_nobg.png"
             alt="OLLIV Perícia Médica"
             class="w-auto object-contain transition-[height] duration-300 ease-out"
-            :class="compact ? 'h-8 sm:h-9 md:h-[2.625rem]' : 'h-10 sm:h-11 md:h-[3.25rem]'"
+            :class="
+              compact
+                ? 'h-7 sm:h-8 md:h-[2.375rem]'
+                : 'h-10 sm:h-11 md:h-[3.25rem]'
+            "
             width="200"
             height="52"
             decoding="async"
@@ -114,22 +122,30 @@ const barHidden = computed(() => headerHidden.value && !open.value)
         </a>
 
         <nav
-          class="hidden items-center gap-8 font-body text-small font-medium text-primary lg:flex xl:gap-10"
+          class="hidden items-center font-body font-medium text-primary lg:flex"
+          :class="
+            compact ? 'gap-6 text-caption xl:gap-7' : 'gap-8 text-small xl:gap-10'
+          "
           aria-label="Principal"
         >
           <a
             v-for="l in links"
             :key="l.href"
             :href="l.href"
-            class="rounded-md py-1 transition-colors hover:text-gold-dark"
+            class="rounded-md transition-colors hover:text-gold-dark"
+            :class="compact ? 'py-0.5' : 'py-1'"
           >
             {{ l.label }}
           </a>
         </nav>
 
-        <div class="flex items-center gap-2 sm:gap-3">
+        <div
+          class="flex items-center"
+          :class="compact ? 'gap-1.5 sm:gap-2' : 'gap-2 sm:gap-3'"
+        >
           <LandingWhatsappButton
             class="hidden sm:inline-flex"
+            :dense="compact"
             :href="whatsappHref"
             label="Fale conosco"
             variant="primary"
@@ -137,7 +153,8 @@ const barHidden = computed(() => headerHidden.value && !open.value)
 
           <button
             type="button"
-            class="inline-flex rounded-full p-2 text-primary lg:hidden"
+            class="inline-flex shrink-0 rounded-full text-primary transition-[padding] duration-300 lg:hidden"
+            :class="compact ? 'p-1.5' : 'p-2'"
             :aria-expanded="open"
             aria-controls="mobile-menu"
             :aria-label="open ? 'Fechar menu' : 'Abrir menu'"
@@ -145,7 +162,8 @@ const barHidden = computed(() => headerHidden.value && !open.value)
           >
             <svg
               v-if="!open"
-              class="size-7"
+              class="transition-[width,height] duration-300"
+              :class="compact ? 'size-6' : 'size-7'"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
@@ -156,7 +174,8 @@ const barHidden = computed(() => headerHidden.value && !open.value)
             </svg>
             <svg
               v-else
-              class="size-7"
+              class="transition-[width,height] duration-300"
+              :class="compact ? 'size-6' : 'size-7'"
               fill="none"
               stroke="currentColor"
               stroke-width="2"

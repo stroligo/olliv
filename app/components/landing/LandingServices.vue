@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ClipboardList, FileText, GitCompareArrows, Scale, Search, Users } from '@lucide/vue'
 
+const { revealRoot, isVisible } = useRevealSection()
+
 const services = [
   {
     title: 'Análise de viabilidade',
@@ -36,9 +38,15 @@ const services = [
 </script>
 
 <template>
-  <section id="servicos" class="bg-off-white py-20 md:py-24" aria-labelledby="servicos-heading">
+  <section
+    id="servicos"
+    ref="revealRoot"
+    class="bg-off-white py-20 md:py-24"
+    :class="{ 'landing-section--visible': isVisible }"
+    aria-labelledby="servicos-heading"
+  >
     <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
+      <div class="landing-reveal-header max-w-3xl">
         <p class="font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-dark">
           Serviços
         </p>
@@ -51,11 +59,12 @@ const services = [
         </p>
       </div>
 
-      <ul class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <ul class="landing-reveal-stagger--alt mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <li
-          v-for="svc in services"
+          v-for="(svc, i) in services"
           :key="svc.title"
-          class="group relative flex flex-col overflow-hidden rounded-premium border border-silver/20 bg-white p-9 pb-10 shadow-[0_12px_44px_rgba(14,27,51,0.07)] ring-1 ring-primary/5 transition-all duration-300 hover:-translate-y-1 hover:border-gold-dark/30 hover:shadow-premium"
+          class="landing-reveal-item group relative flex flex-col overflow-hidden rounded-premium border border-silver/20 bg-white p-9 pb-10 shadow-[0_12px_44px_rgba(14,27,51,0.07)] ring-1 ring-primary/5 transition-shadow duration-300 hover:border-gold-dark/30 hover:shadow-premium"
+          :style="{ '--rv-i': i }"
         >
           <div
             class="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-gold-dark/85 to-transparent opacity-95"

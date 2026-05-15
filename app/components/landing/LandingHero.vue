@@ -5,16 +5,200 @@ const heroPortrait = {
   src: '/images/Messias_terno_nobg.png',
   alt: 'Dr. José Messias Oliveira Júnior, médico-legista, retrato profissional em terno.',
 }
+
+const heroSectionRef = ref<HTMLElement | null>(null)
+const spotlightEl = ref<HTMLElement | null>(null)
+
+/** Mesmo elemento `<section>`: scroll interno + parallax pelo mouse na área toda do hero. */
+let heroRootEl: HTMLElement | null = null
+
+/** Deslocamento em px vindos do mouse sobre o hero (só desktop / pointer fino). */
+let mouseOffsetX = 0
+let mouseOffsetY = 0
+
+/** Alvo imediato (scroll + mouse) vs. valor exibido (interpolação suave). */
+let targetParallaxX = 0
+let targetParallaxY = 0
+let currentParallaxX = 0
+let currentParallaxY = 0
+
+/** Quão rápido o holofote persegue o alvo (por frame ~60 Hz). Mouse sai → volta suave ao base do scroll. */
+const PARALLAX_LERP = 0.22
+/** Para de animar quando a diferença for ínfima (evita loop infinito). */
+const PARALLAX_EPS = 0.35
+
+/** rAF único para suavização. */
+let smoothingRaf = 0
+/** Primeira atualização sem ease (evita “slide” desde 0 ao carregar). */
+let parallaxDidInit = false
+
+function clamp(n: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, n))
+}
+
+function prefersReducedMotion() {
+  return (
+    typeof window.matchMedia !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+}
+
+/**
+ * Calcula o deslocamento desejado (scroll + contribuição do mouse).
+ */
+function computeTargetParallax(): { x: number; y: number } | null {
+  if (!heroSectionRef.value) return null
+
+  const pageY = window.scrollY ?? window.pageYOffset ?? 0
+  const heroScroll = heroSectionRef.value.scrollTop ?? 0
+  const heroRect = heroSectionRef.value.getBoundingClientRect()
+
+  let strength = 1
+  if (heroRect.bottom < 0) strength = Math.max(0, 1 + heroRect.bottom / (heroRect.height * 0.35))
+  else if (heroRect.top > window.innerHeight)
+    strength = Math.max(0, 1 - (heroRect.top - window.innerHeight) / window.innerHeight)
+
+  const blended = pageY + heroScroll * 0.65
+  const scrollYOff = clamp(blended * 0.16 * strength, -82, 82)
+  const scrollXOff = clamp(blended * 0.07 * strength, -40, 40)
+
+  const mx = clamp(mouseOffsetX * strength, -72, 72)
+  const my = clamp(mouseOffsetY * strength, -56, 56)
+
+  return {
+    x: clamp(scrollXOff + mx, -110, 110),
+    y: clamp(scrollYOff + my, -110, 110),
+  }
+}
+
+function applyParallaxCss(x: number, y: number) {
+  const spot = spotlightEl.value
+  if (!spot) return
+  spot.style.setProperty('--hero-spot-parallax-y', `${y}px`)
+  spot.style.setProperty('--hero-spot-parallax-x', `${x}px`)
+}
+
+function smoothTick() {
+  smoothingRaf = 0
+  const spot = spotlightEl.value
+  if (!spot || !heroSectionRef.value) return
+
+  if (prefersReducedMotion()) {
+    const t = computeTargetParallax()
+    if (t) applyParallaxCss(t.x, t.y)
+    return
+  }
+
+  const target = computeTargetParallax()
+  if (!target) return
+
+  targetParallaxX = target.x
+  targetParallaxY = target.y
+
+  currentParallaxX += (targetParallaxX - currentParallaxX) * PARALLAX_LERP
+  currentParallaxY += (targetParallaxY - currentParallaxY) * PARALLAX_LERP
+
+  applyParallaxCss(currentParallaxX, currentParallaxY)
+
+  const err = Math.hypot(targetParallaxX - currentParallaxX, targetParallaxY - currentParallaxY)
+  if (err > PARALLAX_EPS) {
+    smoothingRaf = requestAnimationFrame(smoothTick)
+  } else {
+    currentParallaxX = targetParallaxX
+    currentParallaxY = targetParallaxY
+    applyParallaxCss(currentParallaxX, currentParallaxY)
+  }
+}
+
+function bumpParallax() {
+  const spot = spotlightEl.value
+  if (!spot || !heroSectionRef.value) return
+
+  if (prefersReducedMotion()) {
+    if (smoothingRaf) {
+      cancelAnimationFrame(smoothingRaf)
+      smoothingRaf = 0
+    }
+    const t = computeTargetParallax()
+    if (t) applyParallaxCss(t.x, t.y)
+    return
+  }
+
+  const t = computeTargetParallax()
+  if (!t) return
+
+  targetParallaxX = t.x
+  targetParallaxY = t.y
+
+  if (!parallaxDidInit) {
+    currentParallaxX = targetParallaxX
+    currentParallaxY = targetParallaxY
+    applyParallaxCss(currentParallaxX, currentParallaxY)
+    parallaxDidInit = true
+    return
+  }
+
+  if (!smoothingRaf) smoothingRaf = requestAnimationFrame(smoothTick)
+}
+
+function onHeroPointerMove(e: PointerEvent) {
+  if (e.pointerType !== 'mouse') return
+  const hero = heroSectionRef.value
+  if (!hero) return
+  const r = hero.getBoundingClientRect()
+  if (r.width < 1 || r.height < 1) return
+  /** Posição normalizada em toda a seção do hero (-0.5 … 0.5 no centro). */
+  const nx = (e.clientX - r.left) / r.width - 0.5
+  const ny = (e.clientY - r.top) / r.height - 0.5
+  mouseOffsetX = nx * 2 * 70
+  mouseOffsetY = ny * 2 * 52
+  bumpParallax()
+}
+
+function onHeroPointerLeave() {
+  mouseOffsetX = 0
+  mouseOffsetY = 0
+  bumpParallax()
+}
+
+onMounted(() => {
+  heroRootEl = heroSectionRef.value
+
+  bumpParallax()
+  window.addEventListener('scroll', bumpParallax, { passive: true })
+  heroRootEl?.addEventListener('scroll', bumpParallax, { passive: true })
+
+  heroRootEl?.addEventListener('pointermove', onHeroPointerMove, { passive: true })
+  heroRootEl?.addEventListener('pointerleave', onHeroPointerLeave)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', bumpParallax)
+  heroRootEl?.removeEventListener('scroll', bumpParallax)
+
+  heroRootEl?.removeEventListener('pointermove', onHeroPointerMove)
+  heroRootEl?.removeEventListener('pointerleave', onHeroPointerLeave)
+  heroRootEl = null
+
+  mouseOffsetX = 0
+  mouseOffsetY = 0
+
+  if (smoothingRaf) {
+    cancelAnimationFrame(smoothingRaf)
+    smoothingRaf = 0
+  }
+})
 </script>
 
 <template>
   <section
     id="inicio"
-    class="hero-section relative flex max-h-[calc(100svh-6rem)] min-h-0 flex-col overflow-y-auto overflow-x-hidden bg-primary-dark text-text lg:overflow-hidden"
+    ref="heroSectionRef"
+    class="hero-section relative flex max-h-[calc(100svh-6rem)] min-h-0 flex-col overflow-y-auto overflow-x-hidden text-text lg:overflow-hidden"
     aria-labelledby="hero-heading"
   >
     <div
-      class="relative mx-auto flex min-h-0 w-full max-w-content flex-1 flex-col px-4 sm:px-6 lg:px-8 overflow-hidden md:overflow-visible"
+      class="relative z-10 mx-auto flex min-h-0 w-full max-w-content flex-1 flex-col px-4 sm:px-6 lg:px-8 overflow-hidden md:overflow-visible"
     >
       <div
         class="mx-auto grid min-h-0 w-full max-w-6xl flex-1 grid-cols-1 gap-6 sm:gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-8 xl:gap-10"
@@ -39,7 +223,7 @@ const heroPortrait = {
           </p>
 
           <div
-            class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-7 z-50 relative"
+            class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-7 z-40 relative"
           >
             <LandingWhatsappButton
               :href="whatsappHero"
@@ -65,7 +249,7 @@ const heroPortrait = {
             class="hero-portrait relative w-full max-w-[18rem] sm:max-w-xs lg:max-w-md xl:max-w-lg"
           >
             <div class="hero-portrait__stage relative flex w-full items-end justify-center">
-              <div class="hero-portrait__spotlight" aria-hidden="true" />
+              <div ref="spotlightEl" class="hero-portrait__spotlight" aria-hidden="true" />
               <div class="hero-portrait__frame relative z-10 w-full pt-8">
                 <img
                   :src="heroPortrait.src"
@@ -99,6 +283,57 @@ const heroPortrait = {
 </template>
 
 <style scoped>
+/**
+ * Hero: base azul + malha radial suave + granulado (noise) bem leve — acabamento moderno sem poluir legibilidade.
+ */
+.hero-section {
+  isolation: isolate;
+  background-color: var(--color-primary-dark);
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 110% 90% at 10% -5%,
+      color-mix(in srgb, var(--color-primary-light) 32%, transparent) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 85% 70% at 95% 95%,
+      color-mix(in srgb, var(--color-primary) 38%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 50% 115%,
+      color-mix(in srgb, var(--color-primary) 55%, transparent) 0%,
+      transparent 42%
+    );
+  opacity: 0.85;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-section::after {
+    opacity: 0.035;
+  }
+}
+
 .hero-title {
   font-size: clamp(1.625rem, 2.5vw + 0.85rem, 2.5rem);
   line-height: 1.14;
@@ -119,17 +354,23 @@ const heroPortrait = {
  * Blur alto evita “bola” visível; núcleo extra no ::before dá sensação de luz.
  */
 .hero-portrait__spotlight {
+  --hero-spot-parallax-x: 0px;
+  --hero-spot-parallax-y: 0px;
+
   position: absolute;
   left: 50%;
   top: 60%;
   z-index: 0;
   width: min(200%, 52rem);
   aspect-ratio: 1;
-  transform: translate(-50%, -50%);
+  transform: translate(
+    calc(-50% + var(--hero-spot-parallax-x)),
+    calc(-50% + var(--hero-spot-parallax-y))
+  );
   border-radius: 50%;
   pointer-events: none;
   filter: blur(72px);
-  will-change: filter;
+  will-change: transform;
   background: radial-gradient(
     ellipse 88% 82% at 50% 58%,
     var(--hero-spot-core) 0%,

@@ -1,38 +1,6 @@
-<template>
-  <section class="bg-white py-20 md:py-24" aria-labelledby="processo-heading">
-    <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <p class="font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-dark">
-          Processo
-        </p>
-        <h2 id="processo-heading" class="mt-3 font-heading text-h2 font-bold text-primary">
-          Do primeiro contato ao subsídio técnico pronto
-        </h2>
-        <p class="mt-5 font-body text-body-lg text-muted">
-          Um fluxo enxuto para você saber o que esperar — e para o caso receber a leitura médica
-          certa no tempo processual disponível.
-        </p>
-      </div>
-
-      <ol class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-        <li
-          v-for="(step, i) in steps"
-          :key="step.title"
-          class="relative rounded-premium border border-silver/75 bg-off-white p-7"
-        >
-          <span
-            class="mb-5 inline-flex size-11 items-center justify-center rounded-full bg-gold font-heading text-small font-bold text-primary-dark"
-            >{{ String(i + 1).padStart(2, '0') }}</span
-          >
-          <h3 class="font-heading text-h4 font-semibold text-primary">{{ step.title }}</h3>
-          <p class="mt-3 font-body text-small leading-relaxed text-muted">{{ step.text }}</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-</template>
-
 <script setup lang="ts">
+const { revealRoot, isVisible } = useRevealSection()
+
 const steps = [
   {
     title: 'Triagem rápida no WhatsApp',
@@ -52,3 +20,43 @@ const steps = [
   },
 ] as const
 </script>
+
+<template>
+  <section
+    ref="revealRoot"
+    class="bg-white py-20 md:py-24"
+    :class="{ 'landing-section--visible': isVisible }"
+    aria-labelledby="processo-heading"
+  >
+    <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
+      <div class="landing-reveal-header max-w-3xl">
+        <p class="font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-dark">
+          Processo
+        </p>
+        <h2 id="processo-heading" class="mt-3 font-heading text-h2 font-bold text-primary">
+          Do primeiro contato ao subsídio técnico pronto
+        </h2>
+        <p class="mt-5 font-body text-body-lg text-muted">
+          Um fluxo enxuto para você saber o que esperar — e para o caso receber a leitura médica
+          certa no tempo processual disponível.
+        </p>
+      </div>
+
+      <ol class="landing-reveal-stagger--alt mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <li
+          v-for="(step, i) in steps"
+          :key="step.title"
+          class="landing-reveal-item relative rounded-premium border border-silver/75 bg-off-white p-7"
+          :style="{ '--rv-i': i + 1 }"
+        >
+          <span
+            class="mb-5 inline-flex size-11 items-center justify-center rounded-full bg-gold font-heading text-small font-bold text-primary-dark"
+            >{{ String(i + 1).padStart(2, '0') }}</span
+          >
+          <h3 class="font-heading text-h4 font-semibold text-primary">{{ step.title }}</h3>
+          <p class="mt-3 font-body text-small leading-relaxed text-muted">{{ step.text }}</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+</template>
