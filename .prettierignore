@@ -1,0 +1,22 @@
+# Build
+.nuxt
+.output
+dist
+nitro.json
+
+# Design system (manter formatação manual)
+OLLIV_Design_System_Tailwind.md
+
+# Dependencies
+node_modules
+
+# Logs & cache
+*.log
+.cache
+
+# IDE
+.idea
+.vscode
+
+# OS
+.DS_Store
