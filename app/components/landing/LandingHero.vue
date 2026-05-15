@@ -261,20 +261,20 @@ onBeforeUnmount(() => {
                   fetchpriority="high"
                   decoding="async"
                 />
-                <figcaption class="hero-portrait__caption">
-                  <div class="hero-portrait__caption-box">
-                    <span
-                      class="block font-heading text-base font-semibold tracking-tight text-white sm:text-lg"
-                    >
-                      Dr. José Messias Oliveira Júnior
-                    </span>
-                    <span class="mt-1 block font-body text-caption leading-snug text-text/92">
-                      Médico-legista · assistência técnica médico-legal estratégica
-                    </span>
-                  </div>
-                </figcaption>
               </div>
             </div>
+            <figcaption class="hero-portrait__caption">
+              <div class="hero-portrait__caption-box">
+                <span
+                  class="block font-heading text-base font-semibold tracking-tight text-white sm:text-lg"
+                >
+                  Dr. José Messias Oliveira Júnior
+                </span>
+                <span class="mt-1 block font-body text-caption leading-snug text-text/92">
+                  Médico-legista · assistência técnica médico-legal estratégica
+                </span>
+              </div>
+            </figcaption>
           </figure>
         </div>
       </div>

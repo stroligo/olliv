@@ -63,7 +63,7 @@ const services = [
         <li
           v-for="(svc, i) in services"
           :key="svc.title"
-          class="landing-reveal-item group relative flex flex-col overflow-hidden rounded-premium border border-silver/20 bg-white p-9 pb-10 shadow-[0_12px_44px_rgba(14,27,51,0.07)] ring-1 ring-primary/5 transition-shadow duration-300 hover:border-gold-dark/30 hover:shadow-premium"
+          class="landing-reveal-item group relative flex flex-col overflow-hidden rounded-premium border border-silver/20 bg-white p-9 pb-10 shadow-[0_12px_44px_rgba(14,27,51,0.07)] ring-1 ring-primary/5 hover:border-gold-dark/30 hover:shadow-premium"
           :style="{ '--rv-i': i }"
         >
           <div

@@ -36,11 +36,13 @@ const items = [
   >
     <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
       <h2 id="trust-heading" class="sr-only">Benefícios em destaque</h2>
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 landing-reveal-stagger--alt">
+      <div
+        class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 landing-reveal-stagger--ltr"
+      >
         <article
           v-for="(item, i) in items"
           :key="item.title"
-          class="landing-reveal-item group flex flex-col rounded-premium border border-silver/10 bg-gradient-to-br from-white to-off-white px-7 pb-8 pt-9 shadow-[0_14px_40px_rgba(14,27,51,0.06)] transition-shadow duration-300 hover:border-gold-dark/35 hover:shadow-premium"
+          class="landing-reveal-item group flex flex-col rounded-premium border border-silver/10 bg-gradient-to-br from-white to-off-white px-7 pb-8 pt-9 shadow-[0_14px_40px_rgba(14,27,51,0.06)] hover:border-gold-dark/35 hover:shadow-premium"
           :style="{ '--rv-i': i }"
         >
           <div
