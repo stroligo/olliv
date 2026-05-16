@@ -63,6 +63,7 @@ O `postinstall` executa `nuxt prepare` (tipos ESLint gerados sob `.nuxt`).
 | `npm run generate`     | Geração estática (SSG), se aplicável à hospedagem |
 | `npm run generate:localhost-olliv-dist` | SSG para testar sob **`/olliv/dist/`** (localhost + caminho igual ao exemplo) |
 | `npm run preview:output` | Serve **`.output/public`** por HTTP (smoke‑test rápido) |
+| `npm run prompts:export` | Atualiza **`Prompts.md`** a partir do transcript Cursor |
 | `npm run lint`         | ESLint (`eslint.config.mjs`) |
 | `npm run lint:fix`     | ESLint com `--fix` |
 | `npm run format`       | Prettier (`--write`) |
