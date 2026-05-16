@@ -16,6 +16,7 @@ const links = [
   { href: '#servicos', label: 'Serviços' },
   { href: '#sobre', label: 'Sobre' },
   { href: '#diferenciais', label: 'Diferenciais' },
+  { href: '#faq', label: 'Dúvidas' },
   { href: '#contato', label: 'Contato' },
 ]
 
@@ -68,15 +69,33 @@ onMounted(() => {
   window.addEventListener('scroll', onScroll, { passive: true })
 })
 
-watch(open, () => {
+function onMenuEscape(e: KeyboardEvent) {
+  if (e.key === 'Escape' && open.value) {
+    e.preventDefault()
+    open.value = false
+  }
+}
+
+watch(open, (isOpen) => {
   headerHidden.value = false
   nextTick(measureShell)
+  if (!import.meta.client) return
+  document.body.style.overflow = isOpen ? 'hidden' : ''
+  if (isOpen) {
+    document.addEventListener('keydown', onMenuEscape)
+  } else {
+    document.removeEventListener('keydown', onMenuEscape)
+  }
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', onScroll)
   resizeObserver?.disconnect()
   if (rafId) cancelAnimationFrame(rafId)
+  if (import.meta.client) {
+    document.body.style.overflow = ''
+    document.removeEventListener('keydown', onMenuEscape)
+  }
 })
 
 const compact = computed(() => scrolled.value && !open.value)
@@ -126,7 +145,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
           :class="
             compact ? 'gap-6 text-caption xl:gap-7' : 'gap-8 text-small xl:gap-10'
           "
-          aria-label="Principal"
+          aria-label="Navegação principal"
         >
           <a
             v-for="l in links"
@@ -149,6 +168,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
             :href="whatsappHref"
             label="Fale conosco"
             variant="primary"
+            analytics-label="cta_header_nav"
           />
 
           <button
@@ -203,7 +223,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
         >
           <nav
             class="flex flex-col gap-4 font-body text-body font-medium text-primary"
-            aria-label="Mobile"
+            aria-label="Seções do site (menu móvel)"
           >
             <a
               v-for="l in links"
@@ -219,6 +239,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
               :href="whatsappHref"
               label="Fale no WhatsApp"
               variant="secondary"
+              analytics-label="cta_header_mobile"
             />
           </nav>
         </div>

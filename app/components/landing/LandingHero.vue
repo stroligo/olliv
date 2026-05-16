@@ -206,24 +206,30 @@ onBeforeUnmount(() => {
         <!-- Texto primeiro no mobile e à esquerda no desktop -->
         <div class="min-h-0 max-w-xl pt-10 md:pt-0 lg:self-center">
           <p
-            class="font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-light"
+            class="hero-copy-reveal font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-light"
+            style="--hc-i: 0"
           >
             Consultoria técnica premium
           </p>
           <h1
             id="hero-heading"
-            class="hero-title mt-2 font-heading font-bold tracking-tight text-white sm:mt-3"
+            class="hero-copy-reveal hero-title mt-2 font-heading font-bold tracking-tight text-white sm:mt-3"
+            style="--hc-i: 1"
           >
             Assistência técnica médica estratégica para decisões judiciais mais seguras.
           </h1>
-          <p class="mt-4 font-body text-body leading-relaxed text-text/93 sm:mt-5 sm:text-body-lg">
+          <p
+            class="hero-copy-reveal mt-4 font-body text-body leading-relaxed text-text/93 sm:mt-5 sm:text-body-lg"
+            style="--hc-i: 2"
+          >
             Pareceres médico-legais rigorosos, leitura clínica aplicada ao processo e apoio à
             estratégia — com transparência, ética e foco na sustentação técnica do seu objeto
             litigioso.
           </p>
 
           <div
-            class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-7 z-40 relative"
+            class="hero-copy-reveal mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-7 z-40 relative"
+            style="--hc-i: 3"
           >
             <LandingWhatsappButton
               :href="whatsappHero"
@@ -231,15 +237,18 @@ onBeforeUnmount(() => {
               variant="primary"
               dark-offset
               class="!py-3.5 md:!px-6 md:!py-3.5"
+              analytics-label="cta_hero"
             />
           </div>
 
           <ul
             class="mt-5 hidden md:flex flex-wrap gap-x-5 gap-y-1.5 pb-1 font-body text-caption text-text/75 sm:mt-6 sm:text-small"
           >
-            <li>Pareceres e assistência técnica</li>
-            <li>Estratégia processual alinhada</li>
-            <li>Brasília-DF • atendimento direcionado</li>
+            <li class="hero-copy-reveal" style="--hc-i: 4">Pareceres e assistência técnica</li>
+            <li class="hero-copy-reveal" style="--hc-i: 5">Estratégia processual alinhada</li>
+            <li class="hero-copy-reveal" style="--hc-i: 6">
+              Brasília-DF • atendimento direcionado
+            </li>
           </ul>
         </div>
 
@@ -250,20 +259,23 @@ onBeforeUnmount(() => {
           >
             <div class="hero-portrait__stage relative flex w-full items-end justify-center">
               <div ref="spotlightEl" class="hero-portrait__spotlight" aria-hidden="true" />
-              <div class="hero-portrait__frame relative z-10 w-full pt-8">
+              <div
+                class="hero-portrait__frame hero-portrait__reveal-img relative z-10 w-full pt-8"
+              >
                 <img
                   :src="heroPortrait.src"
                   :alt="heroPortrait.alt"
                   class="hero-portrait__img block w-full max-h-[min(42svh,calc(100svh-14rem))] object-contain object-bottom lg:max-h-[min(100%,calc(100svh-9.5rem))] pt-8 md:pt-0"
                   width="880"
                   height="1100"
+                  sizes="(max-width: 1023px) min(90vw, 18rem) min(42vw, 36rem)"
                   loading="eager"
                   fetchpriority="high"
                   decoding="async"
                 />
               </div>
             </div>
-            <figcaption class="hero-portrait__caption">
+            <figcaption class="hero-portrait__caption hero-portrait__reveal-caption">
               <div class="hero-portrait__caption-box">
                 <span
                   class="block font-heading text-base font-semibold tracking-tight text-white sm:text-lg"
@@ -339,6 +351,38 @@ onBeforeUnmount(() => {
   line-height: 1.14;
 }
 
+/** Coluna de texto: cada bloco entra com fade vindo de cima (escalonado por --hc-i). */
+@keyframes hero-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(-1.125rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-copy-reveal {
+  animation: hero-copy-in 0.78s cubic-bezier(0.22, 0.82, 0.12, 1)
+    calc(0.06s + var(--hc-i, 0) * 0.085s) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy-reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-portrait__reveal-img,
+  .hero-portrait__reveal-caption {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .hero-portrait__stage {
   min-height: min(40svh, calc(100svh - 14rem));
 }
@@ -402,6 +446,26 @@ onBeforeUnmount(() => {
 
 .hero-portrait__img {
   filter: drop-shadow(0 20px 36px rgba(2, 6, 23, 0.55));
+}
+
+/** Entrada do retrato: fade + deslize de baixo para cima */
+@keyframes hero-portrait-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(2.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-portrait__reveal-img {
+  animation: hero-portrait-reveal 1.15s cubic-bezier(0.22, 0.82, 0.12, 1) 0.18s both;
+}
+
+.hero-portrait__reveal-caption {
+  animation: hero-portrait-reveal 0.95s cubic-bezier(0.22, 0.82, 0.12, 1) 0.42s both;
 }
 
 /* Legenda sobreposta na base da foto */

@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
+
 const { revealRoot, isVisible } = useRevealSection()
+
+const sobreCasoHref = useWhatsAppHref(WHATSAPP_MESSAGES.aboutCase)
 </script>
 
 <template>
@@ -36,24 +40,32 @@ const { revealRoot, isVisible } = useRevealSection()
           </figcaption>
         </figure>
 
-        <div
-          class="landing-reveal-item lg:col-span-7"
-          :style="{ '--rv-i': 1, '--rv-tx': '1.5rem' }"
-        >
+        <div class="lg:col-span-7">
           <p
-            class="font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-dark"
+            class="cred-copy-reveal font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-dark"
+            style="--cred-i: 0"
           >
             Credibilidade
           </p>
-          <h2 id="cred-heading" class="mt-3 font-heading text-h2 font-bold text-primary">
+          <h2
+            id="cred-heading"
+            class="cred-copy-reveal mt-3 font-heading text-h2 font-bold text-primary"
+            style="--cred-i: 1"
+          >
             Quando a prova médica é o centro do caso, método importa tanto quanto reputação.
           </h2>
-          <p class="mt-6 font-body text-body-lg leading-relaxed text-muted">
+          <p
+            class="cred-copy-reveal mt-6 font-body text-body-lg leading-relaxed text-muted"
+            style="--cred-i: 2"
+          >
             Escritórios jurídicos parceiros usam parecer médico-legista quando precisam de um
             documento técnico que não venda promessas inexequíveis, mas também não deixe o juiz sem
             orientação suficiente. Nossa marca é o equilíbrio entre profundidade e didática.
           </p>
-          <p class="mt-5 font-body text-body leading-relaxed text-muted">
+          <p
+            class="cred-copy-reveal mt-5 font-body text-body leading-relaxed text-muted"
+            style="--cred-i: 3"
+          >
             A OLLIV posiciona a assistência médica dentro do plano estratégico da sua equipe
             jurídica: quesitos, produção de provas, audiências e recursos onde a doutrina médica faz
             diferença.
@@ -62,7 +74,10 @@ const { revealRoot, isVisible } = useRevealSection()
           <div
             class="mt-10 grid gap-6 rounded-premium border border-gold/25 bg-white p-8 shadow-[0_18px_45px_rgba(14,27,51,0.06)] sm:grid-cols-3 sm:gap-4"
           >
-            <div class="border-b border-silver/80 pb-6 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-4">
+            <div
+              class="cred-copy-reveal border-b border-silver/80 pb-6 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-4"
+              style="--cred-i: 4"
+            >
               <p
                 class="font-body text-caption font-semibold uppercase tracking-[0.12em] text-gold-dark"
               >
@@ -74,7 +89,8 @@ const { revealRoot, isVisible } = useRevealSection()
               </p>
             </div>
             <div
-              class="border-b border-silver/80 pb-6 sm:border-b-0 sm:border-r sm:pb-0 sm:px-2 sm:pr-4"
+              class="cred-copy-reveal border-b border-silver/80 pb-6 sm:border-b-0 sm:border-r sm:pb-0 sm:px-2 sm:pr-4"
+              style="--cred-i: 5"
             >
               <p
                 class="font-body text-caption font-semibold uppercase tracking-[0.12em] text-gold-dark"
@@ -85,7 +101,7 @@ const { revealRoot, isVisible } = useRevealSection()
                 Memoriais sob medida · Quesitos auxiliados
               </p>
             </div>
-            <div class="sm:pl-2">
+            <div class="cred-copy-reveal sm:pl-2" style="--cred-i: 6">
               <p
                 class="font-body text-caption font-semibold uppercase tracking-[0.12em] text-gold-dark"
               >
@@ -96,8 +112,53 @@ const { revealRoot, isVisible } = useRevealSection()
               </p>
             </div>
           </div>
+
+          <div class="cred-copy-reveal mt-10" style="--cred-i: 7">
+            <LandingWhatsappButton
+              :href="sobreCasoHref"
+              label="Falar sobre o meu caso"
+              variant="primary"
+              analytics-label="cta_credibilidade_caso"
+            />
+            <p class="mt-3 max-w-xl font-body text-caption leading-relaxed text-muted">
+              Retorno orientado à viabilidade técnica; em muitos contactos o primeiro retorno ocorre
+              em até 1 dia útil, conforme fila e complexidade.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+/** Mesma linguagem do hero: fade + deslize de cima; só corre com a secção visível (scroll). */
+@keyframes cred-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(-1.125rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cred-copy-reveal {
+  opacity: 0;
+  transform: translateY(-1.125rem);
+}
+
+section.landing-section--visible .cred-copy-reveal {
+  animation: cred-copy-in 0.78s cubic-bezier(0.22, 0.82, 0.12, 1)
+    calc(0.06s + var(--cred-i, 0) * 0.085s) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cred-copy-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+}
+</style>

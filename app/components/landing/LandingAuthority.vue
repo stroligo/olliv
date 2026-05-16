@@ -27,18 +27,18 @@ const tags = [
           médica pericial e na instrução.
         </p>
       </div>
-      <div
-        class="landing-reveal-stagger--alt mt-10 flex flex-wrap items-center justify-center gap-4 font-body text-caption font-semibold uppercase tracking-[0.16em] text-primary/70"
+      <ul
+        class="landing-reveal-stagger--alt mt-10 flex list-none flex-wrap items-center justify-center gap-4 p-0 font-body text-caption font-semibold uppercase tracking-[0.16em] text-primary/70"
       >
-        <span
+        <li
           v-for="(label, i) in tags"
           :key="label"
           class="landing-reveal-item rounded-full border border-silver px-6 py-2"
           :style="{ '--rv-i': i + 1 }"
         >
           {{ label }}
-        </span>
-      </div>
+        </li>
+      </ul>
     </div>
   </section>
 </template>

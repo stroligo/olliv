@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
+
 const { revealRoot, isVisible } = useRevealSection()
+
+const triagemHref = useWhatsAppHref(WHATSAPP_MESSAGES.triagem)
 
 const points = [
   {
@@ -51,15 +55,24 @@ const points = [
           >
             <span class="mt-1 size-2 shrink-0 rounded-full bg-gold" aria-hidden="true" />
             <div>
-              <p class="font-heading text-h4 font-semibold text-white">
+              <h3 class="font-heading text-h4 font-semibold text-white">
                 {{ p.title }}
-              </p>
+              </h3>
               <p class="mt-2 text-text/88">
                 {{ p.text }}
               </p>
             </div>
           </li>
         </ul>
+      </div>
+      <div class="mt-14 flex flex-col items-center sm:items-start">
+        <LandingWhatsappButton
+          :href="triagemHref"
+          label="Experimentar a triagem no WhatsApp"
+          variant="outline"
+          :dark-offset="true"
+          analytics-label="cta_diferenciais_triagem"
+        />
       </div>
     </div>
   </section>

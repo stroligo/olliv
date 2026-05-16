@@ -14,3 +14,34 @@
     @apply bg-off-white font-body text-text-dark antialiased;
   }
 }
+
+/**
+ * Skip link (WCAG 2.4.1): oculto até receber foco pelo teclado.
+ */
+@layer components {
+  .skip-to-main {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .skip-to-main:focus {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    @apply rounded-md border-2 border-gold bg-white px-4 py-3 font-body text-caption font-semibold text-primary shadow-premium outline-none ring-2 ring-gold-dark ring-offset-2 ring-offset-white;
+  }
+}

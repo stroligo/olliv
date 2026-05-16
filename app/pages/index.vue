@@ -1,16 +1,49 @@
 <script setup lang="ts">
 /**
- * Meta alinhada a `app.head` em `nuxt.config.ts`, com OG/Twitter/canonical quando
- * `runtimeConfig.public.siteUrl` está definida (variável `NUXT_PUBLIC_SITE_URL`).
+ * Crédito — desenvolvimento da página
+ * Gabriel Stroligo
+ * https://www.linkedin.com/in/gabrielstroligo/
  */
-const seoTitle = 'OLLIV Perícia Médica — Assistência técnica médico-legal'
-const seoDescription =
-  'Assistência técnica médica estratégica para processos judiciais complexos. Pareceres médico-legais em Brasília-DF.'
+import { defineAsyncComponent } from 'vue'
+import { OLLIV_WHATSAPP_E164 } from '~/composables/useWhatsApp'
+import { OLLIV_CONTACT_EMAIL, SITE_SEO } from '~/constants/siteMarketing'
 
-const config = useRuntimeConfig()
-const raw = config.public.siteUrl
-const siteUrl =
-  typeof raw === 'string' && raw.length > 0 ? raw.replace(/\/$/, '') : ''
+/** Code-splitting: secções abaixo da dobra em chunks separados (menos JS inicial no cliente). */
+const LandingAuthority = defineAsyncComponent(
+  () => import('~/components/landing/LandingAuthority.vue'),
+)
+const LandingServices = defineAsyncComponent(
+  () => import('~/components/landing/LandingServices.vue'),
+)
+const LandingDifferentials = defineAsyncComponent(
+  () => import('~/components/landing/LandingDifferentials.vue'),
+)
+const LandingProcess = defineAsyncComponent(
+  () => import('~/components/landing/LandingProcess.vue'),
+)
+const LandingCredibility = defineAsyncComponent(
+  () => import('~/components/landing/LandingCredibility.vue'),
+)
+const LandingFaq = defineAsyncComponent(() => import('~/components/landing/LandingFaq.vue'))
+const LandingCtaBanner = defineAsyncComponent(
+  () => import('~/components/landing/LandingCtaBanner.vue'),
+)
+const LandingFooter = defineAsyncComponent(() => import('~/components/landing/LandingFooter.vue'))
+const LandingWhatsappFab = defineAsyncComponent(
+  () => import('~/components/landing/LandingWhatsappFab.vue'),
+)
+
+/**
+ * OG/Twitter/canonical/JSON-LD quando `runtimeConfig.public.siteUrl` existe
+ * (por defeito `SITE_ORIGIN` em `siteMarketing`; override com `NUXT_PUBLIC_SITE_URL`).
+ */
+const seoTitle = SITE_SEO.title
+const seoDescription = SITE_SEO.description
+
+const OLLIV_EMAIL = OLLIV_CONTACT_EMAIL
+const phoneE164 = `+${OLLIV_WHATSAPP_E164}`
+
+const siteUrl = usePublicSiteUrl()
 const canonicalHref = siteUrl ? `${siteUrl}/` : null
 /** Enquanto não houver imagem OG 1200×630 própria, usa ícone alto (preferível a logo cortado). */
 const ogAbsolute = siteUrl ? `${siteUrl}/apple-touch-icon.png` : undefined
@@ -18,32 +51,67 @@ const ogAbsolute = siteUrl ? `${siteUrl}/apple-touch-icon.png` : undefined
 useSeoMeta({
   title: seoTitle,
   description: seoDescription,
+  /** Explícito para previews em buscadores / redes */
+  robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
   ogLocale: 'pt_BR',
   ogType: 'website',
   ogSiteName: 'OLLIV Perícia Médica',
   ogTitle: seoTitle,
   ogDescription: seoDescription,
   twitterCard: 'summary_large_image',
+  twitterTitle: seoTitle,
+  twitterDescription: seoDescription,
   ...(canonicalHref && ogAbsolute
     ? { ogUrl: canonicalHref, ogImage: ogAbsolute, twitterImage: ogAbsolute }
     : {}),
 })
 
-const orgLdInner = computed(() =>
-  JSON.stringify({
+const serviceLd = {
+  '@type': 'ProfessionalService' as const,
+  name: 'OLLIV Perícia Médica',
+  description: seoDescription,
+  serviceType: 'Assistência técnica médico-legal',
+  telephone: phoneE164,
+  email: OLLIV_EMAIL,
+  areaServed: {
+    '@type': 'AdministrativeArea' as const,
+    name: 'Distrito Federal',
+    containedInPlace: { '@type': 'Country' as const, name: 'Brasil' },
+  },
+  address: {
+    '@type': 'PostalAddress' as const,
+    addressLocality: 'Brasília',
+    addressRegion: 'DF',
+    addressCountry: 'BR',
+  },
+}
+
+const orgLdInner = computed(() => {
+  if (!siteUrl) {
+    return JSON.stringify({
+      '@context': 'https://schema.org',
+      ...serviceLd,
+    })
+  }
+  return JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
-    name: 'OLLIV Perícia Médica',
-    description: seoDescription,
-    serviceType: 'Assistência técnica médico-legal',
-    areaServed: {
-      '@type': 'AdministrativeArea',
-      name: 'Distrito Federal',
-      containedInPlace: { '@type': 'Country', name: 'Brasil' },
-    },
-    ...(siteUrl ? { url: siteUrl } : {}),
-  }),
-)
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
+        url: `${siteUrl}/`,
+        name: 'OLLIV Perícia Médica',
+        inLanguage: 'pt-BR',
+        publisher: { '@id': `${siteUrl}/#business` },
+      },
+      {
+        ...serviceLd,
+        '@id': `${siteUrl}/#business`,
+        url: siteUrl,
+      },
+    ],
+  })
+})
 
 useHead(() => ({
   link: canonicalHref ? [{ rel: 'canonical', href: canonicalHref }] : [],
@@ -60,7 +128,7 @@ useHead(() => ({
 <template>
   <div class="min-h-screen bg-off-white">
     <LandingHeader />
-    <main>
+    <main id="conteudo-principal" tabindex="-1">
       <LandingHero />
       <LandingTrustBar />
       <LandingAuthority />
@@ -68,6 +136,7 @@ useHead(() => ({
       <LandingDifferentials />
       <LandingProcess />
       <LandingCredibility />
+      <LandingFaq />
       <LandingCtaBanner />
     </main>
     <LandingFooter />

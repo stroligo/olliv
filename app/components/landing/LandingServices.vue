@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { ClipboardList, FileText, GitCompareArrows, Scale, Search, Users } from '@lucide/vue'
+import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
+import { pushWhatsAppCtaClick, useWhatsAppHref, useWhatsAppHrefForService } from '~/composables/useWhatsApp'
 
 const { revealRoot, isVisible } = useRevealSection()
+
+const orientacaoRapidaHref = useWhatsAppHref(WHATSAPP_MESSAGES.afterServices)
+
+function hrefForService(title: string) {
+  return useWhatsAppHrefForService(title)
+}
 
 const services = [
   {
@@ -82,8 +90,38 @@ const services = [
           </div>
           <h3 class="font-heading text-h4 font-semibold text-primary">{{ svc.title }}</h3>
           <p class="mt-3.5 grow font-body text-small leading-relaxed text-muted">{{ svc.text }}</p>
+          <a
+            :href="hrefForService(svc.title)"
+            class="mt-5 inline-flex font-heading text-caption font-semibold uppercase tracking-[0.12em] text-gold-dark underline-offset-2 transition-colors hover:text-gold-dark hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-dark focus-visible:ring-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+            @click="pushWhatsAppCtaClick(`servico:${svc.title}`)"
+          >
+            WhatsApp — {{ svc.title
+            }}<span class="sr-only">. Abre numa nova janela.</span>
+          </a>
         </li>
       </ul>
+
+      <div
+        class="landing-reveal-header mx-auto mt-16 max-w-2xl px-1 text-center pb-2"
+        aria-labelledby="servicos-cta-heading"
+      >
+        <p
+          id="servicos-cta-heading"
+          class="font-body text-body font-medium leading-snug text-primary"
+        >
+          Próximo passo: uma conversa objetiva para alinhar expectativas, prazos e viabilidade
+          técnica do seu caso.
+        </p>
+        <LandingWhatsappButton
+          class="mt-6 justify-center sm:inline-flex"
+          :href="orientacaoRapidaHref"
+          label="Pedir orientação rápida"
+          variant="primary"
+          analytics-label="cta_apos_servicos"
+        />
+      </div>
     </div>
   </section>
 </template>

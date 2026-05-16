@@ -58,6 +58,23 @@ Referência oficial de marca e Tailwind está em **`OLLIV_Design_System_Tailwind
 
 Consulte a [documentação de deploy do Nuxt](https://nuxt.com/docs/getting-started/deployment). Após `npm run build`, a saída fica em `.output/` (preset padrão `node-server`).
 
+### SEO (recomendado em produção)
+
+1. **`NUXT_PUBLIC_SITE_URL`** pode ficar omitida na produção: o defeito já é `https://www.ollivpericias.com.br` (`SITE_ORIGIN` em `siteMarketing`). Use a variável para **staging** ou `http://localhost:3000` se quiser testar URLs absolutas no dev.
+2. Copie `.env.example` para `.env` quando precisar de override local; em hospedagem, configure a variável só se o host não for o domínio oficial.
+3. **`public/sitemap.xml`** e **`robots.txt`** apontam para `https://www.ollivpericias.com.br`. Se o deploy usar outro host, atualize esses ficheiros (ou gere sitemap/robots dinamicamente no futuro).
+4. Para compartilhamento social ideal, adicione uma imagem **Open Graph 1200×630** em `public/` e referencie em `useSeoMeta` (`ogImage` / `twitterImage`) em `app/pages/index.vue`.
+
+### Desempenho (implementado no projeto)
+
+- **@nuxt/fonts** — remove o stylesheet bloqueante do Google Fonts; fontes em woff2 no build, com pesos usados (Inter / Montserrat).
+- **Code-splitting** — secções abaixo da dobra e footer/FAB carregados como chunks assíncronos em `app/pages/index.vue`.
+- **`routeRules`** — `cache-control` longo para `/images/**`, `/_nuxt/**` e ícones (ajuste se o HTML for servido por CDN com outra política).
+- **Hero** — `sizes` no retrato LCP para o browser dimensionar melhor o recurso.
+- **DevTools** — desligados no build de produção (`NODE_ENV=production`).
+
+Próximo nível (opcional): gerar **WebP/AVIF** das fotos em `public/images/`, `@nuxt/image`, auditoria **Lighthouse** / **PageSpeed** em deploy, e **subset** `latin` em `@nuxt/fonts` se quiser menos arquivos de fonte.
+
 ## Links úteis
 
 - [Documentação Nuxt](https://nuxt.com/docs)

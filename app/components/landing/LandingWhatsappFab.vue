@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { pushWhatsAppCtaClick } from '~/composables/useWhatsApp'
+
 const href = useWhatsAppHref()
 </script>
 
@@ -9,6 +11,7 @@ const href = useWhatsAppHref()
     rel="noopener noreferrer"
     class="fixed bottom-5 right-5 z-40 flex size-14 items-center justify-center rounded-full bg-gold text-primary-dark shadow-premium transition-transform hover:scale-105 hover:bg-gold-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-dark focus-visible:ring-offset-2 focus-visible:ring-offset-off-white md:bottom-8 md:right-8 md:size-16"
     aria-label="Abrir conversa no WhatsApp com a OLLIV Perícia Médica"
+    @click="pushWhatsAppCtaClick('cta_fab')"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

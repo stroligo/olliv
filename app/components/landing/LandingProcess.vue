@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
+
 const { revealRoot, isVisible } = useRevealSection()
+
+const processTriagemHref = useWhatsAppHref(WHATSAPP_MESSAGES.processTriagem)
 
 const steps = [
   {
@@ -57,6 +61,19 @@ const steps = [
           <p class="mt-3 font-body text-small leading-relaxed text-muted">{{ step.text }}</p>
         </li>
       </ol>
+      <div class="mt-14 max-w-3xl border-t border-silver/40 pt-10">
+        <p class="font-body text-body text-muted">
+          O primeiro contacto pode ser pelo WhatsApp: descreva a situação e, na medida do possível,
+          anexe o essencial para retorno objetivo.
+        </p>
+        <LandingWhatsappButton
+          class="mt-6 sm:inline-flex"
+          :href="processTriagemHref"
+          label="Iniciar pela triagem no WhatsApp"
+          variant="primary"
+          analytics-label="cta_processo_triagem"
+        />
+      </div>
     </div>
   </section>
 </template>
