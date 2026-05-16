@@ -173,7 +173,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
 
           <button
             type="button"
-            class="inline-flex shrink-0 rounded-full text-primary transition-[padding] duration-300 lg:hidden"
+            class="inline-flex shrink-0 rounded-full text-primary transition-[transform,padding] duration-300 ease-out hover:scale-[0.94] active:scale-[0.88] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 lg:hidden"
             :class="compact ? 'p-1.5' : 'p-2'"
             :aria-expanded="open"
             aria-controls="mobile-menu"

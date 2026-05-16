@@ -34,7 +34,7 @@ const variants: Record<Variant, string> = {
     :href="href"
     target="_blank"
     rel="noopener noreferrer"
-    class="inline-flex items-center justify-center rounded-full font-heading font-semibold uppercase tracking-wide transition-[color,background-color,box-shadow,padding,gap,font-size] duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+    class="inline-flex items-center justify-center rounded-full font-heading font-semibold uppercase tracking-wide transition-[color,background-color,box-shadow,padding,gap,font-size,transform] duration-300 ease-out hover:scale-[0.985] active:scale-[0.96] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
     :class="[
       dense
         ? 'gap-2 px-5 py-2.5 text-caption'

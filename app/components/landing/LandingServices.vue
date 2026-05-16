@@ -92,7 +92,7 @@ const services = [
           <p class="mt-3.5 grow font-body text-small leading-relaxed text-muted">{{ svc.text }}</p>
           <a
             :href="hrefForService(svc.title)"
-            class="mt-5 inline-flex font-heading text-caption font-semibold uppercase tracking-[0.12em] text-gold-dark underline-offset-2 transition-colors hover:text-gold-dark hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-dark focus-visible:ring-offset-2"
+            class="mt-5 inline-flex items-center font-heading text-caption font-semibold uppercase tracking-[0.12em] text-gold-dark underline-offset-2 transition-[color,transform] duration-200 ease-out hover:scale-[0.985] active:scale-[0.96] hover:text-gold-dark hover:underline motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-dark focus-visible:ring-offset-2"
             target="_blank"
             rel="noopener noreferrer"
             @click="pushWhatsAppCtaClick(`servico:${svc.title}`)"

@@ -83,7 +83,7 @@ const items = [
           <button
             :id="faqButtonId(idx)"
             type="button"
-            class="faq-trigger flex w-full cursor-pointer items-start justify-between gap-3 text-left font-heading text-h4 font-semibold tracking-tight text-primary outline-none focus-visible:ring-2 focus-visible:ring-gold-dark focus-visible:ring-offset-2"
+            class="olliv-btn-press faq-trigger flex w-full cursor-pointer items-start justify-between gap-3 text-left font-heading text-h4 font-semibold tracking-tight text-primary outline-none focus-visible:ring-2 focus-visible:ring-gold-dark focus-visible:ring-offset-2"
             :aria-expanded="isFaqOpen(item.q)"
             :aria-controls="faqPanelId(idx)"
             @click="toggleFaq(item.q)"

@@ -44,4 +44,31 @@
     white-space: normal;
     @apply rounded-md border-2 border-gold bg-white px-4 py-3 font-body text-caption font-semibold text-primary shadow-premium outline-none ring-2 ring-gold-dark ring-offset-2 ring-offset-white;
   }
+
+  /**
+   * Micro-feedback em controlos clicáveis (hover ligeiramente menor).
+   * Não combinar com `transition-*` no mesmo elemento que já defina `transform` — duplicar a propriedade.
+   */
+  .olliv-btn-press {
+    @apply transition-transform duration-200 ease-out;
+  }
+
+  .olliv-btn-press:hover {
+    @apply scale-[0.98];
+  }
+
+  .olliv-btn-press:active {
+    @apply scale-[0.94];
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .olliv-btn-press {
+      transition-duration: 0.01ms;
+    }
+
+    .olliv-btn-press:hover,
+    .olliv-btn-press:active {
+      transform: none;
+    }
+  }
 }
