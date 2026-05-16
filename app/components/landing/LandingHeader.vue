@@ -3,6 +3,8 @@ const open = ref(false)
 
 const whatsappHref = useWhatsAppHref()
 
+const publicPath = usePublicPath()
+
 const shellRef = ref<HTMLElement | null>(null)
 const spacerHeight = ref(4.75 * 16) /* ~76px inicial até medição */
 const scrolled = ref(false)
@@ -126,14 +128,10 @@ const barHidden = computed(() => headerHidden.value && !open.value)
           @click="closeMenu"
         >
           <img
-            src="/images/logo_nobg.png"
+            :src="publicPath('/images/logo_nobg.png')"
             alt="OLLIV Perícia Médica"
             class="w-auto object-contain transition-[height] duration-300 ease-out"
-            :class="
-              compact
-                ? 'h-7 sm:h-8 md:h-[2.375rem]'
-                : 'h-10 sm:h-11 md:h-[3.25rem]'
-            "
+            :class="compact ? 'h-7 sm:h-8 md:h-[2.375rem]' : 'h-10 sm:h-11 md:h-[3.25rem]'"
             width="200"
             height="52"
             decoding="async"
@@ -142,9 +140,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
 
         <nav
           class="hidden items-center font-body font-medium text-primary lg:flex"
-          :class="
-            compact ? 'gap-6 text-caption xl:gap-7' : 'gap-8 text-small xl:gap-10'
-          "
+          :class="compact ? 'gap-6 text-caption xl:gap-7' : 'gap-8 text-small xl:gap-10'"
           aria-label="Navegação principal"
         >
           <a
@@ -158,10 +154,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
           </a>
         </nav>
 
-        <div
-          class="flex items-center"
-          :class="compact ? 'gap-1.5 sm:gap-2' : 'gap-2 sm:gap-3'"
-        >
+        <div class="flex items-center" :class="compact ? 'gap-1.5 sm:gap-2' : 'gap-2 sm:gap-3'">
           <LandingWhatsappButton
             class="hidden sm:inline-flex"
             :dense="compact"

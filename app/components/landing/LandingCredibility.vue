@@ -4,6 +4,8 @@ import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
 const { revealRoot, isVisible } = useRevealSection()
 
 const sobreCasoHref = useWhatsAppHref(WHATSAPP_MESSAGES.aboutCase)
+
+const publicPath = usePublicPath()
 </script>
 
 <template>
@@ -24,7 +26,7 @@ const sobreCasoHref = useWhatsAppHref(WHATSAPP_MESSAGES.aboutCase)
             class="overflow-hidden rounded-premium border border-silver shadow-[0_20px_50px_rgba(14,27,51,0.1)] ring-2 ring-primary/5"
           >
             <img
-              src="/images/Messias_jaleco.jpeg"
+              :src="publicPath('/images/Messias_jaleco.jpeg')"
               alt="Dr. José Messias Oliveira Júnior em ambiente hospitalar — jaleco, contexto técnico e clínico."
               class="aspect-[4/5] h-auto w-full object-cover object-top"
               width="720"

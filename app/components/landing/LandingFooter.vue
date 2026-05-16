@@ -76,7 +76,9 @@ const wa = useWhatsAppHref()
           Como trabalhamos
         </NuxtLink>
         <span aria-hidden="true" class="text-text/35">·</span>
-        <a class="transition-colors hover:text-gold-light" href="/#faq">Dúvidas frequentes</a>
+        <NuxtLink class="transition-colors hover:text-gold-light" to="/#faq">
+          Dúvidas frequentes
+        </NuxtLink>
       </nav>
       <p class="mt-3 text-center font-body text-caption text-text/45">
         Desenvolvido por:

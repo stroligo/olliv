@@ -1,10 +1,11 @@
 <script setup lang="ts">
 const whatsappHero = useWhatsAppHref()
 
-const heroPortrait = {
-  src: '/images/Messias_terno_nobg.png',
-  alt: 'Dr. José Messias Oliveira Júnior, médico-legista, retrato profissional em terno.',
-}
+const publicPath = usePublicPath()
+
+const heroPortraitSrc = computed(() => publicPath('/images/Messias_terno_nobg.png'))
+const heroPortraitAlt =
+  'Dr. José Messias Oliveira Júnior, médico-legista, retrato profissional em terno.'
 
 const heroSectionRef = ref<HTMLElement | null>(null)
 const spotlightEl = ref<HTMLElement | null>(null)
@@ -259,12 +260,10 @@ onBeforeUnmount(() => {
           >
             <div class="hero-portrait__stage relative flex w-full items-end justify-center">
               <div ref="spotlightEl" class="hero-portrait__spotlight" aria-hidden="true" />
-              <div
-                class="hero-portrait__frame hero-portrait__reveal-img relative z-10 w-full pt-8"
-              >
+              <div class="hero-portrait__frame hero-portrait__reveal-img relative z-10 w-full pt-8">
                 <img
-                  :src="heroPortrait.src"
-                  :alt="heroPortrait.alt"
+                  :src="heroPortraitSrc"
+                  :alt="heroPortraitAlt"
                   class="hero-portrait__img block w-full max-h-[min(42svh,calc(100svh-14rem))] object-contain object-bottom lg:max-h-[min(100%,calc(100svh-9.5rem))] pt-8 md:pt-0"
                   width="880"
                   height="1100"

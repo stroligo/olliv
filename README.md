@@ -10,6 +10,8 @@ Site **institucional / landing page** da **OLLIV Perícia Médica** (assistênci
 - **E-mail oficial:** `contato@ollivpericias.com.br` (constante `OLLIV_CONTACT_EMAIL` em `app/constants/siteMarketing.ts`)
 - Textos institucionais em **`/politica-de-privacidade`** e **`/como-trabalhamos`** são **esboços** — devem ser validados pela equipe jurídica/clínica da OLLIV antes da versão "oficial".
 
+- **Subpasta do domínio** (deploy em `/cliente/`, `/blog/`, etc.): antes do `npm run generate`/`build`, defina **`NUXT_APP_BASE_URL`** (`/cliente/` com barras) e **`NUXT_PUBLIC_SITE_URL`** com **o mesmo segmento no URL** (`https://exemplo.com/cliente`). Ver `.env.example`.
+
 ---
 
 ## Stack

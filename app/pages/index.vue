@@ -10,27 +10,25 @@ import { OLLIV_CONTACT_EMAIL, SITE_SEO } from '~/constants/siteMarketing'
 
 /** Code-splitting: secções abaixo da dobra em chunks separados (menos JS inicial no cliente). */
 const LandingAuthority = defineAsyncComponent(
-  () => import('~/components/landing/LandingAuthority.vue'),
+  () => import('~/components/landing/LandingAuthority.vue')
 )
 const LandingServices = defineAsyncComponent(
-  () => import('~/components/landing/LandingServices.vue'),
+  () => import('~/components/landing/LandingServices.vue')
 )
 const LandingDifferentials = defineAsyncComponent(
-  () => import('~/components/landing/LandingDifferentials.vue'),
+  () => import('~/components/landing/LandingDifferentials.vue')
 )
-const LandingProcess = defineAsyncComponent(
-  () => import('~/components/landing/LandingProcess.vue'),
-)
+const LandingProcess = defineAsyncComponent(() => import('~/components/landing/LandingProcess.vue'))
 const LandingCredibility = defineAsyncComponent(
-  () => import('~/components/landing/LandingCredibility.vue'),
+  () => import('~/components/landing/LandingCredibility.vue')
 )
 const LandingFaq = defineAsyncComponent(() => import('~/components/landing/LandingFaq.vue'))
 const LandingCtaBanner = defineAsyncComponent(
-  () => import('~/components/landing/LandingCtaBanner.vue'),
+  () => import('~/components/landing/LandingCtaBanner.vue')
 )
 const LandingFooter = defineAsyncComponent(() => import('~/components/landing/LandingFooter.vue'))
 const LandingWhatsappFab = defineAsyncComponent(
-  () => import('~/components/landing/LandingWhatsappFab.vue'),
+  () => import('~/components/landing/LandingWhatsappFab.vue')
 )
 
 /**

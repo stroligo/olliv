@@ -1,5 +1,23 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { joinURL } from 'ufo'
+
 import { SITE_ORIGIN, SITE_SEO } from './app/constants/siteMarketing'
+
+/**
+ * Produção OLLIV (`https://www.ollivpericias.com.br/`) → raiz do domínio: omitir `NUXT_APP_BASE_URL` (fica `/`).
+ * Só definir variável para preview/staging ou outro deploy em subpasta (`/cliente/`, barras inicial e terminal).
+ */
+function normalizeNUXTAppBase(raw: string | undefined): string {
+  const s = typeof raw === 'string' ? raw.trim() : ''
+  if (s === '' || s === '/') return '/'
+  const slug = joinURL('/', s.replace(/^\/+|\/+$/g, ''))
+  return slug.endsWith('/') ? slug : `${slug}/`
+}
+
+const appBaseURL = normalizeNUXTAppBase(process.env.NUXT_APP_BASE_URL)
+const appBaseWithoutTrailingSlash = appBaseURL === '/' ? '' : appBaseURL.replace(/\/+$/, '')
+const rootedPath = (path: string) =>
+  appBaseWithoutTrailingSlash === '' ? path : `${appBaseWithoutTrailingSlash}${path}`
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -19,22 +37,22 @@ export default defineNuxtConfig({
    * Ajuste se servir HTML estático com outro CDN por cima.
    */
   routeRules: {
-    '/images/**': {
+    [rootedPath('/images/**')]: {
       headers: { 'cache-control': 'public, max-age=31536000, immutable' },
     },
-    '/_nuxt/**': {
+    [rootedPath('/_nuxt/**')]: {
       headers: { 'cache-control': 'public, max-age=31536000, immutable' },
     },
-    '/favicon.ico': {
+    [rootedPath('/favicon.ico')]: {
       headers: { 'cache-control': 'public, max-age=604800' },
     },
-    '/favicon-16x16.png': {
+    [rootedPath('/favicon-16x16.png')]: {
       headers: { 'cache-control': 'public, max-age=604800' },
     },
-    '/favicon-32x32.png': {
+    [rootedPath('/favicon-32x32.png')]: {
       headers: { 'cache-control': 'public, max-age=604800' },
     },
-    '/apple-touch-icon.png': {
+    [rootedPath('/apple-touch-icon.png')]: {
       headers: { 'cache-control': 'public, max-age=604800' },
     },
   },
@@ -63,7 +81,20 @@ export default defineNuxtConfig({
     },
   },
 
+  /**
+   * `modulePreload.polyfill: false` — desliga o trecho que o Nuxt injeta no entry e que, com
+   * sourcemaps ativos, dispara WARN do Vite sobre o plugin `nuxt:module-preload-polyfill`.
+   * Os targets do build já são modernos (Vite default “baseline widely available”); o impacto é
+   * mínimo para um site institucional. Se precisares IE/legado, remove este bloco ou reverte.
+   */
+  vite: {
+    build: {
+      modulePreload: { polyfill: false },
+    },
+  },
+
   app: {
+    baseURL: appBaseURL,
     head: {
       title: SITE_SEO.title,
       htmlAttrs: { lang: 'pt-BR' },
@@ -76,10 +107,28 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#0E1B33' },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'icon', type: 'image/png', href: '/favicon-32x32.png', sizes: '32x32' },
-        { rel: 'icon', type: 'image/png', href: '/favicon-16x16.png', sizes: '16x16' },
-        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: joinURL(appBaseURL, 'favicon.ico'),
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: joinURL(appBaseURL, 'favicon-32x32.png'),
+          sizes: '32x32',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: joinURL(appBaseURL, 'favicon-16x16.png'),
+          sizes: '16x16',
+        },
+        {
+          rel: 'apple-touch-icon',
+          href: joinURL(appBaseURL, 'apple-touch-icon.png'),
+          sizes: '180x180',
+        },
       ],
     },
   },
