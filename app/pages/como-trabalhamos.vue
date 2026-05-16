@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { OLLIV_CONTACT_EMAIL } from '~/constants/siteMarketing'
+
 useSeoMeta({
   title: 'Como trabalhamos — OLLIV Perícia Médica',
   description:
@@ -50,6 +52,10 @@ useHead(() => ({
         <p class="font-body text-body leading-relaxed text-muted">
           Quesitos, memoriais e impugnações técnicas integram-se ao plano da equipa jurídica. Prazos
           e formato de entrega são acordados após triagem inicial e compreensão do objeto processual.
+        </p>
+        <p class="pt-10 font-body text-body leading-relaxed text-muted">
+          Contacto geral por e-mail:<br />
+          <a class="font-semibold text-gold-dark underline-offset-2 hover:underline" :href="`mailto:${OLLIV_CONTACT_EMAIL}`">{{ OLLIV_CONTACT_EMAIL }}</a>
         </p>
         <p class="pt-10">
           <NuxtLink

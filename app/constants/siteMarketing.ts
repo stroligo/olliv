@@ -6,6 +6,7 @@ export const SITE_SEO = {
     'Assistência técnica médica estratégica para processos judiciais complexos. Pareceres médico-legais em Brasília-DF.',
 } as const
 
+/** E-mail institucional oficial (contacto geral). Única fonte no projeto — importar onde for necessário. */
 export const OLLIV_CONTACT_EMAIL = 'contato@ollivpericias.com.br' as const
 
 /** Domínio público oficial (HTTPS, sem barra terminal) — alinhado a runtimeConfig.public.siteUrl. */

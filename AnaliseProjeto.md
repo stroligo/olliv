@@ -10,7 +10,7 @@ Este documento descreve o **estado atual** do site institucional em Nuxt/Vue (`a
 |---------|---------------------------|
 | **Stack** | Nuxt 4, Vue 3, Tailwind CSS, Lucide (`@lucide/vue`), `@nuxt/fonts` |
 | **Páginas** | Home **SPA montada por seções** em `index.vue`; páginas leves **`/politica-de-privacidade`** e **`/como-trabalhamos`** (textos esboço — revisão jurídica/clínica antes de comunicação final) |
-| **Contato principal** | Links `wa.me` em `composables/useWhatsApp.ts`; mensagens em camadas definidas em `constants/siteMarketing.ts` (`WHATSAPP_MESSAGES`, assunto SEO em `SITE_SEO`) |
+| **Contato principal** | WhatsApp: links `wa.me` em `composables/useWhatsApp.ts`; mensagens em `constants/siteMarketing.ts` (`WHATSAPP_MESSAGES`, assunto SEO em `SITE_SEO`). **E-mail:** `contato@ollivpericias.com.br` (`OLLIV_CONTACT_EMAIL`) |
 | **Domínio e SEO off-page** | URL canônica oficial: **`https://www.ollivpericias.com.br`**, exposta como **`SITE_ORIGIN`** e como padrão de `runtimeConfig.public.siteUrl` no `nuxt.config.ts`. Override opcional: **`NUXT_PUBLIC_SITE_URL`** (staging ou testes locais com URL absolutas) |
 | **SEO na home** | `SITE_SEO` + `useSeoMeta`; canonical; Open Graph/Twitter quando há `siteUrl` (via `usePublicSiteUrl`); **`og:image` provisória** usa `apple-touch-icon` até haver arte OG 1200×630 própria; JSON-LD **`@graph`** (`WebSite` + `ProfessionalService`) quando há URL base |
 | **SEO institucionais** | `useSeoMeta` em cada página + **`<link rel="canonical">`** por rota usando a mesma base pública |

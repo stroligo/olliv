@@ -1,10 +1,33 @@
-# OLLIV Perícia Médica — Landing (Nuxt)
+# OLLIV Perícia Médica — Site institucional (Nuxt)
 
-Site institucional / landing page da **OLLIV Perícia Médica**, com foco em **CTAs para WhatsApp**, design tokens alinhados ao guia em `OLLIV_Design_System_Tailwind.md` e stack **Nuxt 4 + Vue 3 + Tailwind CSS**.
+Site **institucional / landing page** da **OLLIV Perícia Médica** (assistência técnica médico-legal em Brasília-DF): foco em **conversão para WhatsApp**, copy e SEO reunidos num único codebase, tokens de marca alinhados a **`OLLIV_Design_System_Tailwind.md`**.
+
+---
+
+## Produção
+
+- **Domínio oficial:** [https://www.ollivpericias.com.br](https://www.ollivpericias.com.br)
+- **E-mail oficial:** `contato@ollivpericias.com.br` (constante `OLLIV_CONTACT_EMAIL` em `app/constants/siteMarketing.ts`)
+- Textos institucionais em **`/politica-de-privacidade`** e **`/como-trabalhamos`** são **esboços** — devem ser validados pela equipe jurídica/clínica da OLLIV antes da versão "oficial".
+
+---
+
+## Stack
+
+| Área              | Escolha |
+|-------------------|---------|
+| Framework         | **Nuxt 4** (preset Nitro por defeito **node-server**) |
+| UI                | **Vue 3** (Composition API, `<script setup>`) |
+| Estilização       | **Tailwind CSS** (`@nuxtjs/tailwindcss`) |
+| Ícones            | **Lucide** (`@lucide/vue`) |
+| Fontes            | **@nuxt/fonts** (Inter / Montserrat, Google Fonts, servidas em build sem stylesheet bloqueante) |
+| Qualidade de código | **ESLint** (`@nuxt/eslint`) + **Prettier** |
+
+---
 
 ## Requisitos
 
-- Node.js 18+ (recomendado: LTS atual)
+- **Node.js 18+** (recomendado: versão **LTS** atual)
 
 ## Instalação
 
@@ -12,22 +35,22 @@ Site institucional / landing page da **OLLIV Perícia Médica**, com foco em **C
 npm install
 ```
 
-O `postinstall` roda `nuxt prepare` (gera tipos e config do ESLint em `.nuxt`).
+O `postinstall` executa `nuxt prepare` (tipos ESLint gerados sob `.nuxt`).
 
 ## Scripts
 
-| Comando                | Descrição                         |
-| ---------------------- | --------------------------------- |
-| `npm run dev`          | Servidor de desenvolvimento       |
-| `npm run build`        | Build de produção                 |
-| `npm run preview`      | Preview do build localmente       |
-| `npm run generate`     | Site estático (SSG), se aplicável |
-| `npm run lint`         | ESLint (`eslint.config.mjs`)      |
-| `npm run lint:fix`     | ESLint com `--fix`                |
-| `npm run format`       | Prettier (formata o projeto)      |
-| `npm run format:check` | Verifica formatação Prettier      |
+| Comando                | Descrição |
+|------------------------|-----------|
+| `npm run dev`          | Servidor de desenvolvimento |
+| `npm run build`        | Build de produção (`node .output/server/index.mjs`) |
+| `npm run preview`      | Preview local do último build |
+| `npm run generate`     | Geração estática (SSG), se aplicável à hospedagem |
+| `npm run lint`         | ESLint (`eslint.config.mjs`) |
+| `npm run lint:fix`     | ESLint com `--fix` |
+| `npm run format`       | Prettier (`--write`) |
+| `npm run format:check` | Verifica formatação Prettier |
 
-## Desenvolvimento
+### Desenvolvimento local
 
 ```bash
 npm run dev
@@ -35,47 +58,125 @@ npm run dev
 
 Abra [http://localhost:3000](http://localhost:3000).
 
-## Estrutura principal
+---
 
-- **`app/pages/index.vue`** — Montagem da landing (seções).
-- **`app/components/landing/`** — Blocos da página (hero, serviços, CTA, footer, FAB WhatsApp, etc.).
-- **`app/composables/useWhatsApp.ts`** — Número E.164 e URLs `wa.me`; ajuste aqui mensagens e telefone.
-- **`app/assets/css/tokens.css`** — Variáveis CSS (cores, tipo, escalas).
-- **`app/assets/css/main.css`** — Entrada Tailwind + layer base.
-- **`tailwind.config.ts`** — Tokens mapeados para classes utilitárias.
-- **`public/`** — Arquivos estáticos (ex.: imagens em `public/images/`).
+## Visão funcional da landing (`/`)
 
-## Design system
+Fluxo montado em `app/pages/index.vue` (seções abaixo da dobra carregadas com **`defineAsyncComponent`** para reduzir JS inicial):
 
-Referência oficial de marca e Tailwind está em **`OLLIV_Design_System_Tailwind.md`**. Esse arquivo está no **`.prettierignore`** para não ser reformatado automaticamente.
+1. **LandingHeader** — navegação por âncoras (`#inicio`, `#servicos`, `#sobre`, `#diferenciais`, `#faq`, `#contato`) + CTA WhatsApp.
+2. **LandingHero**
+3. **LandingTrustBar**
+4. **LandingAuthority**
+5. **LandingServices** — cards com WhatsApp contextual por tema + faixa intermediária pós‑serviços.
+6. **LandingDifferentials**
+7. **LandingProcess**
+8. **LandingCredibility**
+9. **LandingFaq** — acordeão acessível (botões + estado Vue, animação de altura).
+10. **LandingCtaBanner** — dois CTAs (conversa institucional / documentos‑processos) + aviso dados/LGPD com link para política.
+11. **LandingFooter** — contactos e ligações institucionais.
+12. **LandingWhatsappFab** — botão fixo WhatsApp global.
+
+Componentes partilhados em `app/components/landing/` incluem **`WhatsappButton.vue`**.
+
+---
+
+## Conversão e medição
+
+- URLs WhatsApp geradas por **`useWhatsApp.ts`** (`wa.me`), mensagens partilhadas em **`constants/siteMarketing.ts`** (`WHATSAPP_MESSAGES`).
+- **`pushWhatsAppCtaClick(cta_label)`** envia **`window.dataLayer.push({ event: 'whatsapp_cta', cta_label })`** para uso com **GTM / GA4** em produção.
+- Rótulos por contexto (hero, FAQ, FAB, por serviço, etc.) estão distribuídos nos componentes correspondentes (`analytics-label` / chamadas ao `pushWhatsAppCtaClick`).
+
+---
+
+## Constantes e composables úteis
+
+| Ficheiro | Função |
+|----------|--------|
+| `app/constants/siteMarketing.ts` | `SITE_SEO`, `SITE_ORIGIN`, **`contato@ollivpericias.com.br`** (`OLLIV_CONTACT_EMAIL`), mensagens pré‑WhatsApp (`WHATSAPP_MESSAGES`) |
+| `app/composables/useWhatsApp.ts` | número E.164, `useWhatsAppHref`, `useWhatsAppHrefForService`, `pushWhatsAppCtaClick` |
+| `app/composables/usePublicSiteUrl.ts` | URL base pública normalizada (canonical / JSON‑LD) |
+| `app/composables/useRevealSection.ts` | revelação ao scroll em secções (respeita `prefers-reduced-motion`) |
+
+---
+
+## Rotas institucionais
+
+| Caminho | Ficheiro | Nota |
+|---------|----------|------|
+| `/` | `app/pages/index.vue` | Landing principal |
+| `/politica-de-privacidade` | `app/pages/politica-de-privacidade.vue` | Revisão jurídica recomendada antes de comunicação oficial |
+| `/como-trabalhamos` | `app/pages/como-trabalhamos.vue` | Idem |
+
+---
+
+## CSS e marca
+
+| Ficheiro | Conteúdo |
+|----------|----------|
+| `app/assets/css/tokens.css` | Variáveis de cor, tipo e espaçamento |
+| `app/assets/css/main.css` | Entrada Tailwind + camadas (`@layer`) |
+| `app/assets/css/reveal.css` | Animações de entrada «reveal» (`.landing-section--visible`) |
+| `tailwind.config.ts` | Mapeamento de tokens para utilities |
+| `OLLIV_Design_System_Tailwind.md` | Guia oficial de marca (está em **`.prettierignore`**) |
+
+---
+
+## Configuração (Nuxt)
+
+- **`nuxt.config.ts`** — `runtimeConfig.public.siteUrl` (valor por defeito = `SITE_ORIGIN`), `routeRules` de cache para estáticos, módulos **fonts**, **Tailwind**, **ESLint**, `app.head` (título e meta alinhados a `SITE_SEO`).
+- Ícones e tema: referências em `app.head` (`favicon.ico`, PNGs, `apple-touch-icon.png`, `theme-color`).
+
+---
+
+## Variáveis de ambiente
+
+Ver **`.env.example`**.
+
+- **`NUXT_PUBLIC_SITE_URL`** — opcional: ignorar em produção se o domínio for o oficial (já definido em código). Use para **staging** ou testes com URL absolutas no dev (`http://localhost:3000`).
+
+---
+
+## SEO e índices
+
+1. Canonical, Open Graph, Twitter Cards e JSON‑LD **WebSite** + **ProfessionalService** quando há URL base configurada (`usePublicSiteUrl` / `SITE_ORIGIN`).
+2. **`public/robots.txt`** e **`public/sitemap.xml`** apontam para `https://www.ollivpericias.com.br`. Altere se o deploy usar outro host.
+3. **Imagem OG 1200×630:** ainda não obrigatória no código — `og:image` provisória na home pode usar ícone até existir arte final (ver `app/pages/index.vue`).
+
+Para uma leitura consolidada da narrativa, conversões e checklist de melhorias, ver **`AnaliseProjeto.md`** (orientação interna).
+
+---
 
 ## Qualidade de código
 
-- **ESLint:** `@nuxt/eslint` + `eslint-config-prettier`.
-- **Prettier:** `.prettierrc` na raiz.
+- ESLint com **`@nuxt/eslint`** e **`eslint-config-prettier`**.
+- Prettier: **`.prettierrc`** na raiz.
 
-## Deploy / produção
+---
 
-Consulte a [documentação de deploy do Nuxt](https://nuxt.com/docs/getting-started/deployment). Após `npm run build`, a saída fica em `.output/` (preset padrão `node-server`).
+## Deploy
 
-### SEO (recomendado em produção)
+Após `npm run build`, a saída fica em **`.output/`** (servidor Node por defeito). Consulte a [documentação de deploy do Nuxt](https://nuxt.com/docs/getting-started/deployment).
 
-1. **`NUXT_PUBLIC_SITE_URL`** pode ficar omitida na produção: o defeito já é `https://www.ollivpericias.com.br` (`SITE_ORIGIN` em `siteMarketing`). Use a variável para **staging** ou `http://localhost:3000` se quiser testar URLs absolutas no dev.
-2. Copie `.env.example` para `.env` quando precisar de override local; em hospedagem, configure a variável só se o host não for o domínio oficial.
-3. **`public/sitemap.xml`** e **`robots.txt`** apontam para `https://www.ollivpericias.com.br`. Se o deploy usar outro host, atualize esses ficheiros (ou gere sitemap/robots dinamicamente no futuro).
-4. Para compartilhamento social ideal, adicione uma imagem **Open Graph 1200×630** em `public/` e referencie em `useSeoMeta` (`ogImage` / `twitterImage`) em `app/pages/index.vue`.
+### Desempenho (já considerado no projeto)
 
-### Desempenho (implementado no projeto)
+- Fontes servidas via **@nuxt/fonts** (sem stylesheet bloqueante do Google Fonts no runtime).
+- **Code-splitting** de secções pesadas na home.
+- **`routeRules`** com `cache-control` longo para `/images/**`, `/_nuxt/**` e ícones (ajuste se o HTML for servido por CDN com política diferente).
+- **DevTools** Nuxt desligados no build de produção.
 
-- **@nuxt/fonts** — remove o stylesheet bloqueante do Google Fonts; fontes em woff2 no build, com pesos usados (Inter / Montserrat).
-- **Code-splitting** — secções abaixo da dobra e footer/FAB carregados como chunks assíncronos em `app/pages/index.vue`.
-- **`routeRules`** — `cache-control` longo para `/images/**`, `/_nuxt/**` e ícones (ajuste se o HTML for servido por CDN com outra política).
-- **Hero** — `sizes` no retrato LCP para o browser dimensionar melhor o recurso.
-- **DevTools** — desligados no build de produção (`NODE_ENV=production`).
+**Opcional:** WebP/AVIF de imagens, `@nuxt/image`, auditoria Lighthouse/PageSpeed pós‑deploy, subset `latin` em `@nuxt/fonts`.
 
-Próximo nível (opcional): gerar **WebP/AVIF** das fotos em `public/images/`, `@nuxt/image`, auditoria **Lighthouse** / **PageSpeed** em deploy, e **subset** `latin` em `@nuxt/fonts` se quiser menos arquivos de fonte.
+---
 
-## Links úteis
+## Créditos
+
+- **Cliente / marca:** **OLLIV Perícia Médica**.
+- **Criação e desenvolvimento do site (implementação técnica, UI e estrutura):** **[Gabriel Stroligo](https://www.linkedin.com/in/gabrielstroligo/)**.
+
+---
+
+## Ligações úteis
 
 - [Documentação Nuxt](https://nuxt.com/docs)
 - [Tailwind CSS](https://tailwindcss.com/docs)
