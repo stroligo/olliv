@@ -12,6 +12,20 @@ Site **institucional / landing page** da **OLLIV Perícia Médica** (assistênci
 
 - **Subpasta do domínio** (deploy em `/cliente/`, `/blog/`, etc.): antes do `npm run generate`/`build`, defina **`NUXT_APP_BASE_URL`** (`/cliente/` com barras) e **`NUXT_PUBLIC_SITE_URL`** com **o mesmo segmento no URL** (`https://exemplo.com/cliente`). Ver `.env.example`.
 
+#### Testar em subpasta (ex.: `http://localhost/olliv/dist/`)
+
+1. Gere com essa mesma base (o HTML passa a apontar para `/olliv/dist/_nuxt/…`, etc.):
+
+   ```bash
+   npm run generate:localhost-olliv-dist
+   ```
+
+2. O Apache (ou Sites) deve **servir fisicamente** o conteúdo de **`.output/public`** no URL `/olliv/dist/`. Ou seja, no disco isso deve resultar algo como **`…/htdocs/olliv/dist/index.html`** (pasta **`_nuxt`**, **`images`**, páginas, etc., **dentro de `dist/`**, copiadas a partir do que está em `.output/public`).
+
+3. Se apenas copiaste **`index.html`** para `dist/` **sem** a pasta **`_nuxt`** e o restante, vai dar **404** — faz deploy do **conjunto inteiro** gerado.
+
+4. Produção oficial na raiz do domínio continua `npm run generate` sem `NUXT_APP_BASE_URL`. Para só validar o build antes do deploy, **`npm run preview:output`** (HTTP estático sem subpasta).
+
 ---
 
 ## Stack
@@ -47,6 +61,8 @@ O `postinstall` executa `nuxt prepare` (tipos ESLint gerados sob `.nuxt`).
 | `npm run build`        | Build de produção (`node .output/server/index.mjs`) |
 | `npm run preview`      | Preview local do último build |
 | `npm run generate`     | Geração estática (SSG), se aplicável à hospedagem |
+| `npm run generate:localhost-olliv-dist` | SSG para testar sob **`/olliv/dist/`** (localhost + caminho igual ao exemplo) |
+| `npm run preview:output` | Serve **`.output/public`** por HTTP (smoke‑test rápido) |
 | `npm run lint`         | ESLint (`eslint.config.mjs`) |
 | `npm run lint:fix`     | ESLint com `--fix` |
 | `npm run format`       | Prettier (`--write`) |
