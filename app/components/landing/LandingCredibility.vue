@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { PERITO_CURRICULO } from '~/constants/peritoCurriculo'
 import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
 
 const { revealRoot, isVisible } = useRevealSection()
+/** Bloco do currículo no fim da secção — observer próprio (secção alta + sticky). */
+const { revealRoot: cvRevealRoot, isVisible: cvVisible } = useRevealSection()
+const curriculo = PERITO_CURRICULO
 
 const sobreCasoHref = useWhatsAppHref(WHATSAPP_MESSAGES.aboutCase)
 
@@ -18,31 +22,37 @@ const publicPath = usePublicPath()
   >
     <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
       <div class="grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-14 xl:gap-16">
-        <figure
-          class="landing-reveal-item mx-auto max-w-md lg:col-span-5 lg:mx-0 xl:sticky xl:top-28"
-          :style="{ '--rv-i': 0 }"
+        <div
+          class="h-full flex items-center justify-center landing-reveal-item mx-auto max-w-md lg:col-span-5 lg:mx-0"
         >
-          <div
-            class="overflow-hidden rounded-premium border border-silver shadow-[0_20px_50px_rgba(14,27,51,0.1)] ring-2 ring-primary/5"
-          >
-            <img
-              :src="publicPath('/images/Messias_jaleco.jpeg')"
-              alt="Dr. José Messias Oliveira Júnior em ambiente hospitalar — jaleco, contexto técnico e clínico."
-              class="aspect-[4/5] h-auto w-full object-cover object-top"
-              width="720"
-              height="900"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <figcaption class="mt-4 font-body text-small leading-relaxed text-muted">
-            <span class="font-medium text-primary">Medicina aplicada aos autos</span>
-            — vínculo explícito entre prática assistencial racional e exigências da instrução
-            pericial nos tribunais.
-          </figcaption>
-        </figure>
+          <figure class="" :style="{ '--rv-i': 0 }">
+            <div
+              class="overflow-hidden rounded-premium border border-silver shadow-[0_20px_50px_rgba(14,27,51,0.1)] ring-2 ring-primary/5"
+            >
+              <img
+                :src="publicPath('/images/Messias_jaleco.jpeg')"
+                alt="Dr. José Messias Oliveira Júnior em ambiente hospitalar — jaleco, contexto técnico e clínico."
+                class="aspect-[4/5] h-auto w-full object-cover object-top"
+                width="720"
+                height="900"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <figcaption class="mt-4 text-center lg:text-left">
+              <p class="font-heading text-h4 font-bold leading-snug text-primary">
+                {{ curriculo.nome }}
+              </p>
+              <p
+                class="mt-1 font-body text-caption font-semibold uppercase tracking-[0.14em] text-gold-dark"
+              >
+                {{ curriculo.cargo }}
+              </p>
+            </figcaption>
+          </figure>
+        </div>
 
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-7 lg:sticky lg:top-28 lg:self-start">
           <p
             class="cred-copy-reveal font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-dark"
             style="--cred-i: 0"
@@ -51,27 +61,38 @@ const publicPath = usePublicPath()
           </p>
           <h2
             id="cred-heading"
-            class="cred-copy-reveal mt-3 font-heading text-h2 font-bold text-primary"
+            class="cred-copy-reveal mt-3 max-w-xl font-heading text-h2 font-bold leading-tight text-primary md:max-w-2xl"
             style="--cred-i: 1"
           >
-            Quando a prova médica é o centro do caso, método importa tanto quanto reputação.
+            Quando a prova médica decide, método e reputação contam.
           </h2>
-          <p
-            class="cred-copy-reveal mt-6 font-body text-body-lg leading-relaxed text-muted"
+          <ul
+            class="cred-copy-reveal mt-6 list-none space-y-4 p-0 font-body text-body leading-relaxed text-muted"
             style="--cred-i: 2"
           >
-            Escritórios jurídicos parceiros usam parecer médico-legista quando precisam de um
-            documento técnico que não venda promessas inexequíveis, mas também não deixe o juiz sem
-            orientação suficiente. Nossa marca é o equilíbrio entre profundidade e didática.
-          </p>
-          <p
-            class="cred-copy-reveal mt-5 font-body text-body leading-relaxed text-muted"
-            style="--cred-i: 3"
-          >
-            A OLLIV posiciona a assistência médica dentro do plano estratégico da sua equipe
-            jurídica: quesitos, produção de provas, audiências e recursos onde a doutrina médica faz
-            diferença.
-          </p>
+            <li class="flex gap-3">
+              <span class="mt-2 size-1.5 shrink-0 rounded-full bg-gold-dark" aria-hidden="true" />
+              <span>
+                <strong class="font-semibold text-primary">Parecer técnico equilibrado</strong> —
+                profundidade científica sem promessas inexequíveis e com orientação clara para o
+                juiz.
+              </span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-2 size-1.5 shrink-0 rounded-full bg-gold-dark" aria-hidden="true" />
+              <span>
+                <strong class="font-semibold text-primary">Didática institucional</strong> —
+                linguagem acessível a magistrados e equipes jurídicas, sem perder rigor.
+              </span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-2 size-1.5 shrink-0 rounded-full bg-gold-dark" aria-hidden="true" />
+              <span>
+                <strong class="font-semibold text-primary">Assistência no plano processual</strong>
+                — quesitos, produção de provas, audiências e recursos onde a medicina faz diferença.
+              </span>
+            </li>
+          </ul>
 
           <div
             class="mt-10 grid gap-6 rounded-premium border border-gold/25 bg-white p-8 shadow-[0_18px_45px_rgba(14,27,51,0.06)] sm:grid-cols-3 sm:gap-4"
@@ -129,6 +150,59 @@ const publicPath = usePublicPath()
           </div>
         </div>
       </div>
+
+      <div
+        ref="cvRevealRoot"
+        class="cred-cv-block mx-auto mt-12 max-w-content lg:mt-14"
+        :class="{ 'cred-cv-block--visible': cvVisible }"
+      >
+        <p
+          class="cred-cv-reveal font-body text-caption font-semibold uppercase tracking-[0.18em] text-gold-dark"
+          style="--cred-cv-i: 0"
+        >
+          {{ curriculo.secaoEyebrow }}
+        </p>
+        <h2
+          class="cred-cv-reveal mt-3 font-heading text-h2 font-bold text-primary md:text-[1.75rem] md:leading-tight"
+          style="--cred-cv-i: 1"
+        >
+          {{ curriculo.secaoTitulo }}
+        </h2>
+
+        <div
+          class="cred-cv-reveal cred-mini-cv mt-6 rounded-premium border border-silver/80 bg-white p-5 shadow-[0_12px_32px_rgba(14,27,51,0.06)] sm:mt-8 sm:p-6 lg:p-8"
+          style="--cred-cv-i: 2"
+        >
+          <p class="font-body text-small leading-relaxed text-muted lg:max-w-4xl">
+            {{ curriculo.perfil }}
+          </p>
+
+          <div
+            class="mt-6 grid gap-6 border-t border-silver/70 pt-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 lg:pt-8"
+          >
+            <div v-for="secao in curriculo.secoes" :key="secao.id">
+              <h3
+                class="font-body text-caption font-semibold uppercase tracking-[0.12em] text-gold-dark"
+              >
+                {{ secao.titulo }}
+              </h3>
+              <ul class="mt-2.5 list-none space-y-2 p-0">
+                <li
+                  v-for="(item, idx) in secao.itens"
+                  :key="idx"
+                  class="flex gap-2.5 font-body text-small leading-relaxed text-muted"
+                >
+                  <span
+                    class="mt-2 size-1 shrink-0 rounded-full bg-gold-dark/80"
+                    aria-hidden="true"
+                  />
+                  <span>{{ item }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -156,8 +230,20 @@ section.landing-section--visible .cred-copy-reveal {
     calc(0.06s + var(--cred-i, 0) * 0.085s) both;
 }
 
+/** Currículo: revela quando o bloco entra na viewport (não depende do topo da secção). */
+.cred-cv-reveal {
+  opacity: 0;
+  transform: translateY(1.125rem);
+}
+
+.cred-cv-block--visible .cred-cv-reveal {
+  animation: cred-copy-in 0.78s cubic-bezier(0.22, 0.82, 0.12, 1)
+    calc(0.06s + var(--cred-cv-i, 0) * 0.1s) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .cred-copy-reveal {
+  .cred-copy-reveal,
+  .cred-cv-reveal {
     opacity: 1;
     transform: none;
     animation: none !important;

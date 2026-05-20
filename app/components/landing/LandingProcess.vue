@@ -1,28 +1,38 @@
 <script setup lang="ts">
+import type { Component } from 'vue'
+import { ClipboardList, FileCheck, MessageCircle, Stethoscope } from '@lucide/vue'
 import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
 
 const { revealRoot, isVisible } = useRevealSection()
 
 const processTriagemHref = useWhatsAppHref(WHATSAPP_MESSAGES.processTriagem)
 
-const steps = [
+const steps: ReadonlyArray<{
+  title: string
+  text: string
+  icon: Component
+}> = [
   {
     title: 'Triagem rápida no WhatsApp',
     text: 'Você descreve a situação, anexa o essencial na medida possível e recebe retorno objetivo sobre enquadramento da demanda.',
+    icon: MessageCircle,
   },
   {
     title: 'Leitura clínico-jurídica',
     text: 'Mapeamos fatos médicos decisivos e lacunas na documentação — incluindo o que um perito deve esclarecer.',
+    icon: Stethoscope,
   },
   {
     title: 'Proposta de entrega técnica',
     text: 'Definimos formato (memorial breve ou amplo), prazos e prioridades de acordo com sua estratégia no processo.',
+    icon: ClipboardList,
   },
   {
     title: 'Entrega para instrução',
     text: 'Síntese redacional pronta para integrar suas peças, quesitos, impugnação ou recurso especializado da prova médica.',
+    icon: FileCheck,
   },
-] as const
+]
 </script>
 
 <template>
@@ -53,10 +63,17 @@ const steps = [
           class="landing-reveal-item relative rounded-premium border border-silver/75 bg-off-white p-7"
           :style="{ '--rv-i': i + 1 }"
         >
-          <span
-            class="mb-5 inline-flex size-11 items-center justify-center rounded-full bg-gold font-heading text-small font-bold text-primary-dark"
-            >{{ String(i + 1).padStart(2, '0') }}</span
-          >
+          <div class="mb-5 flex items-start justify-between gap-3">
+            <span
+              class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-gold font-heading text-small font-bold text-primary-dark"
+              >{{ String(i + 1).padStart(2, '0') }}</span
+            >
+            <span
+              class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-gold/12 text-gold-dark"
+            >
+              <component :is="step.icon" class="size-5 stroke-[1.35]" aria-hidden="true" />
+            </span>
+          </div>
           <h3 class="font-heading text-h4 font-semibold text-primary">{{ step.title }}</h3>
           <p class="mt-3 font-body text-small leading-relaxed text-muted">{{ step.text }}</p>
         </li>

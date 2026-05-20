@@ -198,6 +198,19 @@ onBeforeUnmount(() => {
     class="hero-section relative flex max-h-[calc(100svh-6rem)] min-h-0 flex-col overflow-y-auto overflow-x-hidden text-text lg:overflow-hidden"
     aria-labelledby="hero-heading"
   >
+    <!-- Textura de fundo: mix-blend-mode em .hero-section__bg-img (ver CSS) -->
+    <div class="hero-section__bg pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+      <img
+        :src="publicPath('/images/bg-hero.png')"
+        alt=""
+        class="hero-section__bg-img size-full object-cover"
+        width="1920"
+        height="1080"
+        decoding="async"
+        fetchpriority="low"
+      />
+    </div>
+
     <div
       class="relative z-10 mx-auto flex min-h-0 w-full max-w-content flex-1 flex-col px-4 sm:px-6 lg:px-8 overflow-hidden md:overflow-visible"
     >
@@ -223,9 +236,8 @@ onBeforeUnmount(() => {
             class="hero-copy-reveal mt-4 font-body text-body leading-relaxed text-text/93 sm:mt-5 sm:text-body-lg"
             style="--hc-i: 2"
           >
-            Pareceres médico-legais rigorosos, leitura clínica aplicada ao processo e apoio à
-            estratégia — com transparência, ética e foco na sustentação técnica do seu objeto
-            litigioso.
+            Pareceres médico-legais rigorosos e leitura clínica alinhada ao processo — com
+            transparência, ética e foco na sua estratégia.
           </p>
 
           <div
@@ -264,7 +276,7 @@ onBeforeUnmount(() => {
                 <img
                   :src="heroPortraitSrc"
                   :alt="heroPortraitAlt"
-                  class="hero-portrait__img block w-full max-h-[min(42svh,calc(100svh-14rem))] object-contain object-bottom lg:max-h-[min(100%,calc(100svh-9.5rem))] pt-8 md:pt-0"
+                  class="hero-portrait__img block w-full max-h-[min(42svh,calc(100svh-14rem))] object-contain object-bottom lg:max-h-[min(100%,calc(100svh-9.5rem))] pt-2 md:pt-0"
                   width="880"
                   height="1100"
                   sizes="(max-width: 1023px) min(90vw, 18rem) min(42vw, 36rem)"
@@ -300,13 +312,32 @@ onBeforeUnmount(() => {
 .hero-section {
   isolation: isolate;
   background-color: var(--color-primary-dark);
+  /**
+   * Blend da textura bg-hero.png sobre o azul:
+   * multiply | screen | overlay | soft-light | color-dodge (≈ “luz direta”) | plus-lighter
+   */
+  --hero-bg-blend: multiply;
+  --hero-bg-opacity: 0.72;
+}
+
+.hero-section__bg-img {
+  opacity: var(--hero-bg-opacity);
+  mix-blend-mode: var(--hero-bg-blend);
+  /** Mobile: ancora à direita (balança / justiça na arte); desktop: centrado */
+  object-position: right center;
+}
+
+@media (min-width: 768px) {
+  .hero-section__bg-img {
+    object-position: center center;
+  }
 }
 
 .hero-section::before {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   background:
     radial-gradient(
@@ -331,7 +362,7 @@ onBeforeUnmount(() => {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
   opacity: 0.055;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -399,6 +430,7 @@ onBeforeUnmount(() => {
 .hero-portrait__spotlight {
   --hero-spot-parallax-x: 0px;
   --hero-spot-parallax-y: 0px;
+  opacity: 0.5;
 
   position: absolute;
   left: 50%;

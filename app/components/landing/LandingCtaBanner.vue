@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
 
-const primary = useWhatsAppHref()
-const second = useWhatsAppHref(WHATSAPP_MESSAGES.documents)
+const documentsHref = useWhatsAppHref(WHATSAPP_MESSAGES.documents)
 
 const { revealRoot, isVisible } = useRevealSection()
 </script>
@@ -29,18 +28,11 @@ const { revealRoot, isVisible } = useRevealSection()
         formatos de parecer ou assistência. O contato inicial é informal, objetivo e orientado à
         viabilidade técnica.
       </p>
-      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <div class="mt-10 flex justify-center">
         <LandingWhatsappButton
-          :href="primary"
-          label="Fale com um especialista"
-          variant="primary"
-          :dark-offset="true"
-          analytics-label="cta_banner_principal"
-        />
-        <LandingWhatsappButton
-          :href="second"
+          :href="documentsHref"
           label="Enviar documentos para análise"
-          variant="outline"
+          variant="primary"
           :dark-offset="true"
           analytics-label="cta_banner_documentos"
         />

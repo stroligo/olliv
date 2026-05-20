@@ -38,7 +38,7 @@ const points = [
             Por que nos escolher
           </p>
           <h2 id="diff-heading" class="mt-3 font-heading text-h2 font-bold text-white">
-            Estratégia processual combinada à medicina bem explicada
+            Perícia Médica Especializada
           </h2>
           <p class="mt-6 font-body text-body-lg leading-relaxed text-text/92">
             A OLLIV entende que a prova médica só performa bem quando há alinhamento entre narrativa
