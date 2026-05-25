@@ -9,6 +9,12 @@ import { OLLIV_WHATSAPP_E164 } from '~/composables/useWhatsApp'
 import { OLLIV_CONTACT_EMAIL, SITE_SEO } from '~/constants/siteMarketing'
 
 /** Code-splitting: secções abaixo da dobra em chunks separados (menos JS inicial no cliente). */
+const LandingMetrics = defineAsyncComponent(
+  () => import('~/components/landing/LandingMetrics.vue')
+)
+const LandingAudience = defineAsyncComponent(
+  () => import('~/components/landing/LandingAudience.vue')
+)
 const LandingAuthority = defineAsyncComponent(
   () => import('~/components/landing/LandingAuthority.vue')
 )
@@ -68,7 +74,7 @@ const serviceLd = {
   '@type': 'ProfessionalService' as const,
   name: 'OLLIV Perícia Médica',
   description: seoDescription,
-  serviceType: 'Assistência técnica médico-legal',
+  serviceType: 'Assistência técnica e perícias médicas',
   telephone: phoneE164,
   email: OLLIV_EMAIL,
   areaServed: {
@@ -129,6 +135,8 @@ useHead(() => ({
     <main id="conteudo-principal" tabindex="-1">
       <LandingHero />
       <LandingTrustBar />
+      <LandingMetrics />
+      <LandingAudience />
       <LandingAuthority />
       <LandingServices />
       <LandingDifferentials />

@@ -86,7 +86,7 @@ const steps: ReadonlyArray<{
         <LandingWhatsappButton
           class="mt-6 sm:inline-flex"
           :href="processTriagemHref"
-          label="Iniciar pela triagem no WhatsApp"
+          label="Falar com o Dr. Messias"
           variant="primary"
           analytics-label="cta_processo_triagem"
         />

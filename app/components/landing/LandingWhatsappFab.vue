@@ -10,7 +10,7 @@ const href = useWhatsAppHref()
     target="_blank"
     rel="noopener noreferrer"
     class="fixed bottom-5 right-5 z-40 flex size-14 items-center justify-center rounded-full bg-gold text-primary-dark shadow-premium transition-[transform,background-color] duration-200 ease-out hover:scale-[0.96] hover:bg-gold-light active:scale-[0.9] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-dark focus-visible:ring-offset-2 focus-visible:ring-offset-off-white md:bottom-8 md:right-8 md:size-16"
-    aria-label="Abrir conversa no WhatsApp com a OLLIV Perícia Médica"
+    aria-label="Falar com o Dr. Messias no WhatsApp"
     @click="pushWhatsAppCtaClick('cta_fab')"
   >
     <svg

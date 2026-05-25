@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ChevronDown } from '@lucide/vue'
+import { FAQ_ITEMS } from '~/constants/siteContent'
 import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
 
 const { revealRoot, isVisible } = useRevealSection()
 
 const faqHref = useWhatsAppHref(WHATSAPP_MESSAGES.afterFaq)
 
-/** Aberto/fechado por texto da pergunta (acordeão controlado para animação homogênea nos browsers). */
 const openQs = ref<Set<string>>(new Set())
 
 function isFaqOpen(q: string) {
@@ -28,28 +28,7 @@ function faqPanelId(idx: number) {
   return `faq-panel-${idx}`
 }
 
-const items = [
-  {
-    q: 'Quanto tempo leva o primeiro retorno?',
-    a: 'Em muitos contactos o primeiro retorno ocorre em até 1 dia útil, conforme fila, complexidade e urgência relatada no WhatsApp. Casos muito extensos podem exigir leitura prévia antes de uma resposta completa.',
-  },
-  {
-    q: 'O parecer ou memorial substitui o trabalho do advogado?',
-    a: 'Não. A OLLIV presta assistência técnica médico-legal: subsídios para peças, quesitos e estratégia da prova. A condução processual e as decisões de defesa permanecem com a equipe jurídica.',
-  },
-  {
-    q: 'Como é tratado o sigilo e dados de saúde?',
-    a: 'Atuamos com discrição e respeito ao sigilo profissional. Por WhatsApp, envie apenas o necessário e consulte a nossa Política de privacidade. Conteúdo sensível pode ser tratado por canais alinhados à sua equipe.',
-  },
-  {
-    q: 'Quais formatos de entrega existem?',
-    a: 'Definimos em conjunto (memorial breve ou amplo, quesitos auxiliados, impugnação técnica, parecer convergente ou divergente, entre outros) conforme a fase processual e a estratégia do caso.',
-  },
-  {
-    q: 'Atendem somente Brasília?',
-    a: 'Base em Brasília-DF, com atendimento remoto nacional quando o caso e a documentação permitem trabalho à distância com qualidade.',
-  },
-] as const
+const items = FAQ_ITEMS
 </script>
 
 <template>
@@ -78,7 +57,7 @@ const items = [
         <div
           v-for="(item, idx) in items"
           :key="item.q"
-          class="faq-item border-b border-silver/60 py-4 last:border-b-0"
+          class="border-b border-silver/40 last:border-0"
         >
           <button
             :id="faqButtonId(idx)"
@@ -88,40 +67,29 @@ const items = [
             :aria-controls="faqPanelId(idx)"
             @click="toggleFaq(item.q)"
           >
-            <span>{{ item.q }}</span>
+            <span class="py-4">{{ item.q }}</span>
             <ChevronDown
-              class="faq-chevron mt-0.5 size-5 shrink-0 text-gold-dark motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out"
-              :class="{ 'faq-chevron--open': isFaqOpen(item.q) }"
+              class="mt-4 size-5 shrink-0 text-gold-dark transition-transform duration-300"
+              :class="{ 'rotate-180': isFaqOpen(item.q) }"
               aria-hidden="true"
-              :stroke-width="2"
             />
           </button>
           <div
+            v-show="isFaqOpen(item.q)"
             :id="faqPanelId(idx)"
-            class="faq-panel"
             role="region"
             :aria-labelledby="faqButtonId(idx)"
-            :class="{ 'faq-panel--open': isFaqOpen(item.q) }"
+            class="pb-4 font-body text-body leading-relaxed text-muted"
           >
-            <div class="faq-panel-inner">
-              <p class="pt-3 font-body text-small leading-relaxed text-muted sm:text-body">
-                {{ item.a }}
-              </p>
-            </div>
+            {{ item.a }}
           </div>
         </div>
       </div>
 
-      <div
-        class="landing-reveal-block mx-auto mt-12 flex max-w-2xl flex-col items-center px-2 text-center"
-      >
-        <p class="font-body text-body text-muted">
-          Continuar no WhatsApp com o contexto desta página.
-        </p>
+      <div class="landing-reveal-block mx-auto mt-12 max-w-2xl text-center">
         <LandingWhatsappButton
-          class="mt-6"
           :href="faqHref"
-          label="Continuar no WhatsApp"
+          label="Falar com o Dr. Messias"
           variant="primary"
           analytics-label="cta_pos_faq"
         />
@@ -129,35 +97,3 @@ const items = [
     </div>
   </section>
 </template>
-
-<style scoped>
-/** Acordeão: grid 0fr → 1fr (classe .faq-panel--open garante igual em todos os itens vs. quirks de <details>). */
-.faq-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.faq-panel--open {
-  grid-template-rows: 1fr;
-}
-
-.faq-panel-inner {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.faq-chevron--open {
-  transform: rotate(180deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .faq-panel {
-    transition-duration: 0.01ms;
-  }
-
-  .faq-chevron--open {
-    transition-duration: 0.01ms;
-  }
-}
-</style>

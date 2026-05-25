@@ -1,6 +1,16 @@
 <script setup lang="ts">
+import { Award, Globe, GraduationCap, Scale } from '@lucide/vue'
+import type { Component } from 'vue'
+import { PARTNER_SPECIALTIES } from '~/constants/siteContent'
 import { PERITO_CURRICULO } from '~/constants/peritoCurriculo'
 import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
+
+const badgeIcons: Record<string, Component> = {
+  escs: GraduationCap,
+  cpem: Award,
+  nacional: Globe,
+  judicial: Scale,
+}
 
 const { revealRoot, isVisible } = useRevealSection()
 /** Bloco do currículo no fim da secção — observer próprio (secção alta + sticky). */
@@ -106,9 +116,9 @@ const publicPath = usePublicPath()
               >
                 Retorno inicial
               </p>
-              <p class="mt-2 font-heading text-h4 font-bold text-primary">≤ 1 dia útil</p>
+              <p class="mt-2 font-heading text-h4 font-bold text-primary">Até 24h</p>
               <p class="mt-1 font-body text-caption leading-snug text-muted">
-                Via WhatsApp, conforme urgência relatada no primeiro contato.
+                Resposta rápida via WhatsApp, inclusive quando a urgência exige.
               </p>
             </div>
             <div
@@ -131,7 +141,7 @@ const publicPath = usePublicPath()
                 Alcance
               </p>
               <p class="mt-2 font-heading text-h4 font-semibold leading-snug text-primary">
-                Brasília-DF · atendimento remoto nacional
+                27 estados · base Brasília-DF
               </p>
             </div>
           </div>
@@ -139,13 +149,13 @@ const publicPath = usePublicPath()
           <div class="cred-copy-reveal mt-10" style="--cred-i: 7">
             <LandingWhatsappButton
               :href="sobreCasoHref"
-              label="Falar sobre o meu caso"
+              label="Falar com o Dr. Messias"
               variant="primary"
               analytics-label="cta_credibilidade_caso"
             />
             <p class="mt-3 max-w-xl font-body text-caption leading-relaxed text-muted">
-              Retorno orientado à viabilidade técnica; em muitos contactos o primeiro retorno ocorre
-              em até 1 dia útil, conforme fila e complexidade.
+              Retorno orientado à viabilidade técnica; na maioria dos contactos respondemos em até
+              24 horas, conforme fila e complexidade.
             </p>
           </div>
         </div>
@@ -177,6 +187,21 @@ const publicPath = usePublicPath()
             {{ curriculo.perfil }}
           </p>
 
+          <ul class="mt-5 flex list-none flex-wrap gap-2 p-0">
+            <li
+              v-for="badge in curriculo.badges"
+              :key="badge.id"
+              class="inline-flex items-center gap-2 rounded-full border border-silver/80 bg-off-white px-3 py-1.5 font-body text-caption font-medium text-primary"
+            >
+              <component
+                :is="badgeIcons[badge.id]"
+                class="size-3.5 shrink-0 text-gold-dark"
+                aria-hidden="true"
+              />
+              {{ badge.label }}
+            </li>
+          </ul>
+
           <div
             class="mt-6 grid gap-6 border-t border-silver/70 pt-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 lg:pt-8"
           >
@@ -200,6 +225,24 @@ const publicPath = usePublicPath()
                 </li>
               </ul>
             </div>
+          </div>
+
+          <div class="mt-8 border-t border-silver/70 pt-8">
+            <h3 class="font-heading text-h4 font-semibold text-primary">
+              {{ curriculo.parceirosTitulo }}
+            </h3>
+            <p class="mt-2 font-body text-small leading-relaxed text-muted">
+              {{ curriculo.parceirosIntro }}
+            </p>
+            <ul class="mt-4 flex list-none flex-wrap gap-2 p-0">
+              <li
+                v-for="esp in PARTNER_SPECIALTIES"
+                :key="esp"
+                class="rounded-full border border-primary/15 bg-primary/5 px-3 py-1.5 font-body text-caption text-primary/80"
+              >
+                {{ esp }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>

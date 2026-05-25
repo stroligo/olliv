@@ -49,7 +49,7 @@ useHead(() => ({
           Mensagens devem incluir apenas o indispensável ao primeiro contacto. Evite transmitir dados
           clínicos detalhados sem necessidade antes de canal seguro combinado ou orientação jurídica
           definida pela sua equipa. A OLLIV trata dados com discrição e em suporte técnico
-          médico-legal conforme cada encargo.
+          perícia médica conforme cada encargo.
         </p>
         <h2 class="pt-8 font-heading text-h3 font-bold text-primary">
           Contacto para questões de privacidade

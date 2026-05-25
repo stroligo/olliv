@@ -159,7 +159,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
             class="hidden sm:inline-flex"
             :dense="compact"
             :href="whatsappHref"
-            label="Fale conosco"
+            label="Falar com o Dr. Messias"
             variant="primary"
             analytics-label="cta_header_nav"
           />
@@ -230,7 +230,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
             <LandingWhatsappButton
               class="mt-2"
               :href="whatsappHref"
-              label="Fale no WhatsApp"
+              label="Falar com o Dr. Messias"
               variant="secondary"
               analytics-label="cta_header_mobile"
             />

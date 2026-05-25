@@ -4,7 +4,7 @@ import { OLLIV_CONTACT_EMAIL } from '~/constants/siteMarketing'
 useSeoMeta({
   title: 'Como trabalhamos — OLLIV Perícia Médica',
   description:
-    'Papel da assistência técnica médico-legal, limites do parecer e alinhamento com a equipa jurídica na OLLIV.',
+    'Papel da assistência técnica e perícia médica, limites do parecer e alinhamento com a equipa jurídica na OLLIV.',
   robots: 'index, follow',
 })
 

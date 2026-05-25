@@ -18,7 +18,7 @@ const services = [
     icon: Search,
   },
   {
-    title: 'Parecer médico-legal',
+    title: 'Parecer pericial médico',
     text: 'Fundamentação objetiva sobre nexo causal, padrão de conduta assistencial, sequelas e previsibilidade.',
     icon: FileText,
   },
@@ -29,7 +29,7 @@ const services = [
   },
   {
     title: 'Acompanhamento da perícia',
-    text: 'Roteiros de inconsistência na prova, respeito aos limites éticos da relação médico-legista/perito.',
+    text: 'Roteiros de inconsistência na prova, respeito aos limites éticos da relação assistente técnico/perito.',
     icon: ClipboardList,
   },
   {
@@ -117,7 +117,7 @@ const services = [
         <LandingWhatsappButton
           class="mt-6 justify-center sm:inline-flex"
           :href="orientacaoRapidaHref"
-          label="Pedir orientação rápida"
+          label="Falar com o Dr. Messias"
           variant="primary"
           analytics-label="cta_apos_servicos"
         />

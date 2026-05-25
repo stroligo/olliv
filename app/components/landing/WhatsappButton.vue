@@ -37,8 +37,8 @@ const variants: Record<Variant, string> = {
     class="inline-flex items-center justify-center rounded-full font-heading font-semibold uppercase tracking-wide transition-[color,background-color,box-shadow,padding,gap,font-size,transform] duration-300 ease-out hover:scale-[0.985] active:scale-[0.96] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
     :class="[
       dense
-        ? 'gap-2 px-5 py-2.5 text-caption'
-        : 'gap-3 px-8 py-4 text-small md:text-body',
+        ? 'gap-2 px-4 py-2 text-caption'
+        : 'gap-2.5 px-5 py-3 text-caption sm:px-6 sm:py-3.5 sm:text-small',
       variants[variant],
       darkOffset ? 'focus-visible:ring-offset-primary-dark' : 'focus-visible:ring-offset-off-white',
     ]"
@@ -49,7 +49,7 @@ const variants: Record<Variant, string> = {
       viewBox="0 0 24 24"
       fill="currentColor"
       class="shrink-0 transition-[width,height] duration-300 ease-out"
-      :class="dense ? 'size-4' : 'size-5'"
+      :class="dense ? 'size-3.5' : 'size-4 sm:size-[1.125rem]'"
       aria-hidden="true"
     >
       <path

@@ -31,7 +31,7 @@ const { revealRoot, isVisible } = useRevealSection()
       <div class="mt-10 flex justify-center">
         <LandingWhatsappButton
           :href="documentsHref"
-          label="Enviar documentos para análise"
+          label="Enviar documentos ao Dr. Messias"
           variant="primary"
           :dark-offset="true"
           analytics-label="cta_banner_documentos"

@@ -15,7 +15,7 @@ const points = [
     text: 'Primeiro contato via WhatsApp para encaminhar documentos e receber orientação sobre próximos passos.',
   },
   {
-    title: 'Foco em litígios complexos',
+    title: 'Processos de alta complexidade',
     text: 'Estrutura pensada para causas com múltiplos documentos, evolução clínica longa e divergência de especialistas.',
   },
 ] as const
@@ -68,7 +68,7 @@ const points = [
       <div class="mt-14 flex flex-col items-center sm:items-start">
         <LandingWhatsappButton
           :href="triagemHref"
-          label="Experimentar a triagem no WhatsApp"
+          label="Falar com o Dr. Messias"
           variant="outline"
           :dark-offset="true"
           analytics-label="cta_diferenciais_triagem"

@@ -36,9 +36,7 @@ const items = [
   >
     <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
       <h2 id="trust-heading" class="sr-only">Benefícios em destaque</h2>
-      <div
-        class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 landing-reveal-stagger--ltr"
-      >
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 landing-reveal-stagger--ltr">
         <article
           v-for="(item, i) in items"
           :key="item.title"
@@ -55,7 +53,7 @@ const items = [
               aria-hidden="true"
             />
           </div>
-          <h3 class="font-heading text-h4 font-semibold tracking-tight text-primary">
+          <h3 class="font-heading text-h4 font-semibold tracking-tight text-primary text-center">
             {{ item.title }}
           </h3>
           <p class="mt-3 font-body text-small leading-relaxed text-muted">{{ item.text }}</p>

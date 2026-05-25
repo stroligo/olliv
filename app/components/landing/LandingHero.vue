@@ -1,11 +1,19 @@
 <script setup lang="ts">
-const whatsappHero = useWhatsAppHref()
+import { HERO_SLIDES, HERO_TITLE } from '~/constants/siteContent'
+import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
+
+const whatsappHero = useWhatsAppHref(WHATSAPP_MESSAGES.analysisRequest)
+
+const slideIndex = ref(0)
+const activeSlide = computed(() => HERO_SLIDES[slideIndex.value] ?? HERO_SLIDES[0])
+
+let slideTimer: ReturnType<typeof setInterval> | undefined
 
 const publicPath = usePublicPath()
 
 const heroPortraitSrc = computed(() => publicPath('/images/Messias_terno_nobg.png'))
 const heroPortraitAlt =
-  'Dr. José Messias Oliveira Júnior, médico-legista, retrato profissional em terno.'
+  'Dr. José Messias Oliveira Júnior, perito médico, retrato profissional em terno.'
 
 const heroSectionRef = ref<HTMLElement | null>(null)
 const spotlightEl = ref<HTMLElement | null>(null)
@@ -165,6 +173,12 @@ function onHeroPointerLeave() {
 onMounted(() => {
   heroRootEl = heroSectionRef.value
 
+  if (HERO_SLIDES.length >= 2 && !prefersReducedMotion()) {
+    slideTimer = setInterval(() => {
+      slideIndex.value = (slideIndex.value + 1) % HERO_SLIDES.length
+    }, 9000)
+  }
+
   bumpParallax()
   window.addEventListener('scroll', bumpParallax, { passive: true })
   heroRootEl?.addEventListener('scroll', bumpParallax, { passive: true })
@@ -188,6 +202,8 @@ onBeforeUnmount(() => {
     cancelAnimationFrame(smoothingRaf)
     smoothingRaf = 0
   }
+
+  if (slideTimer) clearInterval(slideTimer)
 })
 </script>
 
@@ -230,15 +246,16 @@ onBeforeUnmount(() => {
             class="hero-copy-reveal hero-title mt-2 font-heading font-bold tracking-tight text-white sm:mt-3"
             style="--hc-i: 1"
           >
-            Assistência técnica médica estratégica para decisões judiciais mais seguras.
+            {{ HERO_TITLE }}
           </h1>
-          <p
-            class="hero-copy-reveal mt-4 font-body text-body leading-relaxed text-text/93 sm:mt-5 sm:text-body-lg"
-            style="--hc-i: 2"
-          >
-            Pareceres médico-legais rigorosos e leitura clínica alinhada ao processo — com
-            transparência, ética e foco na sua estratégia.
-          </p>
+          <div class="hero-copy-reveal mt-4 min-h-[5.5rem] sm:min-h-[6rem]" style="--hc-i: 2">
+            <p class="font-heading text-h4 font-semibold leading-snug text-gold-light sm:text-h3">
+              {{ activeSlide.lead }}
+            </p>
+            <p class="mt-3 font-body text-body leading-relaxed text-text/93 sm:text-body-lg">
+              {{ activeSlide.body }}
+            </p>
+          </div>
 
           <div
             class="hero-copy-reveal mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-7 z-40 relative"
@@ -246,22 +263,19 @@ onBeforeUnmount(() => {
           >
             <LandingWhatsappButton
               :href="whatsappHero"
-              label="Fale com um especialista"
+              label="Solicitar análise técnica"
               variant="primary"
               dark-offset
-              class="!py-3.5 md:!px-6 md:!py-3.5"
-              analytics-label="cta_hero"
+              analytics-label="cta_hero_analise"
             />
           </div>
 
           <ul
             class="mt-5 hidden md:flex flex-wrap gap-x-5 gap-y-1.5 pb-1 font-body text-caption text-text/75 sm:mt-6 sm:text-small"
           >
-            <li class="hero-copy-reveal" style="--hc-i: 4">Pareceres e assistência técnica</li>
-            <li class="hero-copy-reveal" style="--hc-i: 5">Estratégia processual alinhada</li>
-            <li class="hero-copy-reveal" style="--hc-i: 6">
-              Brasília-DF • atendimento direcionado
-            </li>
+            <li class="hero-copy-reveal" style="--hc-i: 4">27 estados atendidos</li>
+            <li class="hero-copy-reveal" style="--hc-i: 5">Resposta em até 24h</li>
+            <li class="hero-copy-reveal" style="--hc-i: 6">Perícia médica · Brasília-DF</li>
           </ul>
         </div>
 
@@ -276,7 +290,7 @@ onBeforeUnmount(() => {
                 <img
                   :src="heroPortraitSrc"
                   :alt="heroPortraitAlt"
-                  class="hero-portrait__img block w-full max-h-[min(42svh,calc(100svh-14rem))] object-contain object-bottom lg:max-h-[min(100%,calc(100svh-9.5rem))] pt-2 md:pt-0"
+                  class="hero-portrait__img block w-full max-h-[min(42svh,calc(100svh-14rem))] object-contain object-bottom pt-2 md:pt-0"
                   width="880"
                   height="1100"
                   sizes="(max-width: 1023px) min(90vw, 18rem) min(42vw, 36rem)"
@@ -294,7 +308,7 @@ onBeforeUnmount(() => {
                   Dr. José Messias Oliveira Júnior
                 </span>
                 <span class="mt-1 block font-body text-caption leading-snug text-text/92">
-                  Médico-legista · assistência técnica médico-legal estratégica
+                  Cirurgião geral · perícia médica judicial
                 </span>
               </div>
             </figcaption>
@@ -420,6 +434,15 @@ onBeforeUnmount(() => {
 @media (min-width: 1024px) {
   .hero-portrait__stage {
     min-height: min(100%, calc(100svh - 9.5rem));
+  }
+
+  .hero-portrait__frame {
+    padding-top: 0;
+  }
+
+  .hero-portrait__img {
+    max-height: min(78svh, calc(100svh - 8rem));
+    object-position: center 12%;
   }
 }
 
