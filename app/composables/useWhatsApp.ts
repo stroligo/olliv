@@ -15,12 +15,12 @@ export function useWhatsAppHrefForService(serviceTitle: string) {
 }
 
 /**
- * Evento para GTM / GA4 (dataLayer). Sem GTM instalado, não faz mal ser chamado.
- * No GTM: trigger com event name `whatsapp_cta` e variável `cta_label`.
+ * Clique em CTA WhatsApp — `dataLayer` + evento GA4 (`whatsapp_cta`).
+ * Registre `cta_label` como parâmetro personalizado no GA4, se quiser relatórios por rótulo.
  */
 export function pushWhatsAppCtaClick(label: string) {
   if (!import.meta.client || typeof window === 'undefined') return
-  const w = window as Window & { dataLayer?: Record<string, unknown>[] }
-  w.dataLayer = w.dataLayer ?? []
-  w.dataLayer.push({ event: 'whatsapp_cta', cta_label: label })
+  window.dataLayer = window.dataLayer ?? []
+  window.dataLayer.push({ event: 'whatsapp_cta', cta_label: label })
+  window.gtag?.('event', 'whatsapp_cta', { cta_label: label })
 }

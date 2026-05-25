@@ -29,6 +29,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl: SITE_ORIGIN,
+      /** GA4; vazio em dev se `NUXT_PUBLIC_GOOGLE_ANALYTICS_ID=""`. Produção: `G-FGLW3DYBEH`. */
+      googleAnalyticsId:
+        process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID ??
+        (process.env.NODE_ENV === 'production' ? 'G-FGLW3DYBEH' : ''),
     },
   },
 
