@@ -249,12 +249,23 @@ onBeforeUnmount(() => {
             {{ HERO_TITLE }}
           </h1>
           <div class="hero-copy-reveal mt-4 min-h-[5.5rem] sm:min-h-[6rem]" style="--hc-i: 2">
-            <p class="font-heading text-h4 font-semibold leading-snug text-gold-light sm:text-h3">
-              {{ activeSlide.lead }}
-            </p>
-            <p class="mt-3 hidden font-body text-body leading-relaxed text-text/93 sm:block sm:text-body-lg">
-              {{ activeSlide.body }}
-            </p>
+            <Transition name="hero-slide" mode="out-in">
+              <div
+                :key="slideIndex"
+                class="hero-slide-content"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                <p class="font-heading text-h4 font-semibold leading-snug text-gold-light sm:text-h3">
+                  {{ activeSlide.lead }}
+                </p>
+                <p
+                  class="mt-3 hidden font-body text-body leading-relaxed text-text/93 sm:block sm:text-body-lg"
+                >
+                  {{ activeSlide.body }}
+                </p>
+              </div>
+            </Transition>
           </div>
 
           <div
@@ -412,9 +423,38 @@ onBeforeUnmount(() => {
     calc(0.06s + var(--hc-i, 0) * 0.085s) both;
 }
 
+/** Rotação dos slides (lead + body) */
+.hero-slide-enter-active,
+.hero-slide-leave-active {
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 0.82, 0.12, 1),
+    transform 0.5s cubic-bezier(0.22, 0.82, 0.12, 1);
+}
+
+.hero-slide-enter-from {
+  opacity: 0;
+  transform: translateY(0.875rem);
+}
+
+.hero-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-0.625rem);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-copy-reveal {
     animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-slide-enter-active,
+  .hero-slide-leave-active {
+    transition-duration: 0.01ms;
+  }
+
+  .hero-slide-enter-from,
+  .hero-slide-leave-to {
     opacity: 1;
     transform: none;
   }
