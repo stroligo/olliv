@@ -162,7 +162,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
             :dense="compact"
             :href="whatsappHref"
             label="Falar com o Dr. Messias"
-            variant="primary"
+            variant="secondary"
             analytics-label="cta_header_nav"
           />
 
@@ -233,7 +233,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
               class="mt-2"
               :href="whatsappHref"
               label="Falar com o Dr. Messias"
-              variant="secondary"
+              variant="outline-navy"
               analytics-label="cta_header_mobile"
             />
           </nav>

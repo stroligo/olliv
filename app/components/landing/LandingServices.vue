@@ -118,7 +118,7 @@ const services = [
           class="mt-6 justify-center sm:inline-flex"
           :href="orientacaoRapidaHref"
           label="Falar com o Dr. Messias"
-          variant="primary"
+          variant="secondary"
           analytics-label="cta_apos_servicos"
         />
       </div>

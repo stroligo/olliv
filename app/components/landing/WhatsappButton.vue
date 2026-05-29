@@ -1,10 +1,11 @@
 <script setup lang="ts">
-type Variant = 'primary' | 'secondary' | 'outline'
+type Variant = 'primary' | 'secondary' | 'outline' | 'outline-navy'
 
 const props = withDefaults(
   defineProps<{
     href: string
     label: string
+    /** primary = dourado · secondary = navy · outline = contorno dourado · outline-navy = contorno navy */
     variant?: Variant
     /** Versão menor (nav compacta ao rolar) */
     dense?: boolean
@@ -22,8 +23,9 @@ function onCtaClick() {
 
 const variants: Record<Variant, string> = {
   primary: 'olliv-btn-gold focus-visible:ring-gold-dark',
-  secondary: 'bg-primary text-white hover:bg-primary-light shadow-premium focus-visible:ring-gold',
+  secondary: 'olliv-btn-navy focus-visible:ring-primary-light',
   outline: 'olliv-btn-gold-outline focus-visible:ring-gold',
+  'outline-navy': 'olliv-btn-navy-outline focus-visible:ring-primary-light',
 }
 </script>
 

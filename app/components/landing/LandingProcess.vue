@@ -87,7 +87,7 @@ const steps: ReadonlyArray<{
           class="mt-6 sm:inline-flex"
           :href="processTriagemHref"
           label="Falar com o Dr. Messias"
-          variant="primary"
+          variant="secondary"
           analytics-label="cta_processo_triagem"
         />
       </div>

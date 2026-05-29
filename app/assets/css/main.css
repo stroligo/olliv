@@ -120,4 +120,53 @@
     color: var(--color-white);
     text-shadow: 0 1px 2px rgba(10, 14, 20, 0.28);
   }
+
+  /** CTA navy — gradiente azul (alternativa ao dourado) */
+  .olliv-btn-navy {
+    border: 1px solid color-mix(in srgb, var(--color-primary-light) 55%, var(--color-primary-dark));
+    background: var(--navy-gradient);
+    box-shadow: var(--shadow-navy-btn);
+    color: var(--color-off-white);
+    text-shadow: 0 1px 2px rgba(10, 14, 20, 0.35);
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .olliv-btn-navy:hover {
+    background: var(--navy-gradient-hover);
+    box-shadow: var(--shadow-navy-btn-hover);
+    border-color: color-mix(in srgb, #2a4880 70%, white);
+    color: var(--color-white);
+  }
+
+  .olliv-btn-navy:active {
+    box-shadow:
+      0 1px 4px rgba(10, 14, 20, 0.22), 0 4px 12px rgba(20, 40, 75, 0.28),
+      inset 0 2px 6px rgba(5, 8, 14, 0.45);
+  }
+
+  .olliv-btn-navy-outline {
+    border: 2px solid var(--color-primary);
+    background: transparent;
+    color: var(--color-primary);
+    box-shadow: none;
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .olliv-btn-navy-outline:hover {
+    border-color: var(--color-primary-light);
+    background: var(--navy-gradient-hover);
+    box-shadow: var(--shadow-navy-btn-hover);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px rgba(10, 14, 20, 0.28);
+  }
 }

@@ -57,7 +57,7 @@ const ctaHref = computed(() => (active.value === 'lawyer' ? lawyerHref : patient
           class="inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3 font-body text-small font-semibold transition-colors sm:text-body"
           :class="
             active === 'patient'
-              ? 'olliv-btn-gold'
+              ? 'olliv-btn-navy'
               : 'border border-silver bg-white text-primary hover:border-gold-dark/40'
           "
           @click="active = 'patient'"
@@ -86,13 +86,14 @@ const ctaHref = computed(() => (active.value === 'lawyer' ? lawyerHref : patient
             <span>{{ item }}</span>
           </li>
         </ul>
-        <LandingWhatsappButton
-          class="mt-8"
-          :href="ctaHref"
-          :label="panel.ctaLabel"
-          variant="primary"
-          :analytics-label="`cta_audience_${active}`"
-        />
+        <div class="mt-8 flex justify-center">
+          <LandingWhatsappButton
+            :href="ctaHref"
+            :label="panel.ctaLabel"
+            variant="secondary"
+            :analytics-label="`cta_audience_${active}`"
+          />
+        </div>
       </div>
     </div>
   </section>

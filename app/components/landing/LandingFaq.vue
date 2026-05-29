@@ -90,7 +90,7 @@ const items = FAQ_ITEMS
         <LandingWhatsappButton
           :href="faqHref"
           label="Falar com o Dr. Messias"
-          variant="primary"
+          variant="secondary"
           analytics-label="cta_pos_faq"
         />
       </div>

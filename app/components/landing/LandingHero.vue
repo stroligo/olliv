@@ -217,11 +217,11 @@ onBeforeUnmount(() => {
     <!-- Textura de fundo: mix-blend-mode em .hero-section__bg-img (ver CSS) -->
     <div class="hero-section__bg pointer-events-none absolute inset-0 z-0" aria-hidden="true">
       <img
-        :src="publicPath('/images/bg-hero.png')"
+        :src="publicPath('/images/bg-hero.webp')"
         alt=""
         class="hero-section__bg-img size-full object-cover"
-        width="1920"
-        height="1080"
+        width="1536"
+        height="1024"
         decoding="async"
         fetchpriority="low"
       />
@@ -338,24 +338,16 @@ onBeforeUnmount(() => {
   isolation: isolate;
   background-color: var(--color-primary-dark);
   /**
-   * Blend da textura bg-hero.png sobre o azul:
-   * multiply | screen | overlay | soft-light | color-dodge (≈ “luz direta”) | plus-lighter
+   * Escritório (bg-hero) — foto já escura; overlay em ::before garante legibilidade do copy.
    */
-  --hero-bg-blend: multiply;
-  --hero-bg-opacity: 0.72;
+  --hero-bg-blend: normal;
+  --hero-bg-opacity: 1;
 }
 
 .hero-section__bg-img {
   opacity: var(--hero-bg-opacity);
   mix-blend-mode: var(--hero-bg-blend);
-  /** Mobile: ancora à direita (balança / justiça na arte); desktop: centrado */
-  object-position: right center;
-}
-
-@media (min-width: 768px) {
-  .hero-section__bg-img {
-    object-position: center center;
-  }
+  object-position: center center;
 }
 
 .hero-section::before {
@@ -365,22 +357,24 @@ onBeforeUnmount(() => {
   z-index: 1;
   pointer-events: none;
   background:
+    linear-gradient(
+      105deg,
+      color-mix(in srgb, var(--color-primary-dark) 92%, transparent) 0%,
+      color-mix(in srgb, var(--color-primary-dark) 62%, transparent) 38%,
+      color-mix(in srgb, var(--color-primary-dark) 28%, transparent) 58%,
+      transparent 78%
+    ),
     radial-gradient(
       ellipse 110% 90% at 10% -5%,
-      color-mix(in srgb, var(--color-primary-light) 32%, transparent) 0%,
+      color-mix(in srgb, var(--color-primary-light) 22%, transparent) 0%,
       transparent 58%
     ),
     radial-gradient(
       ellipse 85% 70% at 95% 95%,
-      color-mix(in srgb, var(--color-primary) 38%, transparent) 0%,
+      color-mix(in srgb, var(--color-primary) 28%, transparent) 0%,
       transparent 55%
-    ),
-    radial-gradient(
-      circle at 50% 115%,
-      color-mix(in srgb, var(--color-primary) 55%, transparent) 0%,
-      transparent 42%
     );
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .hero-section::after {

@@ -150,7 +150,7 @@ const publicPath = usePublicPath()
             <LandingWhatsappButton
               :href="sobreCasoHref"
               label="Falar com o Dr. Messias"
-              variant="primary"
+              variant="secondary"
               analytics-label="cta_credibilidade_caso"
             />
             <p class="mt-3 max-w-xl font-body text-caption leading-relaxed text-muted">

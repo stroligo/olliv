@@ -69,7 +69,7 @@ const points = [
         <LandingWhatsappButton
           :href="triagemHref"
           label="Falar com o Dr. Messias"
-          variant="outline"
+          variant="outline-navy"
           :dark-offset="true"
           analytics-label="cta_diferenciais_triagem"
         />
