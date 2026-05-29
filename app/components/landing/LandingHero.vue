@@ -541,12 +541,12 @@ onBeforeUnmount(() => {
   text-align: center;
   background: linear-gradient(
     180deg,
-    rgba(9, 16, 31, 0.55) 0%,
-    rgba(9, 16, 31, 0.92) 35%,
-    rgba(9, 16, 31, 0.97) 100%
+    rgba(10, 14, 20, 0.55) 0%,
+    rgba(10, 14, 20, 0.92) 35%,
+    rgba(10, 14, 20, 0.97) 100%
   );
-  border: 1px solid rgba(201, 164, 74, 0.4);
-  border-top: 2px solid rgba(201, 164, 74, 0.65);
+  border: 1px solid rgba(200, 161, 101, 0.4);
+  border-top: 2px solid rgba(200, 161, 101, 0.65);
   border-radius: 0 0 var(--radius-premium) var(--radius-premium);
   box-shadow:
     0 -8px 32px rgba(0, 0, 0, 0.35),

@@ -67,7 +67,7 @@ const highlights = [
           <li
             v-for="(item, i) in highlights"
             :key="item.title"
-            class="landing-reveal-item flex gap-4 rounded-premium border border-silver/60 bg-white px-5 py-5 shadow-[0_10px_28px_rgba(14,27,51,0.05)] sm:flex-col sm:items-center sm:px-6 sm:py-6 sm:text-center"
+            class="landing-reveal-item flex gap-4 rounded-premium border border-silver/60 bg-white px-5 py-5 shadow-[0_10px_28px_rgba(10,14,20,0.05)] sm:flex-col sm:items-center sm:px-6 sm:py-6 sm:text-center"
             :style="{ '--rv-i': i }"
           >
             <div

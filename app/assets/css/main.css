@@ -71,4 +71,53 @@
       transform: none;
     }
   }
+
+  /** CTA dourado — gradiente metálico (não flat) */
+  .olliv-btn-gold {
+    border: 1px solid color-mix(in srgb, var(--color-gold-highlight) 50%, var(--color-gold-dark));
+    background: var(--gold-gradient);
+    box-shadow: var(--shadow-gold-btn);
+    color: var(--color-off-white);
+    text-shadow: 0 1px 2px rgba(10, 14, 20, 0.28);
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .olliv-btn-gold:hover {
+    background: var(--gold-gradient-hover);
+    box-shadow: var(--shadow-gold-btn-hover);
+    border-color: color-mix(in srgb, var(--color-gold-light) 65%, white);
+    color: var(--color-white);
+  }
+
+  .olliv-btn-gold:active {
+    box-shadow:
+      0 1px 4px rgba(10, 14, 20, 0.18), 0 4px 12px rgba(155, 122, 70, 0.22),
+      inset 0 2px 6px rgba(100, 75, 35, 0.28);
+  }
+
+  .olliv-btn-gold-outline {
+    border: 2px solid var(--color-gold);
+    background: transparent;
+    color: var(--color-gold);
+    box-shadow: none;
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .olliv-btn-gold-outline:hover {
+    border-color: color-mix(in srgb, var(--color-gold-light) 65%, white);
+    background: var(--gold-gradient-hover);
+    box-shadow: var(--shadow-gold-btn-hover);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px rgba(10, 14, 20, 0.28);
+  }
 }

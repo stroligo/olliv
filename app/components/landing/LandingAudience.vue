@@ -44,7 +44,7 @@ const ctaHref = computed(() => (active.value === 'lawyer' ? lawyerHref : patient
           class="inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3 font-body text-small font-semibold transition-colors sm:text-body"
           :class="
             active === 'lawyer'
-              ? 'bg-gold text-primary-dark shadow-premium'
+              ? 'olliv-btn-gold'
               : 'border border-silver bg-white text-primary hover:border-gold-dark/40'
           "
           @click="active = 'lawyer'"
@@ -57,7 +57,7 @@ const ctaHref = computed(() => (active.value === 'lawyer' ? lawyerHref : patient
           class="inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3 font-body text-small font-semibold transition-colors sm:text-body"
           :class="
             active === 'patient'
-              ? 'bg-gold text-primary-dark shadow-premium'
+              ? 'olliv-btn-gold'
               : 'border border-silver bg-white text-primary hover:border-gold-dark/40'
           "
           @click="active = 'patient'"
@@ -68,7 +68,7 @@ const ctaHref = computed(() => (active.value === 'lawyer' ? lawyerHref : patient
       </div>
 
       <div
-        class="landing-reveal-item mx-auto mt-8 max-w-3xl rounded-premium border border-silver/70 bg-white p-6 shadow-[0_14px_40px_rgba(14,27,51,0.06)] sm:p-8"
+        class="landing-reveal-item mx-auto mt-8 max-w-3xl rounded-premium border border-silver/70 bg-white p-6 shadow-[0_14px_40px_rgba(10,14,20,0.06)] sm:p-8"
         :style="{ '--rv-i': 2 }"
       >
         <h3 class="font-heading text-h3 font-bold text-primary">{{ panel.title }}</h3>

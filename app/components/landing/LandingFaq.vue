@@ -53,7 +53,7 @@ const items = FAQ_ITEMS
         </p>
       </div>
 
-      <div class="mx-auto mt-12 max-w-3xl rounded-premium border border-silver/50 bg-white px-5 py-3 shadow-[0_12px_40px_rgba(14,27,51,0.05)] sm:px-8 sm:py-4">
+      <div class="mx-auto mt-12 max-w-3xl rounded-premium border border-silver/50 bg-white px-5 py-3 shadow-[0_12px_40px_rgba(10,14,20,0.05)] sm:px-8 sm:py-4">
         <div
           v-for="(item, idx) in items"
           :key="item.q"

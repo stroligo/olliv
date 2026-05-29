@@ -16,18 +16,18 @@ A identidade visual da OLLIV transmite:
 
 | Token         | HEX     | Uso                   |
 | ------------- | ------- | --------------------- |
-| primary       | #0E1B33 | Fundo principal       |
-| primary-light | #16284D | Hover / cards         |
-| primary-dark  | #09101F | Background escuro     |
-| gold          | #C9A44A | CTA / destaques       |
-| gold-light    | #D8B763 | Hover dourado         |
-| gold-dark     | #A8842F | Bordas / detalhes     |
+| primary-dark  | #0A0E14 | Fundo mais escuro     |
+| primary       | #14284B | Fundo principal       |
+| primary-light | #1E3568 | Hover / cards         |
+| gold-dark     | #9B7A46 | Bordas / detalhes     |
+| gold          | #C8A165 | CTA / destaques       |
+| gold-light    | #D9B882 | Hover dourado         |
 | white         | #FFFFFF | Fundo claro           |
-| off-white     | #F7F7F5 | Background secundário |
-| silver        | #C8CCD3 | Bordas suaves         |
-| text          | #EAECEF | Texto em fundo escuro |
-| text-dark     | #111827 | Texto em fundo claro  |
-| muted         | #94A3B8 | Texto secundário      |
+| off-white     | #F4F4F3 | Background secundário |
+| silver        | #D1D3D4 | Bordas suaves         |
+| text          | #FFFFFF | Texto em fundo escuro |
+| text-dark     | #0A0E14 | Texto em fundo claro  |
+| muted         | #9BA3AD | Texto secundário      |
 
 ---
 
@@ -95,16 +95,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#0E1B33',
-        'primary-light': '#16284D',
-        'primary-dark': '#09101F',
+        primary: '#14284B',
+        'primary-light': '#1E3568',
+        'primary-dark': '#0A0E14',
 
-        gold: '#C9A44A',
-        'gold-light': '#D8B763',
-        'gold-dark': '#A8842F',
+        gold: '#C8A165',
+        'gold-light': '#D9B882',
+        'gold-dark': '#9B7A46',
 
         white: '#FFFFFF',
-        silver: '#C8CCD3',
+        silver: '#D1D3D4',
       },
 
       fontFamily: {

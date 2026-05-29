@@ -15,6 +15,12 @@ export const SITE_ORIGIN = 'https://www.ollivpericias.com.br' as const
 /** Texto do rodapé / cópias que mostram apenas o host. */
 export const SITE_ORIGIN_DISPLAY = 'www.ollivpericias.com.br' as const
 
+/** Logo institucional (WebP) — wordmark completo e ícone para favicon / rodapé. */
+export const SITE_LOGO_PATH = '/images/logo.webp' as const
+export const SITE_LOGO_ICON_PATH = '/images/logo-icon.webp' as const
+export const SITE_LOGO_WIDTH = 4564 as const
+export const SITE_LOGO_HEIGHT = 1502 as const
+
 export const DR_MESSIAS_SHORT = 'Dr. Messias' as const
 
 export const WHATSAPP_MESSAGES = {

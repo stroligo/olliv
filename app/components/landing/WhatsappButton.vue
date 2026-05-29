@@ -13,7 +13,7 @@ const props = withDefaults(
     /** Rótulo para `dataLayer` (evento `whatsapp_cta`) — opcional */
     analyticsLabel?: string
   }>(),
-  { variant: 'primary', dense: false, darkOffset: false, analyticsLabel: undefined },
+  { variant: 'primary', dense: false, darkOffset: false, analyticsLabel: undefined }
 )
 
 function onCtaClick() {
@@ -21,11 +21,9 @@ function onCtaClick() {
 }
 
 const variants: Record<Variant, string> = {
-  primary:
-    'bg-gold text-primary-dark hover:bg-gold-light shadow-premium focus-visible:ring-gold-dark',
+  primary: 'olliv-btn-gold focus-visible:ring-gold-dark',
   secondary: 'bg-primary text-white hover:bg-primary-light shadow-premium focus-visible:ring-gold',
-  outline:
-    'border-2 border-gold bg-transparent text-gold hover:bg-gold hover:text-primary-dark focus-visible:ring-gold',
+  outline: 'olliv-btn-gold-outline focus-visible:ring-gold',
 }
 </script>
 

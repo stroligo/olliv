@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { SITE_LOGO_HEIGHT, SITE_LOGO_PATH, SITE_LOGO_WIDTH } from '~/constants/siteMarketing'
+
 const open = ref(false)
 
 const whatsappHref = useWhatsAppHref()
@@ -111,7 +113,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
       class="fixed inset-x-0 top-0 z-50 overflow-hidden bg-white backdrop-blur-lg transition-[transform,box-shadow] duration-300 ease-out"
       :class="[
         barHidden ? '-translate-y-full shadow-none' : 'translate-y-0',
-        scrolled ? 'shadow-[0_8px_30px_rgba(14,27,51,0.08)]' : 'shadow-none',
+        scrolled ? 'shadow-[0_8px_30px_rgba(10,14,20,0.08)]' : 'shadow-none',
       ]"
     >
       <div
@@ -128,12 +130,12 @@ const barHidden = computed(() => headerHidden.value && !open.value)
           @click="closeMenu"
         >
           <img
-            :src="publicPath('/images/logo_nobg.png')"
+            :src="publicPath(SITE_LOGO_PATH)"
             alt="OLLIV Perícia Médica"
             class="w-auto object-contain transition-[height] duration-300 ease-out"
             :class="compact ? 'h-7 sm:h-8 md:h-[2.375rem]' : 'h-10 sm:h-11 md:h-[3.25rem]'"
-            width="200"
-            height="52"
+            :width="SITE_LOGO_WIDTH"
+            :height="SITE_LOGO_HEIGHT"
             decoding="async"
           />
         </a>

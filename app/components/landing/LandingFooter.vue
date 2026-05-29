@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { pushWhatsAppCtaClick } from '~/composables/useWhatsApp'
-import { OLLIV_CONTACT_EMAIL, SITE_ORIGIN, SITE_ORIGIN_DISPLAY } from '~/constants/siteMarketing'
+import {
+  OLLIV_CONTACT_EMAIL,
+  SITE_LOGO_HEIGHT,
+  SITE_LOGO_PATH,
+  SITE_LOGO_WIDTH,
+  SITE_ORIGIN,
+  SITE_ORIGIN_DISPLAY,
+} from '~/constants/siteMarketing'
 
 const wa = useWhatsAppHref()
+const publicPath = usePublicPath()
 </script>
 
 <template>
@@ -12,10 +20,14 @@ const wa = useWhatsAppHref()
         class="flex flex-col gap-12 border-b border-primary-light/90 pb-12 md:flex-row md:justify-between"
       >
         <div>
-          <p class="font-heading text-2xl font-bold tracking-tight text-white">OLLIV</p>
-          <p class="mt-1 font-body text-caption font-medium uppercase tracking-[0.22em] text-gold">
-            Perícia Médica
-          </p>
+          <img
+            :src="publicPath(SITE_LOGO_PATH)"
+            alt="OLLIV Perícia Médica"
+            class="h-10 w-auto brightness-0 invert sm:h-11"
+            :width="SITE_LOGO_WIDTH"
+            :height="SITE_LOGO_HEIGHT"
+            decoding="async"
+          />
           <p class="mt-6 max-w-sm font-body text-small leading-relaxed text-text/85">
             Assistência técnica médica estratégica para processos judiciais complexos. Foco em
             pareceres sólidos e comunicação clara com o foro.

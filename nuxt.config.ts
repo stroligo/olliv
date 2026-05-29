@@ -108,7 +108,7 @@ export default defineNuxtConfig({
           content: SITE_SEO.description,
         },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'theme-color', content: '#0E1B33' },
+        { name: 'theme-color', content: '#0A0E14' },
       ],
       link: [
         {

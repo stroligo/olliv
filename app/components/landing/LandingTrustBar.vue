@@ -40,7 +40,7 @@ const items = [
         <article
           v-for="(item, i) in items"
           :key="item.title"
-          class="landing-reveal-item group flex flex-col rounded-premium border border-silver/10 bg-gradient-to-br from-white to-off-white px-7 pb-8 pt-9 shadow-[0_14px_40px_rgba(14,27,51,0.06)] hover:border-gold-dark/35 hover:shadow-premium"
+          class="landing-reveal-item group flex flex-col rounded-premium border border-silver/10 bg-gradient-to-br from-white to-off-white px-7 pb-8 pt-9 shadow-[0_14px_40px_rgba(10,14,20,0.06)] hover:border-gold-dark/35 hover:shadow-premium"
           :style="{ '--rv-i': i }"
         >
           <div

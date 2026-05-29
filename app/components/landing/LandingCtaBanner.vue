@@ -15,7 +15,7 @@ const { revealRoot, isVisible } = useRevealSection()
     aria-labelledby="cta-heading"
   >
     <div
-      class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(201,164,74,0.12),transparent_45%)]"
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(200,161,101,0.12),transparent_45%)]"
     />
     <div
       class="landing-reveal-block relative mx-auto max-w-content px-4 text-center sm:px-6 lg:px-8"

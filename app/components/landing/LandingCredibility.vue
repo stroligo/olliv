@@ -37,7 +37,7 @@ const publicPath = usePublicPath()
         >
           <figure class="" :style="{ '--rv-i': 0 }">
             <div
-              class="overflow-hidden rounded-premium border border-silver shadow-[0_20px_50px_rgba(14,27,51,0.1)] ring-2 ring-primary/5"
+              class="overflow-hidden rounded-premium border border-silver shadow-[0_20px_50px_rgba(10,14,20,0.1)] ring-2 ring-primary/5"
             >
               <img
                 :src="publicPath('/images/Messias_jaleco.jpeg')"
@@ -105,7 +105,7 @@ const publicPath = usePublicPath()
           </ul>
 
           <div
-            class="mt-10 grid gap-6 rounded-premium border border-gold/25 bg-white p-8 shadow-[0_18px_45px_rgba(14,27,51,0.06)] sm:grid-cols-3 sm:gap-4"
+            class="mt-10 grid gap-6 rounded-premium border border-gold/25 bg-white p-8 shadow-[0_18px_45px_rgba(10,14,20,0.06)] sm:grid-cols-3 sm:gap-4"
           >
             <div
               class="cred-copy-reveal border-b border-silver/80 pb-6 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-4"
@@ -180,7 +180,7 @@ const publicPath = usePublicPath()
         </h2>
 
         <div
-          class="cred-cv-reveal cred-mini-cv mt-6 rounded-premium border border-silver/80 bg-white p-5 shadow-[0_12px_32px_rgba(14,27,51,0.06)] sm:mt-8 sm:p-6 lg:p-8"
+          class="cred-cv-reveal cred-mini-cv mt-6 rounded-premium border border-silver/80 bg-white p-5 shadow-[0_12px_32px_rgba(10,14,20,0.06)] sm:mt-8 sm:p-6 lg:p-8"
           style="--cred-cv-i: 2"
         >
           <p class="font-body text-small leading-relaxed text-muted lg:max-w-4xl">

@@ -112,6 +112,8 @@ const orgLdInner = computed(() => {
         ...serviceLd,
         '@id': `${siteUrl}/#business`,
         url: siteUrl,
+        logo: `${siteUrl}/images/logo.webp`,
+        image: `${siteUrl}/images/logo.webp`,
       },
     ],
   })
