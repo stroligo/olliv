@@ -252,7 +252,7 @@ onBeforeUnmount(() => {
             <p class="font-heading text-h4 font-semibold leading-snug text-gold-light sm:text-h3">
               {{ activeSlide.lead }}
             </p>
-            <p class="mt-3 font-body text-body leading-relaxed text-text/93 sm:text-body-lg">
+            <p class="mt-3 hidden font-body text-body leading-relaxed text-text/93 sm:block sm:text-body-lg">
               {{ activeSlide.body }}
             </p>
           </div>
@@ -437,7 +437,7 @@ onBeforeUnmount(() => {
   }
 
   .hero-portrait__frame {
-    padding-top: 0;
+    padding-top: 32px;
   }
 
   .hero-portrait__img {
