@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1600" height="600" viewBox="0 0 1600 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2BE63"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="600" fill="#061B3A"/>
+
+  <!-- Outer O -->
+  <ellipse cx="300" cy="300" rx="120" ry="170"
+           fill="none" stroke="url(#gold)" stroke-width="22"/>
+
+  <!-- Simplified medical symbol -->
+  <line x1="300" y1="180" x2="300" y2="430"
+        stroke="url(#gold)" stroke-width="12"/>
+
+  <!-- Wings -->
+  <path d="M250 205 Q210 210 185 185 Q210 230 270 220"
+        fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M350 205 Q390 210 415 185 Q390 230 330 220"
+        fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Serpent -->
+  <path d="M300 240
+           C260 260, 340 280, 300 300
+           C260 320, 340 340, 300 360
+           C270 375, 310 395, 300 420"
+        fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Brand name -->
+  <text x="520" y="330"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="150"
+        letter-spacing="10"
+        fill="url(#gold)">
+        OLLIV
+  </text>
+
+  <text x="525" y="420"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="58"
+        letter-spacing="8"
+        fill="#F5F5F5">
+        PERÍCIA MÉDICA
+  </text>
+</svg>

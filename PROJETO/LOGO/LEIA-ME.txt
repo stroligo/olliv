@@ -1,0 +1,10 @@
+
+Este SVG foi estruturado para abrir corretamente no Adobe Illustrator.
+Ao abrir:
+1. Abra o arquivo .svg no Illustrator
+2. Vá em Object > Expand Appearance
+3. Converta textos em curvas se desejar:
+   Type > Create Outlines
+4. Salve como .AI
+
+Todos os elementos estão vetorizados e editáveis.
