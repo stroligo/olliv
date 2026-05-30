@@ -40,11 +40,11 @@ const publicPath = usePublicPath()
               class="overflow-hidden rounded-premium border border-card-border shadow-[0_20px_50px_rgba(10,14,20,0.1)]"
             >
               <img
-                :src="publicPath('/images/Messias_jaleco.jpeg')"
-                alt="Dr. José Messias Oliveira Júnior em ambiente hospitalar — jaleco, contexto técnico e clínico."
+                :src="publicPath('/images/messias-terno.webp')"
+                alt="Dr. José Messias Oliveira Júnior — retrato profissional de terno, contexto institucional da OLLIV."
                 class="aspect-[4/5] h-auto w-full object-cover object-top"
-                width="720"
-                height="900"
+                width="768"
+                height="1024"
                 loading="lazy"
                 decoding="async"
               />

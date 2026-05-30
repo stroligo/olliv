@@ -6,7 +6,7 @@
  */
 import { defineAsyncComponent } from 'vue'
 import { OLLIV_WHATSAPP_E164 } from '~/composables/useWhatsApp'
-import { OLLIV_CONTACT_EMAIL, SITE_SEO } from '~/constants/siteMarketing'
+import { OLLIV_CONTACT_EMAIL, SITE_LOGO_PATH, SITE_SEO } from '~/constants/siteMarketing'
 
 /** Code-splitting: secções abaixo da dobra em chunks separados (menos JS inicial no cliente). */
 const LandingMetrics = defineAsyncComponent(
@@ -112,8 +112,8 @@ const orgLdInner = computed(() => {
         ...serviceLd,
         '@id': `${siteUrl}/#business`,
         url: siteUrl,
-        logo: `${siteUrl}/images/logo.webp`,
-        image: `${siteUrl}/images/logo.webp`,
+        logo: `${siteUrl}${SITE_LOGO_PATH}`,
+        image: `${siteUrl}${SITE_LOGO_PATH}`,
       },
     ],
   })
