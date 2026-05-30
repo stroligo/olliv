@@ -25,7 +25,7 @@ const points = [
   <section
     id="diferenciais"
     ref="revealRoot"
-    class="bg-primary py-20 text-text md:py-24"
+    class="bg-primary-dark py-20 text-text md:py-24"
     :class="{ 'landing-section--visible': isVisible }"
     aria-labelledby="diff-heading"
   >
@@ -69,7 +69,7 @@ const points = [
         <LandingWhatsappButton
           :href="triagemHref"
           label="Falar com o Dr. Messias"
-          variant="outline-navy"
+          variant="primary"
           :dark-offset="true"
           analytics-label="cta_diferenciais_triagem"
         />

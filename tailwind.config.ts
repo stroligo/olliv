@@ -7,6 +7,7 @@ export default {
     './app/pages/**/*.vue',
     './app/plugins/**/*.{js,ts}',
     './app/app.vue',
+    './app/error.vue',
     './error.vue',
   ],
   theme: {
@@ -15,6 +16,7 @@ export default {
         primary: 'var(--color-primary)',
         'primary-light': 'var(--color-primary-light)',
         'primary-dark': 'var(--color-primary-dark)',
+        'card-border': 'var(--color-card-border)',
         gold: 'var(--color-gold)',
         'gold-light': 'var(--color-gold-light)',
         'gold-dark': 'var(--color-gold-dark)',

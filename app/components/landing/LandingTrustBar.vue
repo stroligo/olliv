@@ -30,7 +30,7 @@ const items = [
 <template>
   <section
     ref="revealRoot"
-    class="border-y border-silver/70 bg-white py-14 md:py-16"
+    class="bg-[#09101c] py-14 md:py-16"
     :class="{ 'landing-section--visible': isVisible }"
     aria-labelledby="trust-heading"
   >
@@ -40,11 +40,11 @@ const items = [
         <article
           v-for="(item, i) in items"
           :key="item.title"
-          class="landing-reveal-item group flex flex-col rounded-premium border border-silver/10 bg-gradient-to-br from-white to-off-white px-7 pb-8 pt-9 shadow-[0_14px_40px_rgba(10,14,20,0.06)] hover:border-gold-dark/35 hover:shadow-premium"
+          class="landing-reveal-item group flex flex-col rounded-premium border border-silver/10 bg-gradient-to-br from-white to-off-white px-5 pb-6 pt-6 shadow-[0_14px_40px_rgba(10,14,20,0.06)] hover:border-gold-dark/35 hover:shadow-premium md:px-7 md:pb-8 md:pt-9"
           :style="{ '--rv-i': i }"
         >
           <div
-            class="mx-auto mb-7 flex size-[4.75rem] shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-gold/22 via-gold/10 to-transparent text-gold-dark shadow-inner shadow-black/5 transition-transform duration-300 group-hover:scale-[1.04] md:size-[5rem]"
+            class="mx-auto mb-5 flex size-[4.75rem] shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-gold/22 via-gold/10 to-transparent text-gold-dark shadow-inner shadow-black/5 transition-transform duration-300 group-hover:scale-[1.04] md:mb-7 md:size-[5rem]"
           >
             <component
               :is="item.icon"

@@ -37,7 +37,7 @@ const publicPath = usePublicPath()
         >
           <figure class="" :style="{ '--rv-i': 0 }">
             <div
-              class="overflow-hidden rounded-premium border border-silver shadow-[0_20px_50px_rgba(10,14,20,0.1)] ring-2 ring-primary/5"
+              class="overflow-hidden rounded-premium border border-card-border shadow-[0_20px_50px_rgba(10,14,20,0.1)]"
             >
               <img
                 :src="publicPath('/images/Messias_jaleco.jpeg')"

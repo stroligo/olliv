@@ -144,8 +144,8 @@ useHead(() => ({
       <LandingDifferentials />
       <LandingProcess />
       <LandingCredibility />
-      <LandingFaq />
       <LandingCtaBanner />
+      <LandingFaq />
     </main>
     <LandingFooter />
     <LandingWhatsappFab />

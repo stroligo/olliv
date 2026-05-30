@@ -20,8 +20,8 @@ const links = [
   { href: '#servicos', label: 'Serviços' },
   { href: '#sobre', label: 'Sobre' },
   { href: '#diferenciais', label: 'Diferenciais' },
-  { href: '#faq', label: 'Dúvidas' },
   { href: '#contato', label: 'Contato' },
+  { href: '#faq', label: 'Dúvidas' },
 ]
 
 function measureShell() {

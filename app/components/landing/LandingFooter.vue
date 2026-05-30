@@ -14,7 +14,7 @@ const publicPath = usePublicPath()
 </script>
 
 <template>
-  <footer class="bg-primary py-14 text-text" role="contentinfo">
+  <footer class="bg-[#09101c] py-14 text-text" role="contentinfo">
     <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
       <div
         class="flex flex-col gap-12 border-b border-primary-light/90 pb-12 md:flex-row md:justify-between"
@@ -51,12 +51,7 @@ const publicPath = usePublicPath()
                 }}</a>
               </li>
               <li>
-                <a
-                  :href="SITE_ORIGIN"
-                  class="hover:text-gold-light"
-                  target="_blank"
-                  rel="noopener"
-                >
+                <a :href="SITE_ORIGIN" class="hover:text-gold-light" target="_blank" rel="noopener">
                   {{ SITE_ORIGIN_DISPLAY }}
                 </a>
               </li>

@@ -7,7 +7,7 @@ const { revealRoot, isVisible } = useRevealSection()
 <template>
   <section
     ref="revealRoot"
-    class="border-y border-silver/50 bg-primary py-10 md:py-12"
+    class="border-y border-white/10 bg-primary-dark py-10 md:py-12"
     :class="{ 'landing-section--visible': isVisible }"
     aria-label="Destaques de atendimento"
   >

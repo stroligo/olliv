@@ -71,7 +71,7 @@ const services = [
         <li
           v-for="(svc, i) in services"
           :key="svc.title"
-          class="landing-reveal-item group relative flex flex-col overflow-hidden rounded-premium border border-silver/20 bg-white p-9 pb-10 shadow-[0_12px_44px_rgba(10,14,20,0.07)] ring-1 ring-primary/5 hover:border-gold-dark/30 hover:shadow-premium"
+          class="landing-reveal-item group relative flex flex-col overflow-hidden rounded-premium border border-card-border bg-white p-5 pb-6 shadow-[0_12px_44px_rgba(10,14,20,0.07)] hover:border-gold-dark/30 hover:shadow-premium md:p-9 md:pb-10"
           :style="{ '--rv-i': i }"
         >
           <div
@@ -79,7 +79,7 @@ const services = [
             aria-hidden="true"
           />
           <div
-            class="mx-auto mb-8 flex size-[5.25rem] items-center justify-center rounded-2xl bg-gradient-to-br from-gold/25 via-gold/14 to-transparent text-gold-dark shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] transition-transform duration-300 group-hover:scale-[1.045] lg:size-[5.5rem]"
+            class="mx-auto mb-5 flex size-[5.25rem] items-center justify-center rounded-2xl bg-gradient-to-br from-gold/25 via-gold/14 to-transparent text-gold-dark shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] transition-transform duration-300 group-hover:scale-[1.045] md:mb-8 lg:size-[5.5rem]"
           >
             <component
               :is="svc.icon"

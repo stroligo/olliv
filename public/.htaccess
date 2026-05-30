@@ -12,3 +12,6 @@
   RewriteCond %{HTTP_HOST} ^ollivpericias\.com\.br$ [NC]
   RewriteRule ^ https://www.ollivpericias.com.br%{REQUEST_URI} [L,R=301,NE]
 </IfModule>
+
+# Página 404 da OLLIV (gerada em /404/index.html pelo `nuxt generate`)
+ErrorDocument 404 /404/index.html

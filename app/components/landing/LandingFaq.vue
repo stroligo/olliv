@@ -49,7 +49,7 @@ const items = FAQ_ITEMS
         </h2>
         <p class="mx-auto mt-5 max-w-2xl font-body text-body-lg text-muted">
           Esclarecimentos rápidos sobre prazos, formatos e limites do papel técnico. Se preferir,
-          vá direto ao contacto no fim da secção.
+          fale diretamente no WhatsApp pela secção de contacto acima.
         </p>
       </div>
 

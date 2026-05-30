@@ -50,13 +50,22 @@ export default defineNuxtConfig({
     [rootedPath('/favicon.ico')]: {
       headers: { 'cache-control': 'public, max-age=604800' },
     },
-    [rootedPath('/favicon-16x16.png')]: {
+    [rootedPath('/favicon.svg')]: {
       headers: { 'cache-control': 'public, max-age=604800' },
     },
-    [rootedPath('/favicon-32x32.png')]: {
+    [rootedPath('/favicon-96x96.png')]: {
       headers: { 'cache-control': 'public, max-age=604800' },
     },
     [rootedPath('/apple-touch-icon.png')]: {
+      headers: { 'cache-control': 'public, max-age=604800' },
+    },
+    [rootedPath('/site.webmanifest')]: {
+      headers: { 'cache-control': 'public, max-age=604800' },
+    },
+    [rootedPath('/web-app-manifest-192x192.png')]: {
+      headers: { 'cache-control': 'public, max-age=604800' },
+    },
+    [rootedPath('/web-app-manifest-512x512.png')]: {
       headers: { 'cache-control': 'public, max-age=604800' },
     },
   },
@@ -97,6 +106,13 @@ export default defineNuxtConfig({
     },
   },
 
+  /** Página 404 estática para Apache (`ErrorDocument 404 /404/index.html`). */
+  nitro: {
+    prerender: {
+      routes: ['/404'],
+    },
+  },
+
   app: {
     baseURL: appBaseURL,
     head: {
@@ -113,25 +129,28 @@ export default defineNuxtConfig({
       link: [
         {
           rel: 'icon',
+          type: 'image/svg+xml',
+          href: joinURL(appBaseURL, 'favicon.svg'),
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: joinURL(appBaseURL, 'favicon-96x96.png'),
+          sizes: '96x96',
+        },
+        {
+          rel: 'icon',
           type: 'image/x-icon',
           href: joinURL(appBaseURL, 'favicon.ico'),
-        },
-        {
-          rel: 'icon',
-          type: 'image/png',
-          href: joinURL(appBaseURL, 'favicon-32x32.png'),
-          sizes: '32x32',
-        },
-        {
-          rel: 'icon',
-          type: 'image/png',
-          href: joinURL(appBaseURL, 'favicon-16x16.png'),
-          sizes: '16x16',
         },
         {
           rel: 'apple-touch-icon',
           href: joinURL(appBaseURL, 'apple-touch-icon.png'),
           sizes: '180x180',
+        },
+        {
+          rel: 'manifest',
+          href: joinURL(appBaseURL, 'site.webmanifest'),
         },
       ],
     },
