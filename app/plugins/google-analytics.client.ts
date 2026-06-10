@@ -1,16 +1,28 @@
 /**
- * Google tag (gtag.js) — GA4.
- * Só carrega no cliente; ID vazio (ex. dev sem env) desliga o script.
+ * Google tag (gtag.js) — GA4 + Google Ads (mesmo `dataLayer`).
+ * Só carrega no cliente; IDs vazios (ex. dev sem env) desligam o script.
  */
 export default defineNuxtPlugin(() => {
-  const measurementId = String(useRuntimeConfig().public.googleAnalyticsId ?? '').trim()
+  const config = useRuntimeConfig().public
+  const measurementId = String(config.googleAnalyticsId ?? '').trim()
+  const adsId = String(config.googleAdsId ?? '').trim()
+  const tagIds = [measurementId, adsId].filter(Boolean)
 
-  if (!measurementId) return
+  if (!tagIds.length) return
+
+  const configLines = [
+    measurementId
+      ? `gtag('config', '${measurementId}', { send_page_view: true });`
+      : '',
+    adsId ? `gtag('config', '${adsId}');` : '',
+  ]
+    .filter(Boolean)
+    .join('\n          ')
 
   useHead({
     script: [
       {
-        src: `https://www.googletagmanager.com/gtag/js?id=${measurementId}`,
+        src: `https://www.googletagmanager.com/gtag/js?id=${tagIds[0]}`,
         async: true,
       },
       {
@@ -18,13 +30,15 @@ export default defineNuxtPlugin(() => {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${measurementId}', { send_page_view: true });
+          ${configLines}
         `,
         type: 'text/javascript',
         tagPosition: 'head',
       },
     ],
   })
+
+  if (!measurementId) return
 
   const router = useRouter()
 

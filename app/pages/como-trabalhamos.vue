@@ -10,7 +10,7 @@ useSeoMeta({
 
 const siteUrl = usePublicSiteUrl()
 useHead(() => ({
-  link: siteUrl ? [{ rel: 'canonical', href: `${siteUrl}/como-trabalhamos` }] : [],
+  link: siteUrl ? [{ rel: 'canonical', href: `${siteUrl}/como-trabalhamos/` }] : [],
 }))
 </script>
 

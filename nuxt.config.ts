@@ -2,6 +2,11 @@
 import { joinURL } from 'ufo'
 
 import { SITE_ORIGIN, SITE_SEO } from './app/constants/siteMarketing'
+import {
+  GOOGLE_ADS_CONTATO_CONVERSION,
+  GOOGLE_ADS_ID,
+  GOOGLE_ANALYTICS_ID,
+} from './app/constants/analytics'
 
 /**
  * Produção OLLIV (`https://www.ollivpericias.com.br/`) → raiz do domínio: omitir `NUXT_APP_BASE_URL` (fica `/`).
@@ -32,7 +37,15 @@ export default defineNuxtConfig({
       /** GA4; vazio em dev se `NUXT_PUBLIC_GOOGLE_ANALYTICS_ID=""`. Produção: `G-FGLW3DYBEH`. */
       googleAnalyticsId:
         process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID ??
-        (process.env.NODE_ENV === 'production' ? 'G-FGLW3DYBEH' : ''),
+        (process.env.NODE_ENV === 'production' ? GOOGLE_ANALYTICS_ID : ''),
+      /** Google Ads; vazio em dev se `NUXT_PUBLIC_GOOGLE_ADS_ID=""`. */
+      googleAdsId:
+        process.env.NUXT_PUBLIC_GOOGLE_ADS_ID ??
+        (process.env.NODE_ENV === 'production' ? GOOGLE_ADS_ID : ''),
+      /** Snippet de conversão "Contato" (`send_to` completo). */
+      googleAdsContatoConversion:
+        process.env.NUXT_PUBLIC_GOOGLE_ADS_CONTATO_CONVERSION ??
+        (process.env.NODE_ENV === 'production' ? GOOGLE_ADS_CONTATO_CONVERSION : ''),
     },
   },
 
@@ -115,6 +128,8 @@ export default defineNuxtConfig({
 
   app: {
     baseURL: appBaseURL,
+    /** Alinhado ao Hostinger: subpáginas servidas em `/rota/` (evita 301 no GSC). */
+    trailingSlash: 'append',
     head: {
       title: SITE_SEO.title,
       htmlAttrs: { lang: 'pt-BR' },

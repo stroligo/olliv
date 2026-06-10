@@ -15,7 +15,24 @@ export function useWhatsAppHrefForService(serviceTitle: string) {
 }
 
 /**
- * Clique em CTA WhatsApp — `dataLayer` + evento GA4 (`whatsapp_cta`).
+ * Conversão Google Ads — evento "Contato" (clique em CTA WhatsApp).
+ * Equivalente ao snippet `gtag_report_conversion` do Google Ads.
+ */
+export function pushGoogleAdsContatoConversion() {
+  if (!import.meta.client || typeof window === 'undefined') return
+
+  const sendTo = String(useRuntimeConfig().public.googleAdsContatoConversion ?? '').trim()
+  if (!sendTo || typeof window.gtag !== 'function') return
+
+  window.gtag('event', 'conversion', {
+    send_to: sendTo,
+    value: 1.0,
+    currency: 'BRL',
+  })
+}
+
+/**
+ * Clique em CTA WhatsApp — `dataLayer` + GA4 (`whatsapp_cta`) + conversão Google Ads.
  * Registre `cta_label` como parâmetro personalizado no GA4, se quiser relatórios por rótulo.
  */
 export function pushWhatsAppCtaClick(label: string) {
@@ -23,4 +40,5 @@ export function pushWhatsAppCtaClick(label: string) {
   window.dataLayer = window.dataLayer ?? []
   window.dataLayer.push({ event: 'whatsapp_cta', cta_label: label })
   window.gtag?.('event', 'whatsapp_cta', { cta_label: label })
+  pushGoogleAdsContatoConversion()
 }

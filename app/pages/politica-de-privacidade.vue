@@ -11,7 +11,7 @@ useSeoMeta({
 const siteUrl = usePublicSiteUrl()
 useHead(() => ({
   link: siteUrl
-    ? [{ rel: 'canonical', href: `${siteUrl}/politica-de-privacidade` }]
+    ? [{ rel: 'canonical', href: `${siteUrl}/politica-de-privacidade/` }]
     : [],
 }))
 </script>
