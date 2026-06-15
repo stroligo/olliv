@@ -2,9 +2,9 @@
 import { pushWhatsAppCtaClick } from '~/composables/useWhatsApp'
 import {
   OLLIV_CONTACT_EMAIL,
-  SITE_LOGO_HEIGHT,
-  SITE_LOGO_LIGHT_PATH,
-  SITE_LOGO_WIDTH,
+  SITE_LOGO_HEADER_HEIGHT,
+  SITE_LOGO_LIGHT_HEADER_PATH,
+  SITE_LOGO_HEADER_WIDTH,
   SITE_ORIGIN,
   SITE_ORIGIN_DISPLAY,
 } from '~/constants/siteMarketing'
@@ -21,11 +21,12 @@ const publicPath = usePublicPath()
       >
         <div>
           <img
-            :src="publicPath(SITE_LOGO_LIGHT_PATH)"
+            :src="publicPath(SITE_LOGO_LIGHT_HEADER_PATH)"
             alt="OLLIV Perícia Médica"
             class="h-10 w-auto sm:h-11"
-            :width="SITE_LOGO_WIDTH"
-            :height="SITE_LOGO_HEIGHT"
+            :width="SITE_LOGO_HEADER_WIDTH"
+            :height="SITE_LOGO_HEADER_HEIGHT"
+            loading="lazy"
             decoding="async"
           />
           <p class="mt-6 max-w-sm font-body text-small leading-relaxed text-text/85">

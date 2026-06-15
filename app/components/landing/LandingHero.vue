@@ -11,7 +11,35 @@ let slideTimer: ReturnType<typeof setInterval> | undefined
 
 const publicPath = usePublicPath()
 
-const heroPortraitSrc = computed(() => publicPath('/images/Messias_terno_nobg.png'))
+useHead(() => ({
+  link: [
+    {
+      rel: 'preload',
+      as: 'image',
+      href: publicPath('/images/Messias_terno_nobg-512.webp'),
+      type: 'image/webp',
+      fetchpriority: 'high',
+      media: '(max-width: 1023px)',
+    },
+    {
+      rel: 'preload',
+      as: 'image',
+      href: publicPath('/images/Messias_terno_nobg.webp'),
+      type: 'image/webp',
+      fetchpriority: 'high',
+      media: '(min-width: 1024px)',
+    },
+  ],
+}))
+
+const heroPortraitSrc = computed(() => publicPath('/images/Messias_terno_nobg-512.webp'))
+const heroPortraitSrcset = computed(
+  () =>
+    `${publicPath('/images/Messias_terno_nobg-512.webp')} 512w, ${publicPath('/images/Messias_terno_nobg.webp')} 846w`,
+)
+const heroBgStyle = computed(() => ({
+  '--hero-bg-url': `url(${publicPath('/images/bg-hero-sm.webp')})`,
+}))
 const heroPortraitAlt =
   'Dr. José Messias Oliveira Júnior, perito médico, retrato profissional em terno.'
 
@@ -119,6 +147,21 @@ function smoothTick() {
   }
 }
 
+function scheduleParallax() {
+  const start = () => {
+    bumpParallax()
+    window.addEventListener('scroll', bumpParallax, { passive: true })
+    heroRootEl?.addEventListener('scroll', bumpParallax, { passive: true })
+    heroRootEl?.addEventListener('pointermove', onHeroPointerMove, { passive: true })
+    heroRootEl?.addEventListener('pointerleave', onHeroPointerLeave)
+  }
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(start, { timeout: 1500 })
+  } else {
+    start()
+  }
+}
+
 function bumpParallax() {
   const spot = spotlightEl.value
   if (!spot || !heroSectionRef.value) return
@@ -179,12 +222,7 @@ onMounted(() => {
     }, 9000)
   }
 
-  bumpParallax()
-  window.addEventListener('scroll', bumpParallax, { passive: true })
-  heroRootEl?.addEventListener('scroll', bumpParallax, { passive: true })
-
-  heroRootEl?.addEventListener('pointermove', onHeroPointerMove, { passive: true })
-  heroRootEl?.addEventListener('pointerleave', onHeroPointerLeave)
+  scheduleParallax()
 })
 
 onBeforeUnmount(() => {
@@ -214,18 +252,12 @@ onBeforeUnmount(() => {
     class="hero-section relative flex max-h-[calc(100svh-6rem)] min-h-0 flex-col overflow-y-auto overflow-x-hidden text-text lg:overflow-hidden"
     aria-labelledby="hero-heading"
   >
-    <!-- Textura de fundo: mix-blend-mode em .hero-section__bg-img (ver CSS) -->
-    <div class="hero-section__bg pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-      <img
-        :src="publicPath('/images/bg-hero.webp')"
-        alt=""
-        class="hero-section__bg-img size-full object-cover"
-        width="1536"
-        height="1024"
-        decoding="async"
-        fetchpriority="low"
-      />
-    </div>
+    <!-- Textura de fundo: só desktop (CSS), mobile usa gradientes — não compete com LCP -->
+    <div
+      class="hero-section__bg pointer-events-none absolute inset-0 z-0"
+      aria-hidden="true"
+      :style="heroBgStyle"
+    />
 
     <div
       class="relative z-10 mx-auto flex min-h-0 w-full max-w-content flex-1 flex-col px-4 sm:px-6 lg:px-8 overflow-hidden md:overflow-visible"
@@ -256,7 +288,9 @@ onBeforeUnmount(() => {
                 aria-live="polite"
                 aria-atomic="true"
               >
-                <p class="font-heading text-h4 font-semibold leading-snug text-gold-light sm:text-h3">
+                <p
+                  class="font-heading text-h4 font-semibold leading-snug text-gold-light sm:text-h3"
+                >
                   {{ activeSlide.lead }}
                 </p>
                 <p
@@ -300,11 +334,12 @@ onBeforeUnmount(() => {
               <div class="hero-portrait__frame hero-portrait__reveal-img relative z-10 w-full pt-8">
                 <img
                   :src="heroPortraitSrc"
+                  :srcset="heroPortraitSrcset"
                   :alt="heroPortraitAlt"
                   class="hero-portrait__img block w-full max-h-[min(42svh,calc(100svh-14rem))] object-contain object-bottom pt-2 md:pt-0"
-                  width="880"
-                  height="1100"
-                  sizes="(max-width: 1023px) min(90vw, 18rem) min(42vw, 36rem)"
+                  width="512"
+                  height="675"
+                  sizes="(max-width: 1023px) min(90vw, 18rem), min(42vw, 36rem)"
                   loading="eager"
                   fetchpriority="high"
                   decoding="async"
@@ -319,7 +354,7 @@ onBeforeUnmount(() => {
                   Dr. José Messias Oliveira Júnior
                 </span>
                 <span class="mt-1 block font-body text-caption leading-snug text-text/92">
-                  Cirurgião geral · perícia médica judicial
+                  Cirurgião geral · Perícia Médica Judicial
                 </span>
               </div>
             </figcaption>
@@ -344,10 +379,17 @@ onBeforeUnmount(() => {
   --hero-bg-opacity: 1;
 }
 
-.hero-section__bg-img {
+.hero-section__bg {
+  background-size: cover;
+  background-position: center center;
   opacity: var(--hero-bg-opacity);
   mix-blend-mode: var(--hero-bg-blend);
-  object-position: center center;
+}
+
+@media (min-width: 1024px) {
+  .hero-section__bg {
+    background-image: var(--hero-bg-url);
+  }
 }
 
 .hero-section::before {

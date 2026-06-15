@@ -15,10 +15,17 @@ export const SITE_ORIGIN = 'https://www.ollivpericias.com.br' as const
 /** Texto do rodapé / cópias que mostram apenas o host. */
 export const SITE_ORIGIN_DISPLAY = 'www.ollivpericias.com.br' as const
 
+/** Logo no header/footer (280px — evita baixar 4564px no LCP). */
+export const SITE_LOGO_HEADER_PATH = '/images/olliv-logo-header.webp' as const
+export const SITE_LOGO_LIGHT_HEADER_PATH = '/images/olliv-logo-light-header.webp' as const
+export const SITE_LOGO_HEADER_WIDTH = 280 as const
+export const SITE_LOGO_HEADER_HEIGHT = 92 as const
+
 /** Logo oficial (WebP) — wordmark navy e versão clara para fundos escuros. */
 export const SITE_LOGO_PATH = '/images/olliv-logo.webp' as const
 export const SITE_LOGO_LIGHT_PATH = '/images/olliv-logo-light.webp' as const
 export const SITE_LOGO_ICON_PATH = '/images/logo-icon.webp' as const
+/** Dimensões do master (JSON-LD / referência). UI usa SITE_LOGO_HEADER_*. */
 export const SITE_LOGO_WIDTH = 4564 as const
 export const SITE_LOGO_HEIGHT = 1502 as const
 

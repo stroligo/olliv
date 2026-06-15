@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { SITE_LOGO_HEIGHT, SITE_LOGO_PATH, SITE_LOGO_WIDTH } from '~/constants/siteMarketing'
+import {
+  SITE_LOGO_HEADER_HEIGHT,
+  SITE_LOGO_HEADER_PATH,
+  SITE_LOGO_HEADER_WIDTH,
+} from '~/constants/siteMarketing'
 
 const open = ref(false)
 
@@ -130,18 +134,18 @@ const barHidden = computed(() => headerHidden.value && !open.value)
           @click="closeMenu"
         >
           <img
-            :src="publicPath(SITE_LOGO_PATH)"
+            :src="publicPath(SITE_LOGO_HEADER_PATH)"
             alt="OLLIV Perícia Médica"
             class="w-auto object-contain transition-[height] duration-300 ease-out"
             :class="compact ? 'h-7 sm:h-8 md:h-[2.375rem]' : 'h-10 sm:h-11 md:h-[3.25rem]'"
-            :width="SITE_LOGO_WIDTH"
-            :height="SITE_LOGO_HEIGHT"
+            :width="SITE_LOGO_HEADER_WIDTH"
+            :height="SITE_LOGO_HEADER_HEIGHT"
             decoding="async"
           />
         </a>
 
         <nav
-          class="hidden items-center font-body font-medium text-primary lg:flex"
+          class="hidden items-center font-body font-semibold text-primary lg:flex"
           :class="compact ? 'gap-6 text-caption xl:gap-7' : 'gap-8 text-small xl:gap-10'"
           aria-label="Navegação principal"
         >
@@ -217,7 +221,7 @@ const barHidden = computed(() => headerHidden.value && !open.value)
           class="border-t border-silver/40 bg-white/80 px-4 py-5 backdrop-blur-lg lg:hidden"
         >
           <nav
-            class="flex flex-col gap-4 font-body text-body font-medium text-primary"
+            class="flex flex-col gap-4 font-body text-body font-semibold text-primary"
             aria-label="Seções do site (menu móvel)"
           >
             <a

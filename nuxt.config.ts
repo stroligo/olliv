@@ -90,9 +90,14 @@ export default defineNuxtConfig({
   modules: ['@nuxt/fonts', '@nuxtjs/tailwindcss', '@nuxt/eslint'],
 
   fonts: {
+    defaults: {
+      weights: [400, 600],
+      styles: ['normal'],
+      subsets: ['latin'],
+    },
     families: [
-      { name: 'Inter', provider: 'google', weights: [400, 500, 600] },
-      { name: 'Montserrat', provider: 'google', weights: [600, 700, 800] },
+      { name: 'Inter', provider: 'google', weights: [400, 600] },
+      { name: 'Montserrat', provider: 'google', weights: [600, 700] },
     ],
   },
 

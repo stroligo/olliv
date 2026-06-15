@@ -169,4 +169,34 @@
     color: var(--color-white);
     text-shadow: 0 1px 2px rgba(10, 14, 20, 0.28);
   }
+
+  /** FAB WhatsApp — círculo verde com brilho neon */
+  .olliv-whatsapp-fab {
+    border: 2px solid #5ef08a;
+    background: radial-gradient(circle at 50% 42%, #4aef7a 0%, #25d366 52%, #1aab52 100%);
+    box-shadow:
+      0 0 10px rgba(37, 211, 102, 0.7),
+      0 0 24px rgba(37, 211, 102, 0.5),
+      0 0 44px rgba(37, 211, 102, 0.28);
+    color: #fff;
+    transition:
+      box-shadow 0.25s ease,
+      transform 0.2s ease,
+      border-color 0.25s ease;
+  }
+
+  .olliv-whatsapp-fab:hover {
+    border-color: #7ef5a0;
+    box-shadow:
+      0 0 14px rgba(37, 211, 102, 0.85),
+      0 0 32px rgba(37, 211, 102, 0.62),
+      0 0 56px rgba(37, 211, 102, 0.38);
+  }
+
+  .olliv-whatsapp-fab:active {
+    box-shadow:
+      0 0 8px rgba(37, 211, 102, 0.55),
+      0 0 18px rgba(37, 211, 102, 0.35),
+      inset 0 2px 6px rgba(0, 0, 0, 0.18);
+  }
 }

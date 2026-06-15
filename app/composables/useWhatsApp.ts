@@ -14,21 +14,26 @@ export function useWhatsAppHrefForService(serviceTitle: string) {
   return useWhatsAppHref(WHATSAPP_MESSAGES.serviceInquiry(serviceTitle))
 }
 
+import {
+  ensureGoogleAdsLoaded,
+  trackAdsContatoConversion,
+  trackWhatsAppCta,
+} from '~/utils/gtag'
+
 /**
  * Conversão Google Ads — evento "Contato" (clique em CTA WhatsApp).
- * Equivalente ao snippet `gtag_report_conversion` do Google Ads.
+ * Carrega o script do Ads só neste momento (performance).
  */
 export function pushGoogleAdsContatoConversion() {
   if (!import.meta.client || typeof window === 'undefined') return
 
-  const sendTo = String(useRuntimeConfig().public.googleAdsContatoConversion ?? '').trim()
-  if (!sendTo || typeof window.gtag !== 'function') return
+  const config = useRuntimeConfig().public
+  const sendTo = String(config.googleAdsContatoConversion ?? '').trim()
+  const adsId = String(config.googleAdsId ?? '').trim()
+  if (!sendTo) return
 
-  window.gtag('event', 'conversion', {
-    send_to: sendTo,
-    value: 1.0,
-    currency: 'BRL',
-  })
+  ensureGoogleAdsLoaded(adsId, String(config.googleAnalyticsId ?? '').trim())
+  trackAdsContatoConversion(sendTo)
 }
 
 /**
@@ -39,6 +44,6 @@ export function pushWhatsAppCtaClick(label: string) {
   if (!import.meta.client || typeof window === 'undefined') return
   window.dataLayer = window.dataLayer ?? []
   window.dataLayer.push({ event: 'whatsapp_cta', cta_label: label })
-  window.gtag?.('event', 'whatsapp_cta', { cta_label: label })
+  trackWhatsAppCta(label)
   pushGoogleAdsContatoConversion()
 }

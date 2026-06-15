@@ -191,7 +191,7 @@ const publicPath = usePublicPath()
             <li
               v-for="badge in curriculo.badges"
               :key="badge.id"
-              class="inline-flex items-center gap-2 rounded-full border border-silver/80 bg-off-white px-3 py-1.5 font-body text-caption font-medium text-primary"
+              class="inline-flex items-center gap-2 rounded-full border border-silver/80 bg-off-white px-3 py-1.5 font-body text-caption font-semibold text-primary"
             >
               <component
                 :is="badgeIcons[badge.id]"

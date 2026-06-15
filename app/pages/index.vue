@@ -4,38 +4,8 @@
  * Gabriel Stroligo
  * https://www.linkedin.com/in/gabrielstroligo/
  */
-import { defineAsyncComponent } from 'vue'
 import { OLLIV_WHATSAPP_E164 } from '~/composables/useWhatsApp'
 import { OLLIV_CONTACT_EMAIL, SITE_LOGO_PATH, SITE_SEO } from '~/constants/siteMarketing'
-
-/** Code-splitting: secções abaixo da dobra em chunks separados (menos JS inicial no cliente). */
-const LandingMetrics = defineAsyncComponent(
-  () => import('~/components/landing/LandingMetrics.vue')
-)
-const LandingAudience = defineAsyncComponent(
-  () => import('~/components/landing/LandingAudience.vue')
-)
-const LandingAuthority = defineAsyncComponent(
-  () => import('~/components/landing/LandingAuthority.vue')
-)
-const LandingServices = defineAsyncComponent(
-  () => import('~/components/landing/LandingServices.vue')
-)
-const LandingDifferentials = defineAsyncComponent(
-  () => import('~/components/landing/LandingDifferentials.vue')
-)
-const LandingProcess = defineAsyncComponent(() => import('~/components/landing/LandingProcess.vue'))
-const LandingCredibility = defineAsyncComponent(
-  () => import('~/components/landing/LandingCredibility.vue')
-)
-const LandingFaq = defineAsyncComponent(() => import('~/components/landing/LandingFaq.vue'))
-const LandingCtaBanner = defineAsyncComponent(
-  () => import('~/components/landing/LandingCtaBanner.vue')
-)
-const LandingFooter = defineAsyncComponent(() => import('~/components/landing/LandingFooter.vue'))
-const LandingWhatsappFab = defineAsyncComponent(
-  () => import('~/components/landing/LandingWhatsappFab.vue')
-)
 
 /**
  * OG/Twitter/canonical/JSON-LD quando `runtimeConfig.public.siteUrl` existe
@@ -136,18 +106,18 @@ useHead(() => ({
     <LandingHeader />
     <main id="conteudo-principal" tabindex="-1">
       <LandingHero />
-      <LandingTrustBar />
-      <LandingMetrics />
-      <LandingAudience />
-      <LandingAuthority />
-      <LandingServices />
-      <LandingDifferentials />
-      <LandingProcess />
-      <LandingCredibility />
-      <LandingCtaBanner />
-      <LandingFaq />
+      <LazyLandingTrustBar />
+      <LazyLandingMetrics />
+      <LazyLandingAudience />
+      <LazyLandingAuthority />
+      <LazyLandingServices />
+      <LazyLandingDifferentials />
+      <LazyLandingProcess />
+      <LazyLandingCredibility />
+      <LazyLandingCtaBanner />
+      <LazyLandingFaq />
     </main>
-    <LandingFooter />
-    <LandingWhatsappFab />
+    <LazyLandingFooter />
+    <LazyLandingWhatsappFab />
   </div>
 </template>

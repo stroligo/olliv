@@ -109,7 +109,7 @@ const services = [
       >
         <p
           id="servicos-cta-heading"
-          class="font-body text-body font-medium leading-snug text-primary"
+          class="font-body text-body font-semibold leading-snug text-primary"
         >
           Próximo passo: uma conversa objetiva para alinhar expectativas, prazos e viabilidade
           técnica do seu caso.
