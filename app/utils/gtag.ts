@@ -1,9 +1,9 @@
 type GtagArgs = unknown[]
 
-let analyticsScriptInjected = false
+let gtagScriptInjected = false
 let adsConfigured = false
-let adsScriptInjected = false
-let interactionScheduled = false
+let gaConfigured = false
+let gaLoadScheduled = false
 
 function initDataLayer() {
   if (typeof window === 'undefined') return
@@ -29,35 +29,43 @@ function gtagCall(...args: GtagArgs) {
   window.gtag?.(...args)
 }
 
-/** GA4 — carrega só após interação ou timeout longo (não compete com LCP). */
-export function ensureAnalyticsLoaded(measurementId: string) {
-  if (!measurementId || analyticsScriptInjected) return
-  analyticsScriptInjected = true
-  initDataLayer()
-  injectScript(measurementId, measurementId)
-  gtagCall('js', new Date())
-  gtagCall('config', measurementId, { send_page_view: true })
-}
-
-/** Google Ads — só na conversão WhatsApp; evita ~140 KiB no carregamento inicial. */
-export function ensureGoogleAdsLoaded(adsId: string, measurementId = '') {
-  if (!adsId) return
+/**
+ * Google Ads — snippet oficial, carrega no page load para Tag Assistant / remarketing.
+ * `gtag/js?id=AW-…` + `gtag('config', 'AW-…')`
+ */
+export function initGoogleAdsOnPageLoad(adsId: string) {
+  if (!adsId || adsConfigured) return
+  adsConfigured = true
   initDataLayer()
 
-  const gaId = measurementId.trim()
-  if (!analyticsScriptInjected) {
-    ensureAnalyticsLoaded(gaId || adsId)
-  }
-
-  if (adsConfigured) return
-
-  if (!adsScriptInjected && adsId !== gaId) {
-    adsScriptInjected = true
-    injectScript(adsId, `ads-${adsId}`)
+  if (!gtagScriptInjected) {
+    gtagScriptInjected = true
+    injectScript(adsId, adsId)
+    gtagCall('js', new Date())
   }
 
   gtagCall('config', adsId)
-  adsConfigured = true
+}
+
+/** GA4 — adiado após interação ou timeout (performance). Reutiliza o gtag.js do Ads se já carregou. */
+export function ensureAnalyticsLoaded(measurementId: string) {
+  if (!measurementId || gaConfigured) return
+  initDataLayer()
+
+  if (!gtagScriptInjected) {
+    gtagScriptInjected = true
+    injectScript(measurementId, measurementId)
+    gtagCall('js', new Date())
+  }
+
+  gtagCall('config', measurementId, { send_page_view: true })
+  gaConfigured = true
+}
+
+/** Garante Ads ativo antes de disparar conversão (já deve estar no load da página). */
+export function ensureGoogleAdsLoaded(adsId: string) {
+  if (!adsId) return
+  initGoogleAdsOnPageLoad(adsId)
 }
 
 export function trackPageView(measurementId: string, pagePath: string) {
@@ -77,26 +85,26 @@ export function trackAdsContatoConversion(sendTo: string) {
   })
 }
 
-const INTERACTION_EVENTS = ['pointerdown', 'keydown', 'touchstart'] as const
+const GA_DEFER_EVENTS = ['pointerdown', 'keydown', 'touchstart'] as const
 
-/** Agenda GA4 após primeira interação ou timeout (fallback para bounce). */
+/** Agenda GA4 após interação ou timeout (fallback para bounce). */
 export function scheduleAnalyticsLoad(measurementId: string, idleTimeoutMs = 8000) {
-  if (!measurementId || interactionScheduled || typeof window === 'undefined') return
-  interactionScheduled = true
+  if (!measurementId || gaLoadScheduled || typeof window === 'undefined') return
+  gaLoadScheduled = true
   initDataLayer()
 
   let loaded = false
   const load = () => {
     if (loaded) return
     loaded = true
-    for (const ev of INTERACTION_EVENTS) {
+    for (const ev of GA_DEFER_EVENTS) {
       window.removeEventListener(ev, load, captureOpts)
     }
     ensureAnalyticsLoaded(measurementId)
   }
 
   const captureOpts: AddEventListenerOptions = { capture: true, passive: true, once: true }
-  for (const ev of INTERACTION_EVENTS) {
+  for (const ev of GA_DEFER_EVENTS) {
     window.addEventListener(ev, load, captureOpts)
   }
 
@@ -106,4 +114,3 @@ export function scheduleAnalyticsLoad(measurementId: string, idleTimeoutMs = 800
     setTimeout(load, idleTimeoutMs)
   }
 }
-

@@ -1,4 +1,9 @@
 import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
+import {
+  ensureGoogleAdsLoaded,
+  trackAdsContatoConversion,
+  trackWhatsAppCta,
+} from '~/utils/gtag'
 
 /** Número do WhatsApp para CTA (Brasília). Ajuste se necessário. */
 export const OLLIV_WHATSAPP_E164 = '5561991978442'
@@ -14,15 +19,8 @@ export function useWhatsAppHrefForService(serviceTitle: string) {
   return useWhatsAppHref(WHATSAPP_MESSAGES.serviceInquiry(serviceTitle))
 }
 
-import {
-  ensureGoogleAdsLoaded,
-  trackAdsContatoConversion,
-  trackWhatsAppCta,
-} from '~/utils/gtag'
-
 /**
  * Conversão Google Ads — evento "Contato" (clique em CTA WhatsApp).
- * Carrega o script do Ads só neste momento (performance).
  */
 export function pushGoogleAdsContatoConversion() {
   if (!import.meta.client || typeof window === 'undefined') return
@@ -32,7 +30,7 @@ export function pushGoogleAdsContatoConversion() {
   const adsId = String(config.googleAdsId ?? '').trim()
   if (!sendTo) return
 
-  ensureGoogleAdsLoaded(adsId, String(config.googleAnalyticsId ?? '').trim())
+  ensureGoogleAdsLoaded(adsId)
   trackAdsContatoConversion(sendTo)
 }
 

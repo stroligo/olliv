@@ -1,7 +1,8 @@
 /**
- * Google tag (gtag.js) — GA4 adiado; Google Ads só na conversão WhatsApp.
+ * Google tag (gtag.js) — Google Ads no page load (tráfego pago); GA4 adiado.
  */
 import {
+  initGoogleAdsOnPageLoad,
   scheduleAnalyticsLoad,
   trackPageView,
 } from '~/utils/gtag'
@@ -9,13 +10,18 @@ import {
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig().public
   const measurementId = String(config.googleAnalyticsId ?? '').trim()
+  const adsId = String(config.googleAdsId ?? '').trim()
 
-  if (!measurementId) return
+  if (adsId) {
+    initGoogleAdsOnPageLoad(adsId)
+  }
 
-  scheduleAnalyticsLoad(measurementId)
+  if (measurementId) {
+    scheduleAnalyticsLoad(measurementId)
 
-  const router = useRouter()
-  router.afterEach((to) => {
-    trackPageView(measurementId, to.fullPath)
-  })
+    const router = useRouter()
+    router.afterEach((to) => {
+      trackPageView(measurementId, to.fullPath)
+    })
+  }
 })
