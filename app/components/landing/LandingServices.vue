@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ClipboardList, FileText, GitCompareArrows, Scale, Search, Users } from '@lucide/vue'
 import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
-import { pushWhatsAppCtaClick, useWhatsAppHref, useWhatsAppHrefForService } from '~/composables/useWhatsApp'
+import { useWhatsAppHref, useWhatsAppHrefForService } from '~/composables/useWhatsApp'
 
 const { revealRoot, isVisible } = useRevealSection()
 
@@ -95,7 +95,7 @@ const services = [
             class="mt-5 inline-flex items-center font-heading text-caption font-semibold uppercase tracking-[0.12em] text-gold-dark underline-offset-2 transition-[color,transform] duration-200 ease-out hover:scale-[0.985] active:scale-[0.96] hover:text-gold-dark hover:underline motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-dark focus-visible:ring-offset-2"
             target="_blank"
             rel="noopener noreferrer"
-            @click="pushWhatsAppCtaClick(`servico:${svc.title}`)"
+            @click="(e) => handleWhatsAppCtaClick(e, hrefForService(svc.title), `servico:${svc.title}`)"
           >
             WhatsApp — {{ svc.title
             }}<span class="sr-only">. Abre numa nova janela.</span>

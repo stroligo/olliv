@@ -1,3 +1,5 @@
+import { GOOGLE_ADS_CONTATO_CONVERSION } from '~/constants/analytics'
+
 type GtagArgs = unknown[]
 
 let gtagScriptInjected = false
@@ -77,12 +79,28 @@ export function trackWhatsAppCta(label: string) {
   gtagCall('event', 'whatsapp_cta', { cta_label: label })
 }
 
-export function trackAdsContatoConversion(sendTo: string) {
-  gtagCall('event', 'conversion', {
-    send_to: sendTo,
+export function gtagReportConversion(url?: string): false {
+  const payload: Record<string, unknown> = {
+    send_to: GOOGLE_ADS_CONTATO_CONVERSION,
     value: 1.0,
     currency: 'BRL',
-  })
+  }
+
+  if (url !== undefined) {
+    let opened = false
+    const callback = () => {
+      if (opened) return
+      opened = true
+      window.open(url, '_blank', 'noopener,noreferrer')
+    }
+    payload.event_callback = callback
+    gtagCall('event', 'conversion', payload)
+    window.setTimeout(callback, 1000)
+  } else {
+    gtagCall('event', 'conversion', payload)
+  }
+
+  return false
 }
 
 const GA_DEFER_EVENTS = ['pointerdown', 'keydown', 'touchstart'] as const

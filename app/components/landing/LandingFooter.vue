@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { pushWhatsAppCtaClick } from '~/composables/useWhatsApp'
 import {
   OLLIV_CONTACT_EMAIL,
   SITE_LOGO_HEADER_HEIGHT,
@@ -42,7 +41,7 @@ const publicPath = usePublicPath()
                 <a
                   :href="wa"
                   class="text-gold-light transition-colors hover:text-gold"
-                  @click="pushWhatsAppCtaClick('cta_footer_link')"
+                  @click="(e) => handleWhatsAppCtaClick(e, wa, 'cta_footer_link')"
                   >WhatsApp — (61) 99197-8442</a
                 >
               </li>

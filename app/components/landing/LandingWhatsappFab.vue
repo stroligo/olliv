@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { pushWhatsAppCtaClick } from '~/composables/useWhatsApp'
-
 const href = useWhatsAppHref()
+
+function onFabClick(event: MouseEvent) {
+  handleWhatsAppCtaClick(event, href, 'cta_fab')
+}
 </script>
 
 <template>
@@ -11,7 +13,7 @@ const href = useWhatsAppHref()
     rel="noopener noreferrer"
     class="olliv-whatsapp-fab fixed bottom-5 right-5 z-40 flex size-14 items-center justify-center rounded-full hover:scale-[0.96] active:scale-[0.9] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-off-white md:bottom-8 md:right-8 md:size-16"
     aria-label="Falar com o Dr. Messias no WhatsApp"
-    @click="pushWhatsAppCtaClick('cta_fab')"
+    @click="onFabClick"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

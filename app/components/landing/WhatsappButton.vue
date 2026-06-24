@@ -17,8 +17,10 @@ const props = withDefaults(
   { variant: 'primary', dense: false, darkOffset: false, analyticsLabel: undefined }
 )
 
-function onCtaClick() {
-  if (props.analyticsLabel) pushWhatsAppCtaClick(props.analyticsLabel)
+function onCtaClick(event: MouseEvent) {
+  if (props.analyticsLabel) {
+    handleWhatsAppCtaClick(event, props.href, props.analyticsLabel)
+  }
 }
 
 const variants: Record<Variant, string> = {

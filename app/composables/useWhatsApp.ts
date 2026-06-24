@@ -1,9 +1,5 @@
 import { WHATSAPP_MESSAGES } from '~/constants/siteMarketing'
-import {
-  ensureGoogleAdsLoaded,
-  trackAdsContatoConversion,
-  trackWhatsAppCta,
-} from '~/utils/gtag'
+import { ensureGoogleAdsLoaded, gtagReportConversion, trackWhatsAppCta } from '~/utils/gtag'
 
 /** Número do WhatsApp para CTA (Brasília). Ajuste se necessário. */
 export const OLLIV_WHATSAPP_E164 = '5561991978442'
@@ -20,28 +16,20 @@ export function useWhatsAppHrefForService(serviceTitle: string) {
 }
 
 /**
- * Conversão Google Ads — evento "Contato" (clique em CTA WhatsApp).
+ * Clique em CTA WhatsApp — chama `gtag_report_conversion(url)` (snippet Google Ads)
+ * e só depois abre o wa.me.
  */
-export function pushGoogleAdsContatoConversion() {
+export function handleWhatsAppCtaClick(event: MouseEvent, href: string, label: string) {
   if (!import.meta.client || typeof window === 'undefined') return
 
-  const config = useRuntimeConfig().public
-  const sendTo = String(config.googleAdsContatoConversion ?? '').trim()
-  const adsId = String(config.googleAdsId ?? '').trim()
-  if (!sendTo) return
+  event.preventDefault()
 
-  ensureGoogleAdsLoaded(adsId)
-  trackAdsContatoConversion(sendTo)
-}
-
-/**
- * Clique em CTA WhatsApp — `dataLayer` + GA4 (`whatsapp_cta`) + conversão Google Ads.
- * Registre `cta_label` como parâmetro personalizado no GA4, se quiser relatórios por rótulo.
- */
-export function pushWhatsAppCtaClick(label: string) {
-  if (!import.meta.client || typeof window === 'undefined') return
   window.dataLayer = window.dataLayer ?? []
   window.dataLayer.push({ event: 'whatsapp_cta', cta_label: label })
   trackWhatsAppCta(label)
-  pushGoogleAdsContatoConversion()
+
+  const adsId = String(useRuntimeConfig().public.googleAdsId ?? '').trim()
+  if (adsId) ensureGoogleAdsLoaded(adsId)
+
+  gtagReportConversion(href)
 }
