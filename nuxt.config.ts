@@ -24,6 +24,41 @@ const appBaseWithoutTrailingSlash = appBaseURL === '/' ? '' : appBaseURL.replace
 const rootedPath = (path: string) =>
   appBaseWithoutTrailingSlash === '' ? path : `${appBaseWithoutTrailingSlash}${path}`
 
+/** Snippets Google Ads no HTML estático — Tag Assistant lê antes do Vue hidratar. */
+const googleAdsHeadScripts =
+  process.env.NODE_ENV === 'production'
+    ? [
+        {
+          src: `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`,
+          async: true,
+        },
+        {
+          key: 'google-ads-gtag',
+          type: 'text/javascript',
+          innerHTML: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GOOGLE_ADS_ID}');
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+  gtag('event', 'conversion', {
+    'send_to': '${GOOGLE_ADS_CONTATO_CONVERSION}',
+    'value': 1.0,
+    'currency': 'BRL',
+    'event_callback': callback
+  });
+  return false;
+}
+`.trim(),
+        },
+      ]
+    : []
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
@@ -173,6 +208,7 @@ export default defineNuxtConfig({
           href: joinURL(appBaseURL, 'site.webmanifest'),
         },
       ],
+      script: googleAdsHeadScripts,
     },
   },
 })

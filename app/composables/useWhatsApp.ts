@@ -16,8 +16,7 @@ export function useWhatsAppHrefForService(serviceTitle: string) {
 }
 
 /**
- * Clique em CTA WhatsApp — chama `gtag_report_conversion(url)` (snippet Google Ads)
- * e só depois abre o wa.me.
+ * Clique em CTA WhatsApp — `gtag_report_conversion(url)` (snippet Google Ads no HTML).
  */
 export function handleWhatsAppCtaClick(event: MouseEvent, href: string, label: string) {
   if (!import.meta.client || typeof window === 'undefined') return
@@ -31,5 +30,9 @@ export function handleWhatsAppCtaClick(event: MouseEvent, href: string, label: s
   const adsId = String(useRuntimeConfig().public.googleAdsId ?? '').trim()
   if (adsId) ensureGoogleAdsLoaded(adsId)
 
-  gtagReportConversion(href)
+  if (typeof window.gtag_report_conversion === 'function') {
+    window.gtag_report_conversion(href)
+  } else {
+    gtagReportConversion(href)
+  }
 }

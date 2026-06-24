@@ -18,9 +18,7 @@ const props = withDefaults(
 )
 
 function onCtaClick(event: MouseEvent) {
-  if (props.analyticsLabel) {
-    handleWhatsAppCtaClick(event, props.href, props.analyticsLabel)
-  }
+  handleWhatsAppCtaClick(event, props.href, props.analyticsLabel ?? 'cta_whatsapp')
 }
 
 const variants: Record<Variant, string> = {

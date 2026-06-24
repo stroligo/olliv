@@ -1,24 +1,16 @@
 /**
- * Google tag (gtag.js) — Google Ads no page load; GA4 adiado; conversão WhatsApp.
+ * Google tag — GA4 adiado. Google Ads vem do HTML estático (`nuxt.config` head).
  */
-import {
-  gtagReportConversion,
-  initGoogleAdsOnPageLoad,
-  scheduleAnalyticsLoad,
-  trackPageView,
-} from '~/utils/gtag'
+import { GOOGLE_ADS_ID } from '~/constants/analytics'
+import { scheduleAnalyticsLoad, trackPageView } from '~/utils/gtag'
+
+function adsTagInHead(): boolean {
+  return Boolean(document.querySelector(`script[src*="gtag/js?id=${GOOGLE_ADS_ID}"]`))
+}
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig().public
   const measurementId = String(config.googleAnalyticsId ?? '').trim()
-  const adsId = String(config.googleAdsId ?? '').trim()
-
-  if (adsId) {
-    initGoogleAdsOnPageLoad(adsId)
-  }
-
-  /** Snippet Google Ads — `onclick="return gtag_report_conversion(url)"` */
-  window.gtag_report_conversion = gtagReportConversion
 
   if (measurementId) {
     scheduleAnalyticsLoad(measurementId)
@@ -27,5 +19,17 @@ export default defineNuxtPlugin(() => {
     router.afterEach((to) => {
       trackPageView(measurementId, to.fullPath)
     })
+  }
+
+  if (!adsTagInHead()) {
+    const adsId = String(config.googleAdsId ?? '').trim()
+    if (adsId) {
+      import('~/utils/gtag').then(({ initGoogleAdsOnPageLoad, gtagReportConversion }) => {
+        initGoogleAdsOnPageLoad(adsId)
+        if (typeof window.gtag_report_conversion !== 'function') {
+          window.gtag_report_conversion = gtagReportConversion
+        }
+      })
+    }
   }
 })
